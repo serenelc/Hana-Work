@@ -1,0 +1,55 @@
+﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="labBS3.aspx.vb" Inherits="Lab1.labBS3" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>About</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- NAVIGATOR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link text-uppercase active" href="labBS1.aspx">Home</a>
+                    <a class="nav-item nav-link text-uppercase " href="labBS3.aspx">About</a>
+                    <a class="nav-item nav-link text-uppercase " href="labBS4.aspx">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- BODY -->
+    <div class="container">
+        <div class="col">
+            <h1 class="text-uppercase">About</h1>
+            <hr>
+        </div>
+        <div class="col">การเดินทางของคุณจะไม่น่าเบื่ออีกต่อไปเมื่อไปกับ The Wonderful World Travel พบกับโปรแกรมทัวร์ที่ไม่เหมือนใคร การเดินทางไปจักรวาล
+            ไต่ภูเขาหินที่สูงที่สุดในโลก กินปลาใต้ทะเลลึก และ ถ้าคุณเป็นคนชอบทัวร์ราคาประหยัดเพิ่ม Line @ ของเราเลย เพื่อรับการแจ้งเตือนทัวร์ฟ้าผ่า
+            และ ไฟไหม้ของเราทุกวัน
+            <p></p>
+            
+            <img class="img-fluid" src="images/slides/1.jpg" alt="">
+            <p></p>
+            <h2 class="text-center" >The Wonderful World Travel </h2>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</body>
+</body>
+</html>

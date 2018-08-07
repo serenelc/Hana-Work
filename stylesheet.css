@@ -1,0 +1,45 @@
+﻿
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1, h2 {
+    font-family: sans-serif;
+    text-transform: uppercase;
+}
+
+.title {
+    font-size: 50px;
+    text-align: center;
+    color: maroon;
+}
+
+.slogan {
+    font-size: 24px;
+    font-style: italic;
+    text-transform: capitalize;
+    color: maroon;
+}
+
+.more-space, .year {
+    word-spacing: 10px;
+    color: maroon;
+    font-weight: bold;
+}
+
+.project {
+    color: gray;
+    text-transform: uppercase;
+}
+
+#experience {
+    text-decoration: underline;
+}
+
+table.tb-experience {
+    border-collapse: collapse;
+}
+
+    table.tb-experience th, table.tb-experience td {
+        padding: 10px;
+    }

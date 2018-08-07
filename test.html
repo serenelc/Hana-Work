@@ -1,0 +1,142 @@
+<html lang="en">
+    <head>
+
+    </head>
+    <body class="main page hello anothername">
+        <table id="table" class="tbl">
+            <tr>
+                <td>Your age:</td>
+                <td class="row2">
+                    <label><input type="radio" name="age"
+                    value="young" checked> less than 18</label>
+                    <label><input type="radio" name="age"
+                    value="mature">more than 18</label>
+                </td>
+            </tr>
+        </table>
+
+        <p></p>
+
+        <ol id="list">
+            <li>0 </li>
+            <li>1</li>
+            <li>2</li>
+        </ol>
+
+        <br>
+
+        <button 
+            id = "elem"
+            onmouseover = "this.style.color = 'red';"
+            onmouseout = "this.style.color = 'black';"
+        >Hover or click on me</button>
+
+        <input type="text" value=""
+            onkeydown=""
+            onkeypress=""
+            onkeyup=""
+            onchange="console.log(this.value);"
+        >
+
+        <table id="drivingTable">
+                <tr>
+                    <td>How fast do you drive?</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><input type="radio" name="speed"
+                        value="slow" checked 
+                        onclick=
+                        "document.getElementById('howFast').innerHTML = 'You drive at a ' + this.value + ' ' + this.name;"
+                        >slow</label>
+                    </td>
+                </tr>
+                    <tr>
+                        <td>
+                            <label><input type="radio" name="speed"
+                            value="medium" 
+                            onclick=
+                            "document.getElementById('howFast').innerHTML = 'You drive at a ' + this.value + ' ' + this.name;"
+                            >medium</label>
+                        </td>
+                    </tr>
+                <tr>
+                    <td>
+                        <label><input type="radio" name="speed"
+                        value="fast" 
+                        onclick=
+                        "document.getElementById('howFast').innerHTML = 'You drive at a ' + this.value + ' ' + this.name;"
+                        >fast</label>
+                    </td>
+                </tr>
+        </table>
+
+        <br>
+
+        <form>
+            <input type="radio" name="age" value="10">10
+            <input type="radio" name="age" value="20">20
+        </form>
+
+        <form>
+            <input type="radio" name="age" value="30">30
+            <input type="radio" name="age" value="40">40
+        </form>
+
+        <form action="https://www.google.com/search">
+            What would you like to know?
+            <input type="text" name="question" value="">
+            <br>
+            Click Submit to find out <input type="submit" value="Submit">
+        </form>
+
+        <p id="howFast"></p>
+
+        <script>
+            let form = document.forms[0];
+            let ageElems = form.elements.age;
+            //alert(ageElems[1].value);
+        </script>
+
+        <script>
+            let form = document.createElement('form');
+            form.action = "https://www.google.com/search";
+            form.method = "GET";
+            form.innerHTML = "<inputname = 'question' value = 'test'";
+            document.body.append(form);
+        </script>
+
+        <script>
+            function sayHi() {
+                alert("Hi!");
+            }
+            elem.addEventListener("click", sayHi);
+        </script>
+
+        <script>
+            let inputs = document.getElementsByTagName("input");
+            for(let input of inputs) {
+                console.log(input.value + ": " + input.checked);
+            }
+            console.log(inputs[0].value + ": " + inputs[0].checked);
+        </script>
+
+        <script>
+            for (let name of document.body.classList) {
+                console.log(name);
+            }
+        </script>
+
+        <script>
+            document.body.style.backgroundColor = 
+            prompt("background colour?", "green");
+        </script>
+
+        <script>
+            let newLi = document.createElement("li");
+            newLi.innerHTML = "NEW ELEMENT";
+            list.appendChild(newLi);
+        </script>
+      
+    </body>
+</html>
