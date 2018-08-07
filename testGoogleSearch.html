@@ -1,0 +1,25 @@
+<html lang="en">
+
+<head></head>
+
+<body>
+        <!-- <form action="https://www.google.com/search">
+            What would you like to know?
+            need the name to be q otherwise google will not search
+            <input type="text" name="q" value="">
+            <br>
+            Click Submit to find out <input type="submit" value="Submit">
+        </form> -->
+        <p> hello </p>
+    
+
+        <script>
+            let form = document.createElement('form');
+            form.action = 'https://www.google.com/search';
+            form.method = 'GET';
+            form.innerHTML = '<input name = "q" value = "hi">';
+            document.body.append(form);
+        </script>
+</body>
+
+</html>
