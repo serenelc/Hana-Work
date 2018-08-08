@@ -60,8 +60,12 @@
             newQTxt.placeholder = "Question Title";
             newQTxt.style = "width: 70%;";
             newQTxt.id = "ques";
+
+            var answers = document.getElementById("ansType"), 
+                clone = answers.cloneNode(true);
+            clone.id = "clone_id";
             ansType.style = "visibility: visible;";
-            save.before(document.createElement("p"), newQTxt, ansType);
+            save.before(document.createElement("p"), newQTxt, clone);
         }
     </script>
 
