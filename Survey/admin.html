@@ -25,6 +25,7 @@
 
             <hr style="color:black;">
 
+            <!-- <div onchange="showOptions(this.value)" id="ansType" style="visibility: hidden;"> -->
             <div id="ansType" style="visibility: hidden;">
                 <select>
                     <option value="" selected="selected">--</option>
@@ -62,30 +63,56 @@
 
             let divQ = document.createElement("div");
             divQ.id = "diveQ_id" + count;
+            divQ.style = "background-color: red;";
+            divQ.className = "form-inline";
 
             let newQTxt = document.createElement("input");
             newQTxt.type = "text";
             newQTxt.className = "form-control";
             newQTxt.placeholder = "Question Title";
             newQTxt.style = "width: 70%;";
-            newQTxt.id = "ques";
 
             var answers = document.getElementById("ansType"), 
                 clone = answers.cloneNode(true);
             clone.id = "clone_id" + count;
             ansType.style = "visibility: visible;";
 
-            // divQ.appendChild(newQTxt, clone);
+            divQ.appendChild(newQTxt, clone);
 
-            // save.before(divQ);
+            save.before(divQ, document.createElement("br"));
 
-            save.before(document.createElement("p"), newQTxt, clone);
+            // save.before(document.createElement("p"), newQTxt, clone);
         }
 
     </script>
 
     <!-- TODO: write a function to display the type of answer depending on what is chosen in the drop down. -->
-
+    <script>
+        function chooseOptions(opt) {
+            switch(opt) {
+                case "radioButton": 
+                    var numradBut = alert("How many radio buttons would you like?");
+                    var i;
+                    for (i = 0; i < numradBut; i++) {
+                        //create radiobutton
+                    }
+                    let radBut = document.createElement("input");
+                    radBut.type = "radio";
+                    let radButLabel = document.createElement("input");
+                    radButLabel.type = "text";
+                    radButLabel.placeholder = "Option 1";
+                    break;
+                case "tickBox": 
+                    // some code
+                    break;
+                case "shortAns": 
+                    // some code
+                    break;
+                default:
+                    //display nothing
+            }
+        }
+    </script>
     
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
