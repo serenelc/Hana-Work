@@ -26,10 +26,9 @@
             <hr style="color:black;">
 
             <button type="button" class="btn btn-info" id="addQ" 
-            onclick="document.getElementById('questions').innerHTML = addQuestion();"
+            onclick="addQuestion();"
             >Add a Question</button>
            
-            <p></p>
             
             <div id = "save">
                 <br>
@@ -44,31 +43,25 @@
         
     </div>
 
+    <div id="ansType" style="visibility: hidden;">
+        <select>
+            <option value="radioButton">Multiple Choice</option>
+            <option value="tickBox">Tick Boxes</option>
+            <option value="shortAns">Short Answer</option>
+        </select>
+    </div>
+
     <!-- Script to add a question -->
     <script>
         function addQuestion() {
-            let newQLabel = document.createElement("label");
             let newQTxt = document.createElement("input");
-            newQLabel.innerHTML = "Question";
             newQTxt.type = "text";
             newQTxt.className = "form-control";
             newQTxt.placeholder = "Question Title";
             newQTxt.style = "width: 70%;";
-            save.before(newQLabel, newQTxt, document.createElement("p"));
-        }
-    </script>
-
-    <!-- Script to choose the answer type -->
-    <script>
-        function chooseAnswerType() {
-            let ansType = document.createElement("select");
-            let radioButton = document.createElement("option");
-            let tickBox = document.createElement("option");
-            let shortAns = document.createElement("option");
-            radioButton.value = "Multiple Choice";
-            tickBox.value = "Tick Boxes";
-            shortans.value = "Short Answer";
-            ansType.before(ansType);
+            newQTxt.id = "ques";
+            ansType.style = "visibility: visible;";
+            save.before(document.createElement("p"), newQTxt, ansType);
         }
     </script>
 
