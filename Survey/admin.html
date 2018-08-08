@@ -9,11 +9,12 @@
 
 <body>
 
-    <div class="container" style="padding:50px;">
-        <h1> Create A Survey </h1>
+    <div id ="main" class="container" style="padding:50px;">
+        <h1 style="text-align: center;"> Create A Survey </h1>
+
         <form>
             <div class="form-group">
-                <label>Title</label>
+                <label ><h3>Title</h3></label>
                 <input runat="server" type="text" class="form-control" id="txtTitle" placeholder="Survey Title">
             </div>
 
@@ -22,17 +23,23 @@
                 <input runat="server" type="text" class="form-control" id="txtDesc" placeholder="Short description about your survey">
             </div>
 
+            <hr style="color:black;">
+
             <button type="button" class="btn btn-info" id="addQ" 
             onclick="document.getElementById('questions').innerHTML = addQuestion();"
             >Add a Question</button>
-
-            <div id = "questions">
+           
+            <p></p>
+            
+            <div id = "save">
+                <br>
+                <hr style="color:black;">
+                <asp:button runat="server" id="btnSave" type="button" class="btn btn-success"
+                style="float: right">Save</asp:button>
+                <!-- <asp:button runat="server" id="btnDelete" type="button" class="btn btn-danger">Delete</asp:button> -->
+            
             </div>
             
-            <br>
-            <asp:button runat="server" id="btnSave" type="button" class="btn btn-success">Save</asp:button>
-            <!-- <asp:button runat="server" id="btnDelete" type="button" class="btn btn-danger">Delete</asp:button> -->
-
         </form>
         
     </div>
@@ -43,16 +50,31 @@
             let newQLabel = document.createElement("label");
             let newQTxt = document.createElement("input");
             newQLabel.innerHTML = "Question";
-            newQTxt.innerHTML = "Question Title";
-            document.body.appendChild(newQLabel);
-            document.body.appendChild(newQTxt);
-            document.body.appendChild(document.createElement("p"));
+            newQTxt.type = "text";
+            newQTxt.className = "form-control";
+            newQTxt.placeholder = "Question Title";
+            newQTxt.style = "width: 70%;";
+            save.before(newQLabel, newQTxt, document.createElement("p"));
         }
     </script>
 
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Script to choose the answer type -->
+    <script>
+        function chooseAnswerType() {
+            let ansType = document.createElement("select");
+            let radioButton = document.createElement("option");
+            let tickBox = document.createElement("option");
+            let shortAns = document.createElement("option");
+            radioButton.value = "Multiple Choice";
+            tickBox.value = "Tick Boxes";
+            shortans.value = "Short Answer";
+            ansType.before(ansType);
+        }
+    </script>
+
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>
