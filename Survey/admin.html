@@ -25,6 +25,15 @@
 
             <hr style="color:black;">
 
+            <div id="ansType" style="visibility: hidden;">
+                <select>
+                    <option value="" selected="selected">--</option>
+                    <option value="radioButton">Multiple Choice</option>
+                    <option value="tickBox">Tick Boxes</option>
+                    <option value="shortAns">Short Answer</option>
+                </select>
+            </div>
+
             <button type="button" class="btn btn-info" id="addQ" 
             onclick="addQuestion();"
             >Add a Question</button>
@@ -43,17 +52,17 @@
         
     </div>
 
-    <div id="ansType" style="visibility: hidden;">
-        <select>
-            <option value="radioButton">Multiple Choice</option>
-            <option value="tickBox">Tick Boxes</option>
-            <option value="shortAns">Short Answer</option>
-        </select>
-    </div>
-
-    <!-- Script to add a question -->
+    <!-- Script to add a question and choose an answer type -->
     <script>
+
+        var count = 0;
+
         function addQuestion() {
+            count = parseInt(count) + parseInt(1);
+
+            let divQ = document.createElement("div");
+            divQ.id = "diveQ_id" + count;
+
             let newQTxt = document.createElement("input");
             newQTxt.type = "text";
             newQTxt.className = "form-control";
@@ -63,11 +72,21 @@
 
             var answers = document.getElementById("ansType"), 
                 clone = answers.cloneNode(true);
-            clone.id = "clone_id";
+            clone.id = "clone_id" + count;
             ansType.style = "visibility: visible;";
+
+            // divQ.appendChild(newQTxt, clone);
+
+            // save.before(divQ);
+
             save.before(document.createElement("p"), newQTxt, clone);
         }
+
     </script>
+
+    <!-- TODO: write a function to display the type of answer depending on what is chosen in the drop down. -->
+
+    
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
