@@ -11,7 +11,7 @@
 
     <div style="background-color:#619af4; height: 100px" ></div>
         
-    <div id ="main" class="container" style="padding: 10px; background-color:white; min-height: 100%;">
+    <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%;">
         
         <div>
             <h1 style="text-align: center;"> Create A Survey </h1>
@@ -69,7 +69,7 @@
             let divgroup= document.createElement('div'); 
             divgroup.id = "divgroupQ_id" + count;  
             divgroup.className = 'input-group';
-            divgroup.innerHTML = '<input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Question">';           
+            divgroup.innerHTML = '<input type="text" class="form-control" aria-label="Text input with dropdown button" style="font-weight:bold;" placeholder="Question">';           
             
             let divbutton= document.createElement('div');
             divbutton.id = "divbuttonQ_id" + count;  
@@ -146,14 +146,30 @@
         function makeRadBut() {
             let divRadio = document.createElement('div');
             divRadio.id = "divRadio_id" + cnt;
-            divRadio.innerHTML = "<input class='form-check-input' type='radio' value='option1' checked>";
-
-            var numRadBut = console.log(prompt("How many options would you like? (You need at least 2)", 2));
+            divRadio.className = "form-check";
+            
+            var numRadBut = prompt("How many options would you like? (You need at least 2)", 2);
             var n;
-            for (n = 1; n < numRadBut; n++) {
+            for (n = 0; n < numRadBut; n++) {
+    
                 let radio = document.createElement("input");
-                radio.innerHTML = "<input class='form-check-input' type='radio' value='option2'>"
+                radio.type = "radio";
+                radio.class = "form-check-input";
+                radio.name = "radios" + parseInt(cnt);
+                // radio.value = "";
+                radio.id = "radioId" + parseInt(cnt);
+                radio.style = "margin-right: 4px; margin-top: 10px;";
+
+                let radLabel = document.createElement("input");
+                radLabel.type = "text";
+                radLabel.class = "form-control";
+                radLabel.placeholder = "Option " + parseInt(n);
+                radLabel.id = "radLabeldId" + parseInt(cnt);
+                radLabel.style = "margin-right: 10px; margin-top: 10px;";
+
+                divRadio.appendChild(document.createElement("br"));
                 divRadio.appendChild(radio);
+                divRadio.appendChild(radLabel);
             }
             i = getID();
             document.getElementById(i).after(divRadio);
