@@ -31,21 +31,11 @@
 
             <hr>
 
-            <!-- <div onchange="showOptions(this.value)" id="ansType" style="visibility: hidden;"> -->
-            <div id="ansType" style="visibility: hidden;">
-                <select>
-                    <option value="" selected="selected">--</option>
-                    <option value="radioButton">Multiple Choice</option>
-                    <option value="tickBox">Tick Boxes</option>
-                    <option value="shortAns">Short Answer</option>
-                </select>
-            </div>
-
-            <button type="button" class="btn btn-info"  id="addSection" 
+            <button type="button" class="btn btn-info"  id="newSection" 
             onclick="addSection();"
             >Add a Section</button>
             <button type="button" class="btn btn-info"  id="addQ2" 
-            onclick="addQuestion2();"
+            onclick="addQuestion();"
             >Add a Question</button>
             
             <div id = "save" style="background-color: white; height: 70px;">
@@ -59,24 +49,29 @@
         
     </div>        
 
+    <!-- Script to add a section/sub topic -->
+    <script>
+        function addSection() {
+            alert("Add a section");
+        }
+    </script>
+
     <!-- Script to add a question and choose an answer type -->
     <script>
 
         var count = 0;  
-        function addQuestion2() {
+        function addQuestion() {
             
-            let divgroup= document.createElement('div'); 
-            divgroup.id = "divgroupQ_id" + count;  
-            divgroup.className = 'input-group';
-            divgroup.innerHTML = '<input type="text" class="form-control" aria-label="Text input with dropdown button" style="font-weight:bold;" placeholder="Question">';           
+            let divGroup= document.createElement('div'); 
+            divGroup.id = "divGroupQ_id" + count;  
+            divGroup.className = 'input-group';
+            divGroup.innerHTML = '<input type="text" class="form-control" style="font-weight:bold;" placeholder="Question">';           
 
             let divSelect = document.createElement("select");
             divSelect.id = "divSelect_id" + count;
             divSelect.className = "input-group-append";
             divSelect.innerHTML =  "<option value='0' selected='selected'>--</option> <option value='1'>Multiple Choice</option> <option value='2'>Multiple Choice Grid</option> <option value='3'>Short Answer</option>";
-            // divSelect.onchange = selectAns(3);
-            // console.log(document.getElementById("divSelect_id" + count));
-
+            
             // let divbuttonClose= document.createElement('div');            
             // divbuttonClose.id =  "divbuttonCloseQ_id" + count;         
             // divbuttonClose.innerHTML = '<button type="button" class="close" aria-label="Close">'; 
@@ -85,16 +80,19 @@
             // spanClose.innerHTML = '<span aria-hidden="true">&times;</span>  ';  
             // divbuttonClose.appendChild(spanClose)
                          
-            // divgroup.appendChild(divbutton).appendChild(divdropdown);
-            divgroup.appendChild(divSelect);
+            // divGroup.appendChild(divbutton).appendChild(divdropdown);
+            divGroup.appendChild(divSelect);
             let buttonClose= document.createElement('button');   
             buttonClose.id =  "buttonCloseQ_id" + count;     
             buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> '; 
-            divgroup.appendChild(buttonClose);
+            divGroup.appendChild(buttonClose);
 
             document.createElement('br')
-            addSection.before(divgroup,document.createElement('br'));
-
+            newSection.before(divGroup,document.createElement('br'));
+            
+            console.log(document.getElementById("divSelect_id0"));
+            console.log(document.getElementById("divSelect_id0").children);
+            // divSelect.onchange = selectAns(0);
             count = parseInt(count) + parseInt(1);
         }
          
@@ -113,9 +111,9 @@
         var idCount = 0;
         function getID() {
             idCount = parseInt(idCount);
-            var elems = document.getElementsByClassName("input-group")[idCount];
+            var elem = document.getElementsByClassName("input-group")[idCount];
             idCount = parseInt(idCount) + parseInt(1);
-            return elems.getAttribute("id");
+            return elem.getAttribute("id");
         }
     </script>
 
