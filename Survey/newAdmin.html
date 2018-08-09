@@ -25,7 +25,8 @@
 
             <div class="form-group">
                 <label>Description</label>
-                <input runat="server" type="text" class="form-control" id="txtDesc" placeholder="Short description about your survey">
+                <textarea class="form-control" id="txtDesc" rows="2" 
+                placeholder="Short description about your survey" runat="server"></textarea>
             </div>
 
             <hr>
@@ -74,17 +75,17 @@
             divbutton.id = "divbuttonQ_id" + count;  
             divbutton.className = 'input-group-append';
             divbutton.innerHTML = '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Answer Type</button>';        
-           
+
             let divdropdown= document.createElement('div');
             divdropdown.id = "divdropdownQ_id" + count;  
             divdropdown.className = 'dropdown-menu';
-            divdropdown.innerHTML = '<a class="dropdown-item" href="#">Multiple Choice</a>'; 
+            divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut(1)">Radio Button</a>'; 
             let adropdown2= document.createElement('a');
             adropdown2.id = "adropdown2Q_id" + count; 
-            adropdown2.innerHTML = '<a class="dropdown-item" href="#">Tick Boxes</a>';   
+            adropdown2.innerHTML = '<a class="dropdown-item" href="javascript:makeGrid()">Multiple Choice Grid</a>';   
             let adropdown3= document.createElement('a');
             adropdown3.id = "adropdown3Q_id" + count; 
-            adropdown3.innerHTML = '<a class="dropdown-item" href="#">Short Answer</a>';   
+            adropdown3.innerHTML = '<a class="dropdown-item" href="javascript:makeShortAns()">Short Answer</a>';   
             divdropdown.appendChild(adropdown2).appendChild(adropdown3);
 
               
@@ -98,72 +99,55 @@
                          
             divgroup.appendChild(divbutton).appendChild(divdropdown);
             let buttonClose= document.createElement('button');   
-               buttonClose.id =  "buttonCloseQ_id" + count;     
-               buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> '; 
-               divgroup.appendChild(buttonClose);
+            buttonClose.id =  "buttonCloseQ_id" + count;     
+            buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> '; 
+            divgroup.appendChild(buttonClose);
 
             document.createElement('br')
-            addQ2.before(divgroup,document.createElement('br'));
+            addSection.before(divgroup,document.createElement('br'));
+
+            var i = getID();
         }
          
-
-        // var count = 0;
-        // function addQuestion() {
-        //     count = parseInt(count) + parseInt(1);
-
-        //     let divQ = document.createElement("div");
-        //     divQ.id = "diveQ_id" + count;
-        //     divQ.style = "background-color: red;";
-        //     divQ.className = "form-inline";
-
-        //     let newQTxt = document.createElement("input");
-        //     newQTxt.type = "text";
-        //     newQTxt.className = "form-control";
-        //     newQTxt.placeholder = "Question Title";
-        //     newQTxt.style = "width: 70%;";
-
-        //     var answers = document.getElementById("ansType"), 
-        //         clone = answers.cloneNode(true);
-        //     clone.id = "clone_id" + count;
-        //     ansType.style = "visibility: visible;";
-
-        //     divQ.appendChild(newQTxt, clone);
-
-        //     save.after(divQ, document.createElement("br"));
-
-        //     // save.before(document.createElement("p"), newQTxt, clone);
-        // }
-
     </script>
 
-    <!-- TODO: write a function to display the type of answer depending on what is chosen in the drop down. -->
+    <!-- Script to remove a question -->
     <script>
-        function chooseOptions(opt) {
-            switch(opt) {
-                case "radioButton": 
-                    var numradBut = alert("How many radio buttons would you like?");
-                    var i;
-                    for (i = 0; i < numradBut; i++) {
-                        //create radiobutton
-                    }
-                    let radBut = document.createElement("input");
-                    radBut.type = "radio";
-                    let radButLabel = document.createElement("input");
-                    radButLabel.type = "text";
-                    radButLabel.placeholder = "Option 1";
-                    break;
-                case "tickBox": 
-                    // some code
-                    break;
-                case "shortAns": 
-                    // some code
-                    break;
-                default:
-                    //display nothing
-            }
+        function removeElement(elementId) {
+            var element = document.getElementById(elementId);
+            element.parentNode.removeChild(element);
         }
     </script>
-    
+
+    <!-- Script to get ID attribute -->
+    <script>
+        var cnt = 0;
+        function getID() {
+            cnt = parseInt(cnt);
+            var elems = document.getElementsByClassName("input-group")[cnt];
+            console.log(elems);
+            console.log(elems.getAttribute("id"));
+            cnt = parseInt(cnt) + parseInt(1);
+            return elems.getAttribute("id");
+        }
+    </script>
+
+    <!-- TODO: Write 3 functions for creating the different answer types -->
+    <script>
+        function makeRadBut(divId) {
+            console.log(divId);
+            console.log(prompt("How many options would you like?", 5));
+        }
+        function makeGrid() {
+            alert("You've chosen a multiple choice grid answer type!");
+        }
+        function makeShortAns() {
+
+            // <textarea class="form-control" id="txtDesc" rows="2" 
+            //     placeholder="Short description about your survey" runat="server"></textarea>
+            
+        }
+    </script>
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
