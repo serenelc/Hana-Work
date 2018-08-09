@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body style="background-color: #a9c5f2;">
+
+    <div style="background-color:#619af4; height: 100px" ></div>
+        
+    <div id ="main" class="container" style="padding: 10px; background-color:white; min-height: 100%;">
+        
+        <div>
+            <h1 style="text-align: center;"> Create A Survey </h1>
+        </div>
+        
+        <form>
+            <div class="form-group">
+                <label ><h3>Title</h3></label>
+                <input runat="server" type="text" class="form-control" id="txtTitle" placeholder="Survey Title">
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input runat="server" type="text" class="form-control" id="txtDesc" placeholder="Short description about your survey">
+            </div>
+
+            <hr>
+
+            <!-- <div onchange="showOptions(this.value)" id="ansType" style="visibility: hidden;"> -->
+            <div id="ansType" style="visibility: hidden;">
+                <select>
+                    <option value="" selected="selected">--</option>
+                    <option value="radioButton">Multiple Choice</option>
+                    <option value="tickBox">Tick Boxes</option>
+                    <option value="shortAns">Short Answer</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn btn-info"  id="addSection" 
+            onclick="addSection();"
+            >Add a Section</button>
+            <button type="button" class="btn btn-info"  id="addQ2" 
+            onclick="addQuestion2();"
+            >Add a Question</button>
+            
+            <div id = "save" style="background-color: white; height: 70px;">
+                <br>
+                <asp:button runat="server" id="btnSave" type="button" class="btn btn-success"
+                style="float: right">Save</asp:button>
+                <!-- <asp:button runat="server" id="btnDelete" type="button" class="btn btn-danger">Delete</asp:button> -->
+            </div>
+            
+        </form>
+        
+    </div>        
+
+
+    <!-- Script to add a question and choose an answer type -->
+    <script>
+
+        var count = 0;  
+        function addQuestion2() {
+            count = parseInt(count) + parseInt(1);
+            let divgroup= document.createElement('div'); 
+            divgroup.id = "divgroupQ_id" + count;  
+            divgroup.className = 'input-group';
+            divgroup.innerHTML = '<input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Question">';           
+            
+            let divbutton= document.createElement('div');
+            divbutton.id = "divbuttonQ_id" + count;  
+            divbutton.className = 'input-group-append';
+            divbutton.innerHTML = '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Answer Type</button>';        
+           
+            let divdropdown= document.createElement('div');
+            divdropdown.id = "divdropdownQ_id" + count;  
+            divdropdown.className = 'dropdown-menu';
+            divdropdown.innerHTML = '<a class="dropdown-item" href="#">Multiple Choice</a>'; 
+            let adropdown2= document.createElement('a');
+            adropdown2.id = "adropdown2Q_id" + count; 
+            adropdown2.innerHTML = '<a class="dropdown-item" href="#">Tick Boxes</a>';   
+            let adropdown3= document.createElement('a');
+            adropdown3.id = "adropdown3Q_id" + count; 
+            adropdown3.innerHTML = '<a class="dropdown-item" href="#">Short Answer</a>';   
+            divdropdown.appendChild(adropdown2).appendChild(adropdown3);
+
+              
+            // let divbuttonClose= document.createElement('div');            
+            // divbuttonClose.id =  "divbuttonCloseQ_id" + count;         
+            // divbuttonClose.innerHTML = '<button type="button" class="close" aria-label="Close">'; 
+            // let spanClose= document.createElement('span');
+            // spanClose.id = "spanCloseQ_id" + count; 
+            // spanClose.innerHTML = '<span aria-hidden="true">&times;</span>  ';  
+            // divbuttonClose.appendChild(spanClose)
+                         
+            divgroup.appendChild(divbutton).appendChild(divdropdown);
+            let buttonClose= document.createElement('button');   
+               buttonClose.id =  "buttonCloseQ_id" + count;     
+               buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> '; 
+               divgroup.appendChild(buttonClose);
+
+            document.createElement('br')
+            addQ2.before(divgroup,document.createElement('br'));
+        }
+         
+
+        // var count = 0;
+        // function addQuestion() {
+        //     count = parseInt(count) + parseInt(1);
+
+        //     let divQ = document.createElement("div");
+        //     divQ.id = "diveQ_id" + count;
+        //     divQ.style = "background-color: red;";
+        //     divQ.className = "form-inline";
+
+        //     let newQTxt = document.createElement("input");
+        //     newQTxt.type = "text";
+        //     newQTxt.className = "form-control";
+        //     newQTxt.placeholder = "Question Title";
+        //     newQTxt.style = "width: 70%;";
+
+        //     var answers = document.getElementById("ansType"), 
+        //         clone = answers.cloneNode(true);
+        //     clone.id = "clone_id" + count;
+        //     ansType.style = "visibility: visible;";
+
+        //     divQ.appendChild(newQTxt, clone);
+
+        //     save.after(divQ, document.createElement("br"));
+
+        //     // save.before(document.createElement("p"), newQTxt, clone);
+        // }
+
+    </script>
+
+    <!-- TODO: write a function to display the type of answer depending on what is chosen in the drop down. -->
+    <script>
+        function chooseOptions(opt) {
+            switch(opt) {
+                case "radioButton": 
+                    var numradBut = alert("How many radio buttons would you like?");
+                    var i;
+                    for (i = 0; i < numradBut; i++) {
+                        //create radiobutton
+                    }
+                    let radBut = document.createElement("input");
+                    radBut.type = "radio";
+                    let radButLabel = document.createElement("input");
+                    radButLabel.type = "text";
+                    radButLabel.placeholder = "Option 1";
+                    break;
+                case "tickBox": 
+                    // some code
+                    break;
+                case "shortAns": 
+                    // some code
+                    break;
+                default:
+                    //display nothing
+            }
+        }
+    </script>
+    
+
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
