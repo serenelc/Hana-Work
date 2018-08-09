@@ -59,7 +59,6 @@
         
     </div>        
 
-
     <!-- Script to add a question and choose an answer type -->
     <script>
 
@@ -70,23 +69,13 @@
             divgroup.id = "divgroupQ_id" + count;  
             divgroup.className = 'input-group';
             divgroup.innerHTML = '<input type="text" class="form-control" aria-label="Text input with dropdown button" style="font-weight:bold;" placeholder="Question">';           
-            
-            let divbutton= document.createElement('div');
-            divbutton.id = "divbuttonQ_id" + count;  
-            divbutton.className = 'input-group-append';
-            divbutton.innerHTML = '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Answer Type</button>';        
 
-            let divdropdown= document.createElement('div');
-            divdropdown.id = "divdropdownQ_id" + count;  
-            divdropdown.className = 'dropdown-menu';
-            divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut()">Radio Button</a>'; 
-            let adropdown2= document.createElement('a');
-            adropdown2.id = "adropdown2Q_id" + count; 
-            adropdown2.innerHTML = '<a class="dropdown-item" href="javascript:makeGrid()">Multiple Choice Grid</a>';   
-            let adropdown3= document.createElement('a');
-            adropdown3.id = "adropdown3Q_id" + count; 
-            adropdown3.innerHTML = '<a class="dropdown-item" href="javascript:makeShortAns()">Short Answer</a>';   
-            divdropdown.appendChild(adropdown2).appendChild(adropdown3);
+            let divSelect = document.createElement("select");
+            divSelect.id = "divSelect_id" + count;
+            divSelect.className = "input-group-append";
+            divSelect.innerHTML =  "<option value='0' selected='selected'>--</option> <option value='1'>Multiple Choice</option> <option value='2'>Multiple Choice Grid</option> <option value='3'>Short Answer</option>";
+            // divSelect.onchange = selectAns(3);
+            // console.log(document.getElementById("divSelect_id" + count));
 
             // let divbuttonClose= document.createElement('div');            
             // divbuttonClose.id =  "divbuttonCloseQ_id" + count;         
@@ -96,7 +85,8 @@
             // spanClose.innerHTML = '<span aria-hidden="true">&times;</span>  ';  
             // divbuttonClose.appendChild(spanClose)
                          
-            divgroup.appendChild(divbutton).appendChild(divdropdown);
+            // divgroup.appendChild(divbutton).appendChild(divdropdown);
+            divgroup.appendChild(divSelect);
             let buttonClose= document.createElement('button');   
             buttonClose.id =  "buttonCloseQ_id" + count;     
             buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> '; 
@@ -129,6 +119,25 @@
         }
     </script>
 
+    <!-- Script to switch between answer types -->
+    <script>
+        function selectAns(ansType) {
+            switch(ansType) {
+                case 1: 
+                    makeRadBut();
+                    break;
+                case 2:
+                    makeGrid();
+                    break;
+                case 3: 
+                    makeShortAns();
+                    break;
+                default:
+                    //Do nothing
+            }
+        }
+    </script>
+
     <!-- Script to create a short answer box -->
     <script>
         var cnt = 0;
@@ -139,6 +148,7 @@
             divShortAns.id = "divShortAns_id" + cnt;
             divShortAns.innerHTML = "<textarea id = 'txtDesc' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea>";
             i = getID();
+            console.log("not here");
             document.getElementById(i).after(divShortAns);
             cnt = parseInt(cnt) + parseInt(1);
         }
