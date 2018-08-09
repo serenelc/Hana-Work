@@ -65,7 +65,7 @@
 
         var count = 0;  
         function addQuestion2() {
-            count = parseInt(count) + parseInt(1);
+            
             let divgroup= document.createElement('div'); 
             divgroup.id = "divgroupQ_id" + count;  
             divgroup.className = 'input-group';
@@ -79,7 +79,7 @@
             let divdropdown= document.createElement('div');
             divdropdown.id = "divdropdownQ_id" + count;  
             divdropdown.className = 'dropdown-menu';
-            divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut(1)">Radio Button</a>'; 
+            divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut()">Radio Button</a>'; 
             let adropdown2= document.createElement('a');
             adropdown2.id = "adropdown2Q_id" + count; 
             adropdown2.innerHTML = '<a class="dropdown-item" href="javascript:makeGrid()">Multiple Choice Grid</a>';   
@@ -88,7 +88,6 @@
             adropdown3.innerHTML = '<a class="dropdown-item" href="javascript:makeShortAns()">Short Answer</a>';   
             divdropdown.appendChild(adropdown2).appendChild(adropdown3);
 
-              
             // let divbuttonClose= document.createElement('div');            
             // divbuttonClose.id =  "divbuttonCloseQ_id" + count;         
             // divbuttonClose.innerHTML = '<button type="button" class="close" aria-label="Close">'; 
@@ -106,7 +105,7 @@
             document.createElement('br')
             addSection.before(divgroup,document.createElement('br'));
 
-            var i = getID();
+            count = parseInt(count) + parseInt(1);
         }
          
     </script>
@@ -121,33 +120,65 @@
 
     <!-- Script to get ID attribute -->
     <script>
-        var cnt = 0;
+        var idCount = 0;
         function getID() {
-            cnt = parseInt(cnt);
-            var elems = document.getElementsByClassName("input-group")[cnt];
-            console.log(elems);
-            console.log(elems.getAttribute("id"));
-            cnt = parseInt(cnt) + parseInt(1);
+            idCount = parseInt(idCount);
+            var elems = document.getElementsByClassName("input-group")[idCount];
+            idCount = parseInt(idCount) + parseInt(1);
             return elems.getAttribute("id");
         }
     </script>
 
-    <!-- TODO: Write 3 functions for creating the different answer types -->
+    <!-- Script to create a short answer box -->
     <script>
-        function makeRadBut(divId) {
-            console.log(divId);
-            console.log(prompt("How many options would you like?", 5));
+        var cnt = 0;
+        var i;
+
+        function makeShortAns() {
+            let divShortAns= document.createElement('div');
+            divShortAns.id = "divShortAns_id" + cnt;
+            divShortAns.innerHTML = "<textarea id = 'txtDesc' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea>";
+            i = getID();
+            document.getElementById(i).after(divShortAns);
+            cnt = parseInt(cnt) + parseInt(1);
         }
+
+        function makeRadBut() {
+            let divRadio = document.createElement('div');
+            divRadio.id = "divRadio_id" + cnt;
+            divRadio.innerHTML = "<input class='form-check-input' type='radio' value='option1' checked>";
+
+            var numRadBut = console.log(prompt("How many options would you like? (You need at least 2)", 2));
+            var n;
+            for (n = 1; n < numRadBut; n++) {
+                let radio = document.createElement("input");
+                radio.innerHTML = "<input class='form-check-input' type='radio' value='option2'>"
+                divRadio.appendChild(radio);
+            }
+            i = getID();
+            document.getElementById(i).after(divRadio);
+            cnt = parseInt(cnt) + parseInt(1);
+        }
+
         function makeGrid() {
             alert("You've chosen a multiple choice grid answer type!");
         }
-        function makeShortAns() {
 
-            // <textarea class="form-control" id="txtDesc" rows="2" 
-            //     placeholder="Short description about your survey" runat="server"></textarea>
-            
+    </script>
+
+    <!-- Script to create a specified number of radio buttons
+    <script>
+         function makeRadBut() {
+            console.log(prompt("How many options would you like?", 5));
         }
     </script>
+
+    Script to create a multiple choice grid
+    <script>
+        function makeGrid() {
+            alert("You've chosen a multiple choice grid answer type!");
+        }
+    </script> -->
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
