@@ -141,15 +141,27 @@
     <!-- TODO: Script to remove a question -->
     <script>
         function removeElement() {
-            // var element = document.getElementById(elementId);
-            // element.parentNode.removeChild(element);
-            // document.getElementById(this.id).remove();
-            // document.getElementById('divRadio_id0').remove();
-            //this.remove();
             var idNum = this.id.slice(-2);
             document.getElementById("divGroupQ_id" + idNum).remove();
             document.getElementById("break_id" + idNum).remove();
-            console.log(this.id.slice(-2));
+            // console.log(document.getElementById("divRadio_id" + idNum));
+            // console.log(document.getElementById("divShortAns_id" + idNum));
+            // console.log(document.getElementById("divTable_id" + idNum));
+            if (document.getElementById("divRadio_id" + idNum) != null) {
+                document.getElementById("divRadio_id" + idNum).remove();
+                console.log("REMOVING RADIO BUTTON");
+            }
+            else if (document.getElementById("divShortAns_id" + idNum) != null) {
+                document.getElementById("divShortAns_id" + idNum).remove();
+                console.log("REMOVING SHORT ANSWER");
+            }
+            else if (document.getElementById("divTable_id" + idNum) != null) {
+                document.getElementById("divTable_id" + idNum).remove();
+                console.log("REMOVING MULTIPLE CHOICE GRID");
+            }
+            else {
+                //do nothing
+            }
             return false;
         }
     </script>
@@ -161,6 +173,7 @@
             idCount = parseInt(idCount);
             var elem = document.getElementsByClassName("input-group")[idCount];
             idCount = parseInt(idCount) + parseInt(1);
+            console.log(elem.getAttribute("id"));
             return elem.getAttribute("id");
         }
     </script>
@@ -168,12 +181,13 @@
     <!-- Script to create answer options. Currently if you click on the drop down menu for the question below
     having not chosen an answer type for the current question, the answer type automatically goes to the top question -->
     <script>
-        var cnt = 0;
+        var cnt = 100;
         var i;
 
         function makeShortAns() {
+            var shortAnsCnt = cnt.toString().slice(-2);
             let divShortAns= document.createElement('div');
-            divShortAns.id = "divShortAns_id" + cnt;
+            divShortAns.id = "divShortAns_id" + shortAnsCnt;
             divShortAns.innerHTML = "<textarea id = 'txtDesc' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea>";
             i = getID();
             document.getElementById(i).after(divShortAns);
@@ -181,8 +195,9 @@
         }
 
         function makeRadBut() {
+            var radCnt = cnt.toString().slice(-2);
             let divRadio = document.createElement("div");
-            divRadio.id = "divRadio_id" + cnt;
+            divRadio.id = "divRadio_id" + radCnt;
             divRadio.className = "form-check";
             
             var numRadBut = prompt("How many options would you like? (You need at least 2)", 2);
@@ -192,9 +207,9 @@
                 let radio = document.createElement("input");
                 radio.type = "radio";
                 radio.className = "form-check-input";
-                radio.name = "radios" + parseInt(cnt);
+                radio.name = "radios" + parseInt(radCnt);
                 // radio.value = "";
-                radio.id = "radioId" + parseInt(cnt);
+                radio.id = "radioId" + parseInt(radCnt);
                 radio.disabled = true;
                 radio.style = "margin-right: 4px; margin-top: 10px;";
 
@@ -202,7 +217,7 @@
                 radLabel.type = "text";
                 radLabel.className = "input-group-sm";
                 radLabel.placeholder = "Option " + parseInt(n);
-                radLabel.id = "radLabeldId" + parseInt(cnt);
+                radLabel.id = "radLabeldId" + parseInt(radCnt);
                 radLabel.style = "margin-right: 10px; margin-top: 10px;";
 
                 divRadio.appendChild(document.createElement("br"));
@@ -215,24 +230,15 @@
         }
 
         function makeGrid() {
+            var gridCnt = cnt.toString().slice(-2);
             var numRows = prompt("How many rows would you like (at least 1)?", 1);
             var numCols = prompt("How many columns would you like (at least 2)?", 2);
             let divTable = document.createElement("div");
-            divTable.id = "divTable_id" + parseInt(cnt);
+            divTable.id = "divTable_id" + parseInt(gridCnt);
 
             var theader = "<table class='table' style='margin-top: 20px;'>\n";
             var tbody = "";
             var split = 9 / numCols;
-
-            // for (var r = 0; r < 1; r++) {
-            //     tbody += "<thead><tr class='row'><th class='col-3'></th>";
-            //     for (var c = 1; c <= numCols; c++) {
-            //         tbody += "<div class='col'><th><input type='text' placeholder='option' style='border:none'></input></th></div>";
-            //         // tbody += "<th class='col-" + split;
-            //         // tbody += "'><input type='text' class-'input-group-sm' placeholder='option' style='border:none'></input></th>";
-            //     }
-            //     tbody += "</tr></thead></tbody>";
-            // }
 
             for (var r = 0; r <= numRows; r++) {
                 tbody += "<tr class='row'><th class='col-3'><div class='col-12'>";
@@ -246,7 +252,6 @@
                 
             }
            
-
             var tfooter = "</tbody>\n</table>";
             divTable.innerHTML = theader + tbody + tfooter;
 
