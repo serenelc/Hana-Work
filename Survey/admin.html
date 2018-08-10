@@ -51,21 +51,6 @@
         
     </div>      
 
-    <!-- <script>
-        let button = document.createElement("button");
-        button.innerHTML = "test button";
-        button.onclick = myFunction;
-
-        function myFunction() {
-            $("div").remove(".input-group");
-            // document.getElementById()
-            return false;
-        }
-
-        save.after(button);
-
-    </script> -->
-
     <!-- Script to add a section/sub topic -->
     <script>
 
@@ -86,7 +71,7 @@
             
             divSection.appendChild(divSecTitle, document.createElement("br"));
             newSection.before(divSection);
-            
+            console.log("adding a section");
         }
 
     </script>
@@ -134,6 +119,7 @@
             buttonClose.onclick = removeElement;
 
             countQ = parseInt(countQ) + parseInt(1);
+            console.log("Adding a question");
         }
          
     </script>
@@ -173,7 +159,7 @@
             idCount = parseInt(idCount);
             var elem = document.getElementsByClassName("input-group")[idCount];
             idCount = parseInt(idCount) + parseInt(1);
-            console.log(elem.getAttribute("id"));
+            // console.log(elem.getAttribute("id"));
             return elem.getAttribute("id");
         }
     </script>
@@ -192,6 +178,7 @@
             i = getID();
             document.getElementById(i).after(divShortAns);
             cnt = parseInt(cnt) + parseInt(1);
+            console.log("making a short answer");
         }
 
         function makeRadBut() {
@@ -227,6 +214,7 @@
             i = getID();
             document.getElementById(i).after(divRadio);
             cnt = parseInt(cnt) + parseInt(1);
+            console.log("making radio buttons")
         }
 
         function makeGrid() {
@@ -235,30 +223,36 @@
             var numCols = prompt("How many columns would you like (at least 2)?", 2);
             let divTable = document.createElement("div");
             divTable.id = "divTable_id" + parseInt(gridCnt);
+            divTable.className = "container";
 
-            var theader = "<table class='table' style='margin-top: 20px;'>\n";
-            var tbody = "";
-            var split = 9 / numCols;
+            let divRow = document.createElement("div");
+            divRow.id = "divRow_id" + parseInt(gridCnt);
+            divRow.className = "row";
+            
+            var gridBody = "<div class='col-7'><div></div>";
 
-            for (var r = 0; r <= numRows; r++) {
-                tbody += "<tr class='row'><th class='col-3'><div class='col-12'>";
-                tbody += "<textarea type='text' class='form-control' placeholder='question' border:none'></textarea>";
-                tbody += "</div></th>";
-                for (var c = 0; c <= numCols; c++) {
-                    tbody += "<td class='col'><input type='radio' name='gridRadio" + r + "'";
-                    tbody += " disabled></td>";
-                }
-                tbody += "</tr>\n";
-                
+            for (var r = 0; r < numRows; r++) {
+                gridBody += "<div><textarea type='text' class='form-control' placeholder='question' border:none ></textarea></div>";
             }
-           
-            var tfooter = "</tbody>\n</table>";
-            divTable.innerHTML = theader + tbody + tfooter;
+
+            gridBody += "</div><div  class='col-5' style='overflow:scroll;height:auto;width:100%;overflow-y:hidden;overflow-x:scroll;'>";
+            for (var r = 0; r < numRows; r++) {
+                gridBody += "<div style='width:450px;'>";
+                for (var c = 0; c < numCols; c++) {
+                    gridBody += "<input type='radio' style='margin: 30px' name='gridRadio" + r + "'";
+                    gridBody += " disabled><label>" + (c + 1) + "</label>";
+                }
+                gridBody += "</div>";
+            }
+
+            gridBody += "</div>"
+            divRow.innerHTML = gridBody;
+            divTable.appendChild(divRow);
 
             i = getID();
             document.getElementById(i).after(divTable);
             cnt = parseInt(cnt) + parseInt(1);
-
+            console.log("making multiple choice grid");
         }
 
     </script>

@@ -1,0 +1,38 @@
+<div class="container"  >
+        <div class="row ">
+            <div class="col-7"  >
+                    <div>
+
+                    </div>
+                <div>
+                        <textarea type='text' class='form-control' placeholder='question' border:none ></textarea>
+                </div>
+                <div>
+                        <textarea type='text' class='form-control' placeholder='question' border:none ></textarea>
+                </div>
+            </div>
+
+            <div  class="col-5" style=" overflow:scroll;height:auto;width:100%;overflow-y:hidden;overflow-x:hidden; " > 
+         
+                <div style="width:450px;">
+              
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                </div>
+                <div style="width:450px;">
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                    <input type='radio' name='gridRadio' style="margin: 30px">
+                </div>
+         
+             </div>
+
+        
+        </div>
+       
+    </div>

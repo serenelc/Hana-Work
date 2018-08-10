@@ -224,29 +224,22 @@
             var tbody = "";
             var split = 9 / numCols;
 
-            // for (var r = 0; r < 1; r++) {
-            //     tbody += "<thead><tr class='row'><th class='col-3'></th>";
-            //     for (var c = 1; c <= numCols; c++) {
-            //         tbody += "<div class='col'><th><input type='text' placeholder='option' style='border:none'></input></th></div>";
-            //         // tbody += "<th class='col-" + split;
-            //         // tbody += "'><input type='text' class-'input-group-sm' placeholder='option' style='border:none'></input></th>";
-            //     }
-            //     tbody += "</tr></thead></tbody>";
-            // }
+            var theader = "<table class='table' style='margin-top: 20px;'>\n";
+            var tbody = "";
 
-            for (var r = 0; r <= numRows; r++) {
+            for (var r = 0; r < numRows; r++) {
                 tbody += "<tr class='row'><th class='col-3'><div class='col-12'>";
                 tbody += "<textarea type='text' class='form-control' placeholder='question' border:none'></textarea>";
                 tbody += "</div></th>";
-                for (var c = 0; c <= numCols; c++) {
+                for (var c = 0; c < numCols; c++) {
                     tbody += "<td class='col'><input type='radio' name='gridRadio" + r + "'";
-                    tbody += " disabled></td>";
+                    tbody += " disabled><label>" + (c + 1) + "</label>";
+                    tbody += "</td>";
                 }
                 tbody += "</tr>\n";
                 
             }
            
-
             var tfooter = "</tbody>\n</table>";
             divTable.innerHTML = theader + tbody + tfooter;
 
