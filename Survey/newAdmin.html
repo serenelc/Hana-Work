@@ -49,6 +49,21 @@
         
     </div>      
 
+    <script>
+        let button = document.createElement("button");
+        button.innerHTML = "test button";
+        button.onclick = myFunction;
+
+        function myFunction() {
+            $("div").remove(".input-group");
+            // document.getElementById()
+            return false;
+        }
+
+        save.after(button);
+
+    </script>
+
     <!-- Script to add a section/sub topic -->
     <script>
 
@@ -111,10 +126,11 @@
             // divbuttonClose.appendChild(spanClose)
                          
             divGroup.appendChild(divbutton).appendChild(divdropdown);
-            // divGroup.appendChild(divSelect);
+            
             let buttonClose= document.createElement('button');   
             buttonClose.id =  "buttonCloseQ_id" + countQ;     
             buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> '; 
+            buttonClose.onclick = removeElement;
             divGroup.appendChild(buttonClose);
 
             document.createElement('br')
@@ -127,9 +143,12 @@
 
     <!-- Script to remove a question -->
     <script>
-        function removeElement(elementId) {
-            var element = document.getElementById(elementId);
-            element.parentNode.removeChild(element);
+        function removeElement() {
+            // var element = document.getElementById(elementId);
+            // element.parentNode.removeChild(element);
+            
+            this.remove();
+            return false;
         }
     </script>
 
@@ -163,7 +182,8 @@
         }
     </script>
 
-    <!-- Script to create a short answer box -->
+    <!-- Script to create answer options. Currently if you click on the drop down menu for the question below
+    having not chosen an answer type for the current question, the answer type automatically goes to the top question -->
     <script>
         var cnt = 0;
         var i;
@@ -178,7 +198,7 @@
         }
 
         function makeRadBut() {
-            let divRadio = document.createElement('div');
+            let divRadio = document.createElement("div");
             divRadio.id = "divRadio_id" + cnt;
             divRadio.className = "form-check";
             
@@ -188,7 +208,7 @@
     
                 let radio = document.createElement("input");
                 radio.type = "radio";
-                radio.class = "form-check-input";
+                radio.className = "form-check-input";
                 radio.name = "radios" + parseInt(cnt);
                 // radio.value = "";
                 radio.id = "radioId" + parseInt(cnt);
@@ -196,7 +216,7 @@
 
                 let radLabel = document.createElement("input");
                 radLabel.type = "text";
-                radLabel.class = "form-control";
+                radLabel.className = "form-control";
                 radLabel.placeholder = "Option " + parseInt(n);
                 radLabel.id = "radLabeldId" + parseInt(cnt);
                 radLabel.style = "margin-right: 10px; margin-top: 10px;";
@@ -211,7 +231,63 @@
         }
 
         function makeGrid() {
-            alert("You've chosen a multiple choice grid answer type!");
+            var numRows = prompt("How many rows would you like (at least 1)?", 1);
+            var numCols = prompt("How many columns would you like (at least 1)?", 1);
+            let divTable = document.createElement("div");
+            divTable.id = "divTable_id" + parseInt(cnt);
+
+            var theader = "<table class='table' style='margin-top: 20px;'>\n";
+            var tbody = "";
+
+            for (var r = 0; r < 1; r++) {
+                tbody += "<thead>\n<tr>\n";
+                for (var c = 0; c <= numCols; c++) {
+                    tbody += "<th>";
+                    tbody += "Column" + c;
+                    tbody += "</th>";
+                }
+                tbody += "</tr>\n</thead>\n</tbody>\n";
+            }
+
+            for (var r = 1; r <= numRows; r++) {
+                tbody += "<tr>";
+                tbody += "<th scope='row'>";
+                tbody += "<input type='text' class='form-control' placeholder='question'></input>";
+                tbody += "</th>";
+                for (var c = 1; c <= numCols; c++) {
+                    tbody += "<td>";
+                    tbody += "<input type='radio' name='gridRadio' + parseInt(cnt)>";
+                    tbody += "</td>";
+                }
+                tbody += "</tr>\n";
+                
+            }
+            var tfooter = "</tbody>\n</table>";
+            divTable.innerHTML = theader + tbody + tfooter;
+
+            // let grid = document.createElement("table");
+            // grid.className = "table";
+            // grid.id = "gridId" + parseInt(cnt);
+
+            // var r;
+            // var c;
+            // for (r = 0; r <= numRows; r++) {
+            //     let tableRow = document.createElement("tr");
+            //     tableRow.id = "tableRowId" + parseInt(cnt);
+            //     for (c = 0; c <= numCols; c++) {
+            //         let tableCol = document.createElement("td");
+            //         tableCol.id = "tableColId" + parseInt(cnt);
+            //         tableRow.appendChild(tableCol);
+            //     }
+            // }
+
+            // grid.appendChild(tableRow);
+            // divTable.appendChild(grid);
+
+            i = getID();
+            document.getElementById(i).after(divTable);
+            cnt = parseInt(cnt) + parseInt(1);
+
         }
 
     </script>
