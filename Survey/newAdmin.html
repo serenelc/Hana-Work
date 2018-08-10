@@ -49,7 +49,7 @@
         
     </div>      
 
-    <script>
+    <!-- <script>
         let button = document.createElement("button");
         button.innerHTML = "test button";
         button.onclick = myFunction;
@@ -62,7 +62,7 @@
 
         save.after(button);
 
-    </script>
+    </script> -->
 
     <!-- Script to add a section/sub topic -->
     <script>
@@ -141,7 +141,7 @@
          
     </script>
 
-    <!-- Script to remove a question -->
+    <!-- TODO: Script to remove a question -->
     <script>
         function removeElement() {
             // var element = document.getElementById(elementId);
@@ -212,11 +212,12 @@
                 radio.name = "radios" + parseInt(cnt);
                 // radio.value = "";
                 radio.id = "radioId" + parseInt(cnt);
+                radio.disabled = true;
                 radio.style = "margin-right: 4px; margin-top: 10px;";
 
                 let radLabel = document.createElement("input");
                 radLabel.type = "text";
-                radLabel.className = "form-control";
+                radLabel.className = "input-group-sm";
                 radLabel.placeholder = "Option " + parseInt(n);
                 radLabel.id = "radLabeldId" + parseInt(cnt);
                 radLabel.style = "margin-right: 10px; margin-top: 10px;";
@@ -232,7 +233,7 @@
 
         function makeGrid() {
             var numRows = prompt("How many rows would you like (at least 1)?", 1);
-            var numCols = prompt("How many columns would you like (at least 1)?", 1);
+            var numCols = prompt("How many columns would you like (at least 2)?", 2);
             let divTable = document.createElement("div");
             divTable.id = "divTable_id" + parseInt(cnt);
 
@@ -240,10 +241,10 @@
             var tbody = "";
 
             for (var r = 0; r < 1; r++) {
-                tbody += "<thead>\n<tr>\n";
-                for (var c = 0; c <= numCols; c++) {
+                tbody += "<thead>\n<tr>\n<th></th>\n";
+                for (var c = 1; c <= numCols; c++) {
                     tbody += "<th>";
-                    tbody += "Column" + c;
+                    tbody += "<input type='text' class-'input-group-sm' placeholder='option' style='width:50%;'></input>";
                     tbody += "</th>";
                 }
                 tbody += "</tr>\n</thead>\n</tbody>\n";
@@ -252,11 +253,12 @@
             for (var r = 1; r <= numRows; r++) {
                 tbody += "<tr>";
                 tbody += "<th scope='row'>";
-                tbody += "<input type='text' class='form-control' placeholder='question'></input>";
+                tbody += "<input type='text' class='input-group-sm' placeholder='question' style='width:50%;'></input>";
                 tbody += "</th>";
                 for (var c = 1; c <= numCols; c++) {
                     tbody += "<td>";
-                    tbody += "<input type='radio' name='gridRadio' + parseInt(cnt)>";
+                    tbody += "<input type='radio' name='gridRadio" + r + ":" + c + "'";
+                    tbody += " disabled>";
                     tbody += "</td>";
                 }
                 tbody += "</tr>\n";
@@ -264,25 +266,6 @@
             }
             var tfooter = "</tbody>\n</table>";
             divTable.innerHTML = theader + tbody + tfooter;
-
-            // let grid = document.createElement("table");
-            // grid.className = "table";
-            // grid.id = "gridId" + parseInt(cnt);
-
-            // var r;
-            // var c;
-            // for (r = 0; r <= numRows; r++) {
-            //     let tableRow = document.createElement("tr");
-            //     tableRow.id = "tableRowId" + parseInt(cnt);
-            //     for (c = 0; c <= numCols; c++) {
-            //         let tableCol = document.createElement("td");
-            //         tableCol.id = "tableColId" + parseInt(cnt);
-            //         tableRow.appendChild(tableCol);
-            //     }
-            // }
-
-            // grid.appendChild(tableRow);
-            // divTable.appendChild(grid);
 
             i = getID();
             document.getElementById(i).after(divTable);
