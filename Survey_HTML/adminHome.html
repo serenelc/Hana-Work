@@ -10,26 +10,38 @@
 <body style="background-color: #a9c5f2;">
 
         <div style="background-color:#619af4; height: 100px" >
-                <!-- <button type="button" class="btn btn-outline-secondary">Logout</button> -->
         </div>
         
         <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%;">
             
             <div>
                 <h1 style="text-align: center;"> Admin Home </h1>
+                <br>
             </div>
 
             <div>
+                <!-- glyphicon won't show up -->
                     <button type="button" class="btn btn-secondary btn-lg btn-block">
-                        <a href="adminCreate.html" style="text-decoration: none; color: white;">Create a survey</a></button>
-                    <br>
-                    <button type="button" class="btn btn-secondary btn-lg btn-block">
-                        <a href="adminStats.html" style="text-decoration: none; color: white;">Survey Statistics</a>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        <a href="adminCreate.html" style="text-decoration: none; color: white;">Create a survey</a>
                     </button>
                     <br>
                     <button type="button" class="btn btn-secondary btn-lg btn-block">
-                        <a href="userSurveyList.html" style="text-decoration: none; color: white;">Answer a survey</a></button>
+                        <a href="adminStatsList.html" style="text-decoration: none; color: white;">Survey Statistics</a>
+                    </button>
+                    <br>
+                    <button type="button" class="btn btn-secondary btn-lg btn-block">
+                        <a href="userSurveyList.html" style="text-decoration: none; color: white;">Answer a survey</a>
+                    </button>
+                    <br>
             </div>
+
+            <div id = "footer" style="background-color: white; height: 70px;">
+                    <br>
+                    <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
+                    style="float: left">Logout</asp:button>
+                    <!-- <asp:button runat="server" id="btnDelete" type="button" class="btn btn-danger">Delete</asp:button> -->
+                </div>
         
         </div>
 

@@ -8,7 +8,6 @@
 </head>
 
 <body style="background-color: #a9c5f2;">
-
     <div style="background-color:#619af4; height: 100px" ></div>
         
     <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%;">
@@ -40,9 +39,12 @@
             
             <div id = "save" style="background-color: white; height: 70px;">
                 <br>
+                <!-- Do a thing which checks whether the admin has pressed save yet before being allowed to go back -->
                 <asp:button runat="server" id="btnSave" type="button" class="btn btn-success"
                 style="float: right">Save</asp:button>
-                <!-- <asp:button runat="server" id="btnDelete" type="button" class="btn btn-danger">Delete</asp:button> -->
+                <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning">
+                    <a href="adminHome.html" style="text-decoration: none; color: black;">Back</a>
+                </asp:button>
             </div>
             
         </form>
