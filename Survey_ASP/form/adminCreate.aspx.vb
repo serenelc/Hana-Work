@@ -40,6 +40,9 @@ Public Class admin
         Dim xcreateBy = Session("En")
         Dim xcreateDate = Date.Now
 
+        Dim something = Request.QueryString("divSecTitle_name0")
+        Dim another = Request.QueryString("divSecTitle_name1")
+
         Dim con As New SqlConnection
         Dim cmd As New SqlCommand
         Try

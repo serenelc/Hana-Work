@@ -77,18 +77,21 @@
             let divSection = document.createElement("div");
             divSection.className = "container";
             divSection.id = "divSection_id" + countSec;
+            divSection.name = "divSection_name" + countSec;
             
             let divSecTitle = document.createElement("input");
             divSecTitle.className = "form-control-lg";
             divSecTitle.type = "text";
             divSecTitle.placeholder = "Section Title";           
-            divSecTitle.id = "divSecTitle_id" + countSec ;
+            divSecTitle.id = "divSecTitle_id" + countSec;
+            divSecTitle.name = "divSecTitle_name" + countSec ;
             divSecTitle.value = "<%=divSecTitle_val%>" ;
             divSecTitle.style = "margin-bottom: 20px; font-weight: bold; float: center; border-right: none; border-left: none; border-top: none; border-bottom-width: medium; border-bottom-color: black; width: 50%;";
             
             divSection.appendChild(divSecTitle, document.createElement("br"));
             newSection.before(divSection);
             console.log("adding a section");
+            countSec = parseInt(countSec) + parseInt(1);
         }
 
     </script>
@@ -103,35 +106,42 @@
             
             let divGroup= document.createElement("div"); 
             divGroup.id = "divGroupQ_id" + newCountQ;  
+            divGroup.name = "divGroupQ_name" + newCountQ;  
             divGroup.className = "input-group";
             divGroup.innerHTML = '<input type="text" class="form-control" style="font-weight:bold;" placeholder="Question">';           
 
             let divbutton= document.createElement("div");
             divbutton.id = "divbuttonQ_id" + newCountQ;  
+            divbutton.name = "divbuttonQ_name" + newCountQ;  
             divbutton.className = "input-group-append";
             divbutton.innerHTML = '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Answer Type</button>';        
  
             let divdropdown= document.createElement("div");
             divdropdown.id = "divdropdownQ_id" + newCountQ;  
+            divdropdown.name = "divdropdownQ_name" + newCountQ;
             divdropdown.className ="dropdown-menu";
             divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut()">Radio Button</a>'; 
             let adropdown2= document.createElement("a");
-            adropdown2.id = "adropdown2Q_id" + newCountQ; 
+            adropdown2.id = "adropdown2Q_id" + newCountQ;
+            divdropdown2.name = "divdropdown2Q_name" + newCountQ;
             adropdown2.innerHTML = '<a class="dropdown-item" href="javascript:makeGrid()">Multiple Choice Grid</a>';   
             let adropdown3= document.createElement("a");
             adropdown3.id = "adropdown3Q_id" + newCountQ; 
+            divdropdown3.name = "divdropdown3Q_name" + newCountQ;
             adropdown3.innerHTML = '<a class="dropdown-item" href="javascript:makeShortAns()">Short Answer</a>';   
             divdropdown.appendChild(adropdown2).appendChild(adropdown3);
                          
             divGroup.appendChild(divbutton).appendChild(divdropdown);
             
             let buttonClose= document.createElement('button');   
-            buttonClose.id =  "buttonCloseQ_id" + newCountQ;     
+            buttonClose.id = "buttonCloseQ_id" + newCountQ;   
+            buttonClose.name =  "buttonCloseQ_name" + newCountQ;  
             buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> ';
             divGroup.appendChild(buttonClose);
             // divGroup.appendchild();
             let br = document.createElement('br');
             br.id = "break_id" + newCountQ;
+            br.name = "break_name" + newCountQ;
             newSection.before(divGroup, br);
             buttonClose.onclick = removeElement;
 
@@ -198,6 +208,7 @@ won't delete because its id number won't match its question number. --%>
             var shortAnsCnt = cnt.toString().slice(-2);
             let divShortAns= document.createElement('div');
             divShortAns.id = "divShortAns_id" + shortAnsCnt;
+            divShortAns.name = "divShortAns_name" + shortAnsCnt;
             divShortAns.innerHTML = "<textarea id = 'txtDesc' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea>";
             i = getID();
             document.getElementById(i).after(divShortAns);
@@ -209,6 +220,7 @@ won't delete because its id number won't match its question number. --%>
             var radCnt = cnt.toString().slice(-2);
             let divRadio = document.createElement("div");
             divRadio.id = "divRadio_id" + radCnt;
+            divRadio.name = "divRadio_name" + radCnt;
             divRadio.className = "form-check";
             
             var numRadBut = prompt("How many options would you like? (You need at least 2)", 2);
@@ -221,6 +233,7 @@ won't delete because its id number won't match its question number. --%>
                 radio.name = "radios" + parseInt(radCnt);
                 // radio.value = "";
                 radio.id = "radioId" + parseInt(radCnt);
+                radio.name = "radioName" + parseInt(radCnt);
                 radio.disabled = true;
                 radio.style = "margin-right: 4px; margin-top: 10px;";
 
@@ -229,6 +242,7 @@ won't delete because its id number won't match its question number. --%>
                 radLabel.className = "input-group-sm";
                 radLabel.placeholder = "Option " + parseInt(n);
                 radLabel.id = "radLabeldId" + parseInt(radCnt);
+                radLabel.name = "radLabeldName" + parseInt(radCnt);
                 radLabel.style = "margin-right: 10px; margin-top: 10px;";
 
                 divRadio.appendChild(document.createElement("br"));
@@ -247,10 +261,12 @@ won't delete because its id number won't match its question number. --%>
             var numCols = prompt("How many columns would you like (at least 2)?", 2);
             let divTable = document.createElement("div");
             divTable.id = "divTable_id" + gridCnt;
+            divTable.name = "divTable_name" + gridCnt;
             divTable.className = "container";
 
             let divRow = document.createElement("div");
             divRow.id = "divRow_id" + parseInt(gridCnt);
+            divRow.name = "divRow_name" + parseInt(gridCnt);
             divRow.className = "row";
             
             var gridBody = "<div class='col-7'><div></div>";
