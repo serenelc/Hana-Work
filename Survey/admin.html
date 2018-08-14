@@ -9,8 +9,6 @@
 
 <body style="background-color: #a9c5f2;">
 
-    
-
     <div style="background-color:#619af4; height: 100px" ></div>
         
     <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%;">
@@ -124,15 +122,22 @@
          
     </script>
 
+<!-- OK so the issue with removing a question and then trying to add an answer type 
+is that we need to reduce the idCount in getID() by 1 whenever we call getID()
+to remove an element. When we call getID() to add an element then we don't need
+to do anything, but when we remove an element, the number of elements in 
+document.getElementsByClassName("input-group") will be 1 less than the idCount. 
+There is also the issue where if you add multiple questions and then remove them
+without adding an answer type, when you try to delete the question, the answer box 
+won't delete because its id number won't match its question number. -->
+
     <!-- TODO: Script to remove a question -->
     <script>
+        var called = false;
         function removeElement() {
             var idNum = this.id.slice(-2);
             document.getElementById("divGroupQ_id" + idNum).remove();
             document.getElementById("break_id" + idNum).remove();
-            // console.log(document.getElementById("divRadio_id" + idNum));
-            // console.log(document.getElementById("divShortAns_id" + idNum));
-            // console.log(document.getElementById("divTable_id" + idNum));
             if (document.getElementById("divRadio_id" + idNum) != null) {
                 document.getElementById("divRadio_id" + idNum).remove();
                 console.log("REMOVING RADIO BUTTON");
@@ -148,6 +153,7 @@
             else {
                 //do nothing
             }
+            called = true;
             return false;
         }
     </script>
@@ -155,11 +161,18 @@
     <!-- Script to get ID attribute -->
     <script>
         var idCount = 0;
+        // Need to check that if removeElement() has been called then idCount--
         function getID() {
+            if (called) {
+                idCount--;
+                called = false;
+            }
             idCount = parseInt(idCount);
+            console.log(idCount);
+            console.log(document.getElementsByClassName("input-group"));
             var elem = document.getElementsByClassName("input-group")[idCount];
             idCount = parseInt(idCount) + parseInt(1);
-            // console.log(elem.getAttribute("id"));
+            console.log(elem);
             return elem.getAttribute("id");
         }
     </script>
@@ -222,7 +235,7 @@
             var numRows = prompt("How many rows would you like (at least 1)?", 1);
             var numCols = prompt("How many columns would you like (at least 2)?", 2);
             let divTable = document.createElement("div");
-            divTable.id = "divTable_id" + parseInt(gridCnt);
+            divTable.id = "divTable_id" + gridCnt;
             divTable.className = "container";
 
             let divRow = document.createElement("div");
