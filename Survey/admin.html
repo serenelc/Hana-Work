@@ -122,11 +122,7 @@
          
     </script>
 
-<!-- OK so the issue with removing a question and then trying to add an answer type 
-is that we need to reduce the idCount in getID() by 1 whenever we call getID()
-to remove an element. When we call getID() to add an element then we don't need
-to do anything, but when we remove an element, the number of elements in 
-document.getElementsByClassName("input-group") will be 1 less than the idCount. 
+<!--  
 There is also the issue where if you add multiple questions and then remove them
 without adding an answer type, when you try to delete the question, the answer box 
 won't delete because its id number won't match its question number. -->
@@ -134,6 +130,7 @@ won't delete because its id number won't match its question number. -->
     <!-- TODO: Script to remove a question -->
     <script>
         var called = false;
+        var idCount = 0; //GLOBAL VARIABLE
         function removeElement() {
             var idNum = this.id.slice(-2);
             document.getElementById("divGroupQ_id" + idNum).remove();
@@ -153,20 +150,14 @@ won't delete because its id number won't match its question number. -->
             else {
                 //do nothing
             }
-            called = true;
+            idCount--;
             return false;
         }
     </script>
 
     <!-- Script to get ID attribute -->
     <script>
-        var idCount = 0;
-        // Need to check that if removeElement() has been called then idCount--
         function getID() {
-            if (called) {
-                idCount--;
-                called = false;
-            }
             idCount = parseInt(idCount);
             console.log(idCount);
             console.log(document.getElementsByClassName("input-group"));
