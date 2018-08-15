@@ -9,65 +9,64 @@
     <!-- Custom styles for this template -->
     <link href="../css/userInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-    <%--Need background colour to extend to bottom of page--%>
+<%--Need background colour to extend to bottom of page--%>
 
 <body style="background: linear-gradient(#a9c5f2, #619af4);">
-    
-    <form id="form1" runat="server" method="get" >
 
-    <div style="background-color:inherit; height: 100px" >
-        <div id="userInfo" class="sidenav">
-            <label id= "info"><%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%></label> 
-        </div>
-        <img src="../images/HANA-Logo-BW.png" style="float:left;" />
-    </div>
-        
-    <div id ="main" class="container" style="padding: 20px; background-color:white;">
-        
-        <div>
-            <h1 style="text-align: center;"> Create A Survey </h1>
-        </div>
-        
-        <form>
-            <div class="form-group">
-                <label ><h3>Title</h3></label>
-                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight:bold;" placeholder="Survey Title">
+    <form id="form1" runat="server" method="get">
+
+        <div style="background-color: inherit; height: 100px">
+            <div id="userInfo" class="sidenav">
+                <label id="info"><%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%></label>
             </div>
-
-            <div class="form-group">
-                <label>Description</label>
-                <textarea class="form-control" id="txtDesc" rows="2" 
-                placeholder="Short description about your survey" runat="server"></textarea>
-            </div>
-
-            <hr>
-
-            <button type="button" class="btn btn-info"  id="newSection" 
-            onclick="addSection();"
-            >Add a Section</button>
-            <button type="button" class="btn btn-info"  id="addQ2" 
-            onclick="addQuestion();"
-            >Add a Question</button>
-            
-            <div id = "save" style="background-color: white; height: 70px;">
-                <br>
-                <asp:button runat="server" id="btnSave" type="button" class="btn btn-success"
-                style="float: right" text="Save" onclick="btnSave_Click" OnClientClick="return confirmSave()"/>
-                <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning" Text="Back"/>
-                    
-            </div>
-            
-        
-        
-    </div>
-        
-        <div style="background-color:inherit; height: 100px" >
-                 
+            <img src="../images/HANA-Logo-BW.png" style="float: left;" />
         </div>
 
-        </form>
+        <div id="main" class="container" style="padding: 20px; background-color: white; width: 70%;">
+
+            <div>
+                <h1 style="text-align: center;">Create A Survey </h1>
+            </div>
+
+            <form>
+                <div class="form-group">
+                    <label>
+                        <h3>Title</h3>
+                    </label>
+                    <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title">
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" id="txtDesc" rows="2"
+                        placeholder="Short description about your survey" runat="server"></textarea>
+                </div>
+
+                <hr>
+
+                <button type="button" class="btn btn-info" id="newSection"
+                    onclick="addSection();">
+                    Add a Section</button>
+                <button type="button" class="btn btn-info" id="addQ2"
+                    onclick="addQuestion();">
+                    Add a Question</button>
+
+                <div id="save" style="background-color: white; height: 70px;">
+                    <br>
+                    <asp:Button runat="server" ID="btnSave" type="button" class="btn btn-success"
+                        Style="float: right" Text="Save" OnClick="btnSave_Click" OnClientClick="return confirmSave()" />
+                    <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning" Text="Back" />
+
+                </div>
+        </div>
+
+        <div style="background-color: inherit; height: 100px">
+        </div>
+
+    </form>
 
     <%--Script to confirm save--%>
     <script>
@@ -75,9 +74,9 @@
             return confirm("Are you sure you have finished creating the survey?");
         }
     </script>
-   
 
-     <%--Script to add a section/sub topic--%> 
+
+    <%--Script to add a section/sub topic--%>
     <script>
 
         var countSec = 0;
@@ -88,16 +87,16 @@
             divSection.className = "container";
             divSection.id = "divSection_id" + countSec;
             divSection.name = "divSection_name" + countSec;
-            
+
             let divSecTitle = document.createElement("input");
             divSecTitle.className = "form-control-lg";
             divSecTitle.type = "text";
-            divSecTitle.placeholder = "Section Title";           
-            divSecTitle.id = "divSecTitle_id" + countSec;
-            divSecTitle.name = "divSecTitle_name" + countSec ;
-            divSecTitle.value = "<%=divSecTitle_val%>" ;
+            divSecTitle.placeholder = "Section Title";
+            divSecTitle.id = "sectionTitle_id" + countSec;
+            divSecTitle.name = "sectionTitle_name" + countSec;
+            divSecTitle.value = "<%=divSecTitle_val%>";
             divSecTitle.style = "margin-bottom: 20px; font-weight: bold; float: center; border-right: none; border-left: none; border-top: none; border-bottom-width: medium; border-bottom-color: black; width: 50%;";
-            
+
             divSection.appendChild(divSecTitle, document.createElement("br"));
             newSection.before(divSection);
             console.log("adding a section");
@@ -106,46 +105,56 @@
 
     </script>
 
-     <%--Script to add a question and choose an answer type--%> 
+    <%--Script to add a question and choose an answer type--%>
     <script>
 
-        var countQ = 100;  
+        var countQ = 100;
         function addQuestion() {
 
             var newCountQ = countQ.toString().slice(-2);
-            
-            let divGroup= document.createElement("div"); 
-            divGroup.id = "divGroupQ_id" + newCountQ;  
-            divGroup.name = "divGroupQ_name" + newCountQ;  
-            divGroup.className = "input-group";
-            divGroup.innerHTML = '<input type="text" class="form-control" style="font-weight:bold;" placeholder="Question">';           
 
-            let divbutton= document.createElement("div");
-            divbutton.id = "divbuttonQ_id" + newCountQ;  
-            divbutton.name = "divbuttonQ_name" + newCountQ;  
+            let divGroup = document.createElement("div");
+            divGroup.id = "divGroupQ_id" + newCountQ;
+            divGroup.name = "divGroupQ_name" + newCountQ;
+            divGroup.className = "input-group";
+            //divGroup.innerHTML = '<input type="text" class="form-control" style="font-weight:bold;" placeholder="Question" name="questionName">';
+
+            let questionInput = document.createElement("input");
+            questionInput.type = "text";
+            questionInput.class = "form-control";
+            questionInput.style = "font-weight:bold;"
+            questionInput.placeholder = "Question";
+            questionInput.required = true;
+            questionInput.name = "questionInput_name" + newCountQ;
+
+            divGroup.appendChild(questionInput);
+
+            let divbutton = document.createElement("div");
+            divbutton.id = "divbuttonQ_id" + newCountQ;
+            divbutton.name = "divbuttonQ_name" + newCountQ;
             divbutton.className = "input-group-append";
-            divbutton.innerHTML = '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Answer Type</button>';        
- 
-            let divdropdown= document.createElement("div");
-            divdropdown.id = "divdropdownQ_id" + newCountQ;  
+            divbutton.innerHTML = '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Answer Type</button>';
+
+            let divdropdown = document.createElement("div");
+            divdropdown.id = "divdropdownQ_id" + newCountQ;
             divdropdown.name = "divdropdownQ_name" + newCountQ;
-            divdropdown.className ="dropdown-menu";
-            divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut()">Radio Button</a>'; 
-            let adropdown2= document.createElement("a");
+            divdropdown.className = "dropdown-menu";
+            divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut()">Radio Button</a>';
+            let adropdown2 = document.createElement("a");
             adropdown2.id = "adropdown2Q_id" + newCountQ;
             adropdown2.name = "adropdown2Q_name" + newCountQ;
-            adropdown2.innerHTML = '<a class="dropdown-item" href="javascript:makeGrid()">Multiple Choice Grid</a>';   
-            let adropdown3= document.createElement("a");
-            adropdown3.id = "adropdown3Q_id" + newCountQ; 
+            adropdown2.innerHTML = '<a class="dropdown-item" href="javascript:makeGrid()">Multiple Choice Grid</a>';
+            let adropdown3 = document.createElement("a");
+            adropdown3.id = "adropdown3Q_id" + newCountQ;
             adropdown3.name = "adropdown3Q_name" + newCountQ;
-            adropdown3.innerHTML = '<a class="dropdown-item" href="javascript:makeShortAns()">Short Answer</a>';   
+            adropdown3.innerHTML = '<a class="dropdown-item" href="javascript:makeShortAns()">Short Answer</a>';
             divdropdown.appendChild(adropdown2).appendChild(adropdown3);
-                         
+
             divGroup.appendChild(divbutton).appendChild(divdropdown);
-            
-            let buttonClose= document.createElement('button');   
-            buttonClose.id = "buttonCloseQ_id" + newCountQ;   
-            buttonClose.name =  "buttonCloseQ_name" + newCountQ;  
+
+            let buttonClose = document.createElement('button');
+            buttonClose.id = "buttonCloseQ_id" + newCountQ;
+            buttonClose.name = "buttonCloseQ_name" + newCountQ;
             buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> ';
             divGroup.appendChild(buttonClose);
             // divGroup.appendchild();
@@ -158,15 +167,15 @@
             countQ = parseInt(countQ) + parseInt(1);
             console.log("Adding a question");
         }
-         
+
     </script>
 
-<%--  
+    <%--  
 There is also the issue where if you add multiple questions and then remove them
 without adding an answer type, when you try to delete the question, the answer box 
 won't delete because its id number won't match its question number. --%>
 
-     <%--TODO: Script to remove a question--%> 
+    <%--TODO: Script to remove a question--%>
     <script>
         var called = false;
         var idCount = 0; //GLOBAL VARIABLE
@@ -194,7 +203,7 @@ won't delete because its id number won't match its question number. --%>
         }
     </script>
 
-     <%--Script to get ID attribute--%> 
+    <%--Script to get ID attribute--%>
     <script>
         function getID() {
             idCount = parseInt(idCount);
@@ -207,19 +216,29 @@ won't delete because its id number won't match its question number. --%>
         }
     </script>
 
-         <%--  Script to create answer options. Currently if you click on the drop down menu for the question below
-    having not chosen an answer type for the current question, the answer type automatically goes to the top question --%>  
-  
+    <%--  Script to create answer options. Currently if you click on the drop down menu for the question below
+    having not chosen an answer type for the current question, the answer type automatically goes to the top question --%>
+
     <script>
         var cnt = 100;
         var i;
 
         function makeShortAns() {
             var shortAnsCnt = cnt.toString().slice(-2);
-            let divShortAns= document.createElement('div');
+            let divShortAns = document.createElement('div');
             divShortAns.id = "divShortAns_id" + shortAnsCnt;
             divShortAns.name = "divShortAns_name" + shortAnsCnt;
-            divShortAns.innerHTML = "<textarea id = 'txtDesc' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea>";
+            //divShortAns.innerHTML = "<textarea id = 'txtDesc' class = 'form-control' rows = '2' placeholder = 'Answer' disabled></textarea>";
+
+            let shortAns = document.createElement("textarea");
+            shortAns.id = "shortAns" + shortAnsCnt;
+            shortAns.class = "form-control";
+            shortAns.rows = "2";
+            shortAns.placeholder = "Answer";
+            shortAns.name = "shortAns_name" + shortAnsCnt;
+
+            divShortAns.appendChild(shortAns);
+            
             i = getID();
             document.getElementById(i).after(divShortAns);
             cnt = parseInt(cnt) + parseInt(1);
@@ -232,16 +251,15 @@ won't delete because its id number won't match its question number. --%>
             divRadio.id = "divRadio_id" + radCnt;
             divRadio.name = "divRadio_name" + radCnt;
             divRadio.className = "form-check";
-            
+
             var numRadBut = prompt("How many options would you like? (You need at least 2)", 2);
             var n;
             for (n = 0; n < numRadBut; n++) {
-    
+
                 let radio = document.createElement("input");
                 radio.type = "radio";
                 radio.className = "form-check-input";
                 radio.name = "radios" + parseInt(radCnt);
-                // radio.value = "";
                 radio.id = "radioId" + parseInt(radCnt);
                 radio.name = "radioName" + parseInt(radCnt);
                 radio.disabled = true;
@@ -251,8 +269,8 @@ won't delete because its id number won't match its question number. --%>
                 radLabel.type = "text";
                 radLabel.className = "input-group-sm";
                 radLabel.placeholder = "Option " + parseInt(n);
-                radLabel.id = "radLabeldId" + parseInt(radCnt);
-                radLabel.name = "radLabeldName" + parseInt(radCnt);
+                radLabel.id = "radLabelId" + parseInt(radCnt);
+                radLabel.name = "radLabelName" + parseInt(radCnt);
                 radLabel.style = "margin-right: 10px; margin-top: 10px;";
 
                 divRadio.appendChild(document.createElement("br"));
@@ -278,14 +296,15 @@ won't delete because its id number won't match its question number. --%>
             divRow.id = "divRow_id" + parseInt(gridCnt);
             divRow.name = "divRow_name" + parseInt(gridCnt);
             divRow.className = "row";
-            
+
             var gridBody = "<div class='col-7'><div></div>";
 
             for (var r = 0; r < numRows; r++) {
-                gridBody += "<div><textarea type='text' class='form-control' placeholder='question' border:none ></textarea></div>";
+                gridBody += "<div><textarea type='text' class='form-control' placeholder='question' border:none name = 'gridQ_name"
+                    + gridCnt + "_" + r + "' id='gridQ_Id" + gridCnt + "_" + r + "_" + numCols +"'></textarea></div>";
             }
 
-            gridBody += "</div><div  class='col-5' style='overflow:scroll;height:auto;width:100%;overflow-y:hidden;overflow-x:scroll;'>";
+            gridBody += "</div><div class='col-5' style='overflow:scroll;height:auto;width:100%;overflow-y:hidden;overflow-x:scroll;'>";
             for (var r = 0; r < numRows; r++) {
                 gridBody += "<div style='width:450px;'>";
                 for (var c = 0; c < numCols; c++) {

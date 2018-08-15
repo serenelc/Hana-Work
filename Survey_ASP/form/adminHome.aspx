@@ -24,7 +24,7 @@
             <img src="../images/HANA-Logo-BW.png" style="float:left;" />
         </div>
         
-        <div id ="main" class="container" style="padding: 20px; background-color:white;">
+        <div id ="main" class="container" style="padding: 20px; background-color:white; width: 70%;">
             
             <div>
                 <h1 style="text-align: center;"> Admin Home </h1>
@@ -34,26 +34,25 @@
             <div>
                 <div>
                     <%--<img src="../images/make-survey.jpeg" style="width: 100px;"/>--%>
-                    <button type="button" class="btn btn-secondary btn-lg btn-block">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        <a href="adminCreate.aspx" style="text-decoration: none; color: white;">Create a survey</a>
-                    </button>
+                    <a href="adminCreate.aspx" style="text-decoration: none; color: white; display: block;">
+                        <button type="button" class="btn btn-secondary btn-lg btn-block"> Create a survey</button>
+                    </a>
                     <br>
                 </div>
                 
                 <div>
                     <%--<img src="../images/statistics.jpg" style="width: 100px;"/>--%>
-                    <button type="button" class="btn btn-secondary btn-lg btn-block"> 
-                        <a href="adminStatsList.aspx" style="text-decoration: none; color: white;">Survey Statistics</a>
-                    </button>
+                     <a href="adminStatsList.aspx" style="text-decoration: none; color: white; display: block;">
+                        <button type="button" class="btn btn-secondary btn-lg btn-block">Survey Statistics</button>
+                     </a>
                     <br>
                 </div>
 
                 <div>
                      <%--<img src="../images/statistics.jpg" style="width: 100px;"/>--%>
-                    <button type="button" class="btn btn-secondary btn-lg btn-block">
-                        <a href="userSurveyList.aspx" style="text-decoration: none; color: white;">Answer a survey</a>
-                    </button>
+                    <a href="userSurveyList.aspx" style="text-decoration: none; color: white; display: block;">
+                        <button type="button" class="btn btn-secondary btn-lg btn-block">Answer a survey</button>
+                    </a>
                     <br>
                 </div>
                   

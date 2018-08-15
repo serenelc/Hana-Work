@@ -20,7 +20,7 @@
             <img src="../images/HANA-Logo-BW.png" style="float:left;" />
         </div>
         
-        <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%;">
+        <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%; width: 70%;">
             
             <div>
                 <h1 style="text-align: center;"> Surveys </h1>
@@ -29,10 +29,40 @@
 
             <div>
                 <p> 
-                    This page will hold a list of all the surveys. When you click onto each survey 
-                    it will lead you to another page with the statistics for that survey.
-                            
+                    The following surveys are currently open.
                 </p>
+                <div>
+                    
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Survey.My.MySettings.ConnStringDatabaseSurvey %>" 
+                        SelectCommand="SELECT subjectName, subjectDetail, createDate, subjectId from surveyMaster where statusComp = 0"
+                        ></asp:SqlDataSource>
+                    
+                    <asp:GridView ID="surveyList" runat="server" Width="615px" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10" 
+                        ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlDataSource1"
+                        OnRowCommand = "surveyList_RowCommand">
+                        <Columns>
+                            <asp:BoundField DataField="subjectName" HeaderText="subjectName" SortExpression="subjectName" />
+                            <asp:BoundField DataField="subjectDetail" HeaderText="subjectDetail" SortExpression="subjectDetail" />
+                            <asp:BoundField DataField="createDate" HeaderText="createDate" SortExpression="createDate" />
+                            <asp:TemplateField ShowHeader="False">
+                                <ItemTemplate>
+                                    <asp:Button ID="Button1" runat="server" CommandName="Go"
+                                    Text="Go" CommandArgument='<%# Eval("subjectId") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:BoundField DataField="subjectId" HeaderText="subjectId" InsertVisible="False" ReadOnly="True" SortExpression="subjectId" Visible="False" />
+                        </Columns>
+                        <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+                        <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+                        <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
+                        <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+                        <SortedAscendingCellStyle BackColor="#F7F7F7" />
+                        <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+                        <SortedDescendingCellStyle BackColor="#E5E5E5" />
+                        <SortedDescendingHeaderStyle BackColor="#242121" />
+                    </asp:GridView>
+                    
+                </div>
             </div>
 
             <div id = "footer" style="background-color: white; height: 70px;">

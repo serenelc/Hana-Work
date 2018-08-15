@@ -10,6 +10,7 @@
     <link href="../css/userInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
+
 <body style="background: linear-gradient(#a9c5f2, #619af4);">
 
     <form id="form1" runat="server" method="get">
@@ -21,7 +22,7 @@
             <img src="../images/HANA-Logo-BW.png" style="float:left;" />
         </div>
         
-        <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%;">
+        <div id ="main" class="container" style="padding: 20px; background-color:white; width: 70%;">
             
             <div>
                 <h1 style="text-align: center;"> Statistics </h1>
@@ -46,17 +47,17 @@
         
         </div>
 
-          <script>
+        <script>
             function confirmLogout() {
                 return confirm("Are you sure you would like to logout?");
             }
         </script>
 
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
-</form>
+    </form>
 
 </body>
 </html>

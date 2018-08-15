@@ -10,28 +10,7 @@ Public Class admin
         'Response.Write(Session("UserType"))
 
     End Sub
-    Function ConnectDBUpdate(ConnectionString As String, Sql As String)
-        'Try
-        '    'make a SqlConnection using the supplied ConnectionString 
-        '    Dim MySqlConnection As New SqlConnection(ConnectionString)
-        '    Using MySqlConnection
-        '        'make a query using the supplied Sql
-        '        Dim MySqlCommand As SqlCommand = New SqlCommand(Sql, MySqlConnection)
 
-        '        'open the connection
-        '        MySqlConnection.Open()
-
-        '        'create a DataReader and execute the SqlCommand
-        '        MySqlCommand.ExecuteNonQuery()
-
-        '        MySqlConnection.Close()
-        '    End Using
-        '    Return True
-        'Catch ex As Exception
-        '    Return False
-        'End Try
-
-    End Function
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
 
         txtTitle.Value = Request.QueryString("txtTitle")
@@ -40,8 +19,12 @@ Public Class admin
         Dim xcreateBy = Session("En")
         Dim xcreateDate = Date.Now
 
-        Dim something = Request.QueryString("divSecTitle_name0")
-        Dim another = Request.QueryString("divSecTitle_name1")
+        Dim ClientQueryList = Request.QueryString
+        Dim aa = ClientQueryList
+        Dim bb = ClientQueryString
+
+        Dim strRep = ClientQueryString.Replace("+", " ")
+        Dim strArr() = strRep.Split("&")
 
         Dim con As New SqlConnection
         Dim cmd As New SqlCommand
