@@ -38,15 +38,14 @@
                         ></asp:SqlDataSource>
                     
                     <asp:GridView ID="surveyList" runat="server" Width="615px" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10" 
-                        ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlDataSource1"
-                        OnRowCommand = "surveyList_RowCommand">
+                        ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlDataSource1">
                         <Columns>
-                            <asp:BoundField DataField="subjectName" HeaderText="subjectName" SortExpression="subjectName" />
-                            <asp:BoundField DataField="subjectDetail" HeaderText="subjectDetail" SortExpression="subjectDetail" />
-                            <asp:BoundField DataField="createDate" HeaderText="createDate" SortExpression="createDate" />
+                            <asp:BoundField DataField="subjectName" HeaderText="Survey Name" SortExpression="subjectName" />
+                            <asp:BoundField DataField="subjectDetail" HeaderText="Details" SortExpression="subjectDetail" />
+                            <asp:BoundField DataField="createDate" HeaderText="Date Created" SortExpression="createDate" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
-                                    <asp:Button ID="Button1" runat="server" CommandName="Go"
+                                    <asp:Button ID="Button1" runat="server" class="btn btn-success" CommandName="Go"
                                     Text="Go" CommandArgument='<%# Eval("subjectId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>

@@ -12,6 +12,10 @@
 <body style="background: linear-gradient(#a9c5f2, #619af4);">
 
     <form id="form1" runat="server" method="get">
+        <div>
+            <p> <%=listContent%> </p>
+        </div>
+        
 
         <div style="background-color:inherit; height: 100px" >
             <div id="userInfo" class="sidenav">
