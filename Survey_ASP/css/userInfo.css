@@ -1,0 +1,21 @@
+﻿#userInfo label {
+    position: absolute;
+    right: -180px;
+    transition: 0.3s;
+    padding: 15px;
+    padding-left: 20px;
+    width: 200px;
+    text-decoration: none;
+    font-size: 15px;
+    color: white;
+    border-radius: 5px 0px 0px 5px;
+}
+
+#userInfo label:hover {
+    right: 0;
+}
+
+#info {
+    top: 10px;
+    background-color: mediumseagreen;
+}

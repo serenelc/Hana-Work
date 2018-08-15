@@ -5,22 +5,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
-    <title>Admin Page</title>
+    <title>Admin Create</title>
+    <!-- Custom styles for this template -->
+    <link href="../css/userInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
-<body style="background-color: #a9c5f2;">
-    <form id="form1" runat="server"   method="get" >
+    <%--Need background colour to extend to bottom of page--%>
 
-<%--        <div style="background-color:red">
-            <label ><h3><%=Session("En")%></h3></label>
-             <label ><h3><%=Session("Name")%> </h3></label>
-             <label ><h3><%=Session("UserType")%> </h3></label>           
-        </div>--%>
+<body style="background: linear-gradient(#a9c5f2, #619af4);">
+    
+    <form id="form1" runat="server" method="get" >
 
-    <div style="background-color:#619af4; height: 100px" ></div>
+    <div style="background-color:inherit; height: 100px" >
+        <div id="userInfo" class="sidenav">
+            <label id= "info"><%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%></label> 
+        </div>
+        <img src="../images/HANA-Logo-BW.png" style="float:left;" />
+    </div>
         
-    <div id ="main" class="container" style="padding: 20px; background-color:white; ">
+    <div id ="main" class="container" style="padding: 20px; background-color:white;">
         
         <div>
             <h1 style="text-align: center;"> Create A Survey </h1>
@@ -55,9 +59,15 @@
                     
             </div>
             
-        </form>
         
-    </div>      
+        
+    </div>
+        
+        <div style="background-color:inherit; height: 100px" >
+                 
+        </div>
+
+        </form>
 
     <%--Script to confirm save--%>
     <script>
@@ -123,11 +133,11 @@
             divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut()">Radio Button</a>'; 
             let adropdown2= document.createElement("a");
             adropdown2.id = "adropdown2Q_id" + newCountQ;
-            divdropdown2.name = "divdropdown2Q_name" + newCountQ;
+            adropdown2.name = "adropdown2Q_name" + newCountQ;
             adropdown2.innerHTML = '<a class="dropdown-item" href="javascript:makeGrid()">Multiple Choice Grid</a>';   
             let adropdown3= document.createElement("a");
             adropdown3.id = "adropdown3Q_id" + newCountQ; 
-            divdropdown3.name = "divdropdown3Q_name" + newCountQ;
+            adropdown3.name = "adropdown3Q_name" + newCountQ;
             adropdown3.innerHTML = '<a class="dropdown-item" href="javascript:makeShortAns()">Short Answer</a>';   
             divdropdown.appendChild(adropdown2).appendChild(adropdown3);
                          

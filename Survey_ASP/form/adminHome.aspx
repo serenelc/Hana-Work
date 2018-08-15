@@ -6,18 +6,25 @@
 
 <head runat="server">
     <title>Admin Home</title>
+    <!-- Custom styles for this template -->
+    <link href="../css/userInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
-<body style="background-color: #a9c5f2;">
+    <%--Need background colour to extend to bottom of page--%>
 
-    <form id="form1" runat="server"   method="get">
+<body style="background: linear-gradient(#a9c5f2, #619af4);">
 
-        <div style="background-color:#619af4; height: 100px" >
-                 <%--<button type="button" class="btn btn-outline-secondary">Logout</button>--%> 
+    <form id="form1" runat="server" method="get">
+
+        <div style="background-color:inherit; height: 100px" >
+            <div id="userInfo" class="sidenav">
+                <label id= "info"><%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%></label> 
+            </div>
+            <img src="../images/HANA-Logo-BW.png" style="float:left;" />
         </div>
         
-        <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%;">
+        <div id ="main" class="container" style="padding: 20px; background-color:white;">
             
             <div>
                 <h1 style="text-align: center;"> Admin Home </h1>
@@ -25,19 +32,31 @@
             </div>
 
             <div>
+                <div>
+                    <%--<img src="../images/make-survey.jpeg" style="width: 100px;"/>--%>
                     <button type="button" class="btn btn-secondary btn-lg btn-block">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         <a href="adminCreate.aspx" style="text-decoration: none; color: white;">Create a survey</a>
                     </button>
                     <br>
-                    <button type="button" class="btn btn-secondary btn-lg btn-block">
+                </div>
+                
+                <div>
+                    <%--<img src="../images/statistics.jpg" style="width: 100px;"/>--%>
+                    <button type="button" class="btn btn-secondary btn-lg btn-block"> 
                         <a href="adminStatsList.aspx" style="text-decoration: none; color: white;">Survey Statistics</a>
                     </button>
                     <br>
+                </div>
+
+                <div>
+                     <%--<img src="../images/statistics.jpg" style="width: 100px;"/>--%>
                     <button type="button" class="btn btn-secondary btn-lg btn-block">
                         <a href="userSurveyList.aspx" style="text-decoration: none; color: white;">Answer a survey</a>
                     </button>
                     <br>
+                </div>
+                  
             </div>
 
             <div id = "footer" style="background-color: white; height: 70px;">
@@ -45,8 +64,12 @@
                     <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
                     style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
                     <%-- <asp:button runat="server" id="btnDelete" type="button" class="btn btn-danger">Delete</asp:button> --%>
-                </div>
+             </div>
         
+        </div>
+
+        <div style="background-color:inherit; height: 100px" >
+                 
         </div>
 
         <script>

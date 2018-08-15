@@ -5,9 +5,9 @@ Public Class admin
 
     Public divSecTitle_val = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Response.Write(Session("En"))
-        Response.Write(Session("Name"))
-        Response.Write(Session("UserType"))
+        'Response.Write(Session("En"))
+        'Response.Write(Session("Name"))
+        'Response.Write(Session("UserType"))
 
     End Sub
     Function ConnectDBUpdate(ConnectionString As String, Sql As String)

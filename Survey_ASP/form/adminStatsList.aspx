@@ -6,13 +6,19 @@
 
 <head runat="server">
     <title>Statistics</title>
+    <!-- Custom styles for this template -->
+    <link href="../css/userInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
-<body style="background-color: #a9c5f2;">
+<body style="background: linear-gradient(#a9c5f2, #619af4);">
 
-    <form id="form1" runat="server"   method="get">
+    <form id="form1" runat="server" method="get">
 
-        <div style="background-color:#619af4; height: 100px" >
+        <div style="background-color:inherit; height: 100px">
+            <div id="userInfo" class="sidenav">
+                <label id= "info"><%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%></label> 
+            </div>
+            <img src="../images/HANA-Logo-BW.png" style="float:left;" />
         </div>
         
         <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%;">
@@ -31,13 +37,12 @@
             </div>
 
             <div id = "footer" style="background-color: white; height: 70px;">
-                    <br>
-                <%--Button does not currently work--%>
-                    <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
+                <br>
+                <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
                     style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
-                  <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
+                <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
                     style="float: left" Text="Back"/>
-                </div>
+            </div>
         
         </div>
 
