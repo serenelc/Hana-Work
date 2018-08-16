@@ -11,6 +11,7 @@ Public Class adminCreate
     Public prmQuestionOrder As Integer = 0
     Public prmAnswerID As Integer = 0
     Public prmAnswerOrder As Integer = 0
+    Public xupdateValueType = ""
     Public xcreateDate As DateTime = Date.Now
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("En") Is Nothing Then
@@ -75,13 +76,29 @@ Public Class adminCreate
                                 End If
                             End If
 
+                            xupdateValueType = updateValueType
+
 
                             If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType) = False) Then Throw New Exception("Save surveyMaster fail!")
                         Else
-                            If val.Contains("rad") = True Or val.Contains("short") = True Or val.Contains("grid") = True Then
+                            If xupdateValueType = "grid" Then
                                 Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
-                                If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveyMaster fail!")
+                                If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, xupdateValueType) = False) Then Throw New Exception("Save surveyMaster fail!")
+                                Dim updateValue2 As String = val.Substring(val.IndexOf("=") - 2, 2)
+                                Dim updateValue3 As String = ""
+                                If updateValue2.Contains("_") = True Then
+                                    updateValue3 = Right(updateValue2, 1)
+                                Else
+                                    updateValue3 = updateValue2
+                                End If
+                                If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue3) = False) Then Throw New Exception("Save surveyMaster fail!")
+                            Else
+                                If val.Contains("rad") = True Or val.Contains("short") = True Or val.Contains("grid") = True Then
+                                    Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
+                                    If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveyMaster fail!")
+                                End If
                             End If
+
                         End If
                     End If
                 End If
@@ -89,7 +106,7 @@ Public Class adminCreate
 
             SQLTran.Commit()
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
-
+            Response.Redirect("adminHome.aspx")
         Catch ex As Exception
             If (SQLTran IsNot Nothing) Then SQLTran.Rollback()
             Dim errorMsg = "Error While inserting record On table..." & ex.Message & ",Insert Records"

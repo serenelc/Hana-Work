@@ -300,7 +300,7 @@ won't delete because its id number won't match its question number. --%>
 
             for (var r = 0; r < numRows; r++) {
                 gridBody += "<div><textarea type='text' class='form-control' placeholder='question' border:none name = 'gridQ_name"
-                    + gridCnt + "_" + r + "' id='gridQ_Id" + gridCnt + "_" + r + "_" + numCols +"'></textarea></div>";
+                    + gridCnt + "_" + r + "_" + numCols + "' id='gridQ_Id" + gridCnt + "_" + r +"'></textarea></div>";
             }
 
             gridBody += "</div><div class='col-5' style='overflow:scroll;height:auto;width:100%;overflow-y:hidden;overflow-x:scroll;'>";
