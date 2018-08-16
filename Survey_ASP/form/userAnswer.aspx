@@ -12,9 +12,6 @@
 <body style="background: linear-gradient(#a9c5f2, #619af4);">
 
     <form id="form1" runat="server" method="get">
-        <div>
-            <p> <%=listContent%> </p>
-        </div>
 
         <div style="background-color:inherit; height: 100px" >
             <div id="userInfo" class="sidenav">
@@ -26,22 +23,13 @@
         <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%; width: 70%;">
             
             <div>
-                <h1 style="text-align: center;"> Survey Title (get info from database) </h1>
+                <asp:Label ID="title" runat="server"></asp:Label>
+                <asp:Label ID="description" runat="server"></asp:Label>
                 <br>
             </div>
 
-            <div>
-                <p> 
-                    Please fill out the following survey.
-                </p>
-                <p> 
-                    <asp:Label ID="lblname" runat="server"></asp:Label>
-                </p>
-                <p> 
-                    <asp:GridView ID="GridView1" runat="server">
-                    </asp:GridView>
-                    <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
-                </p>
+            <div> 
+                    <asp:Label ID="frm" runat="server"></asp:Label>
             </div>
 
             <div id = "footer" style="background-color: white; height: 70px;">
@@ -61,19 +49,15 @@
             }
         </script>
 
-        <%--Script to check if user is admin--%>
-        <script>
-            function isAdmin() {
-                <%--if (<%=Session("UserType")%> = "ADMIN") {
-                    console.log("user is admin");
+        <%--<script>
+            function loopThroughList() {
+                var i;
+                for (i = 0; i < <%=listContent%>; i++) {
+
                 }
-                else {
-                    console.log("user is not admin");
-                }--%>
-                console.log(<%=Session("UserType")%>);
+                <%=listContent%>
             }
-            isAdmin();
-        </script>
+        </script>--%>
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>

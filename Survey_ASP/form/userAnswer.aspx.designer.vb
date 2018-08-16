@@ -23,31 +23,31 @@ Partial Public Class userAnswer
     Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
     
     '''<summary>
-    '''lblname control.
+    '''title control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblname As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents title As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''GridView1 control.
+    '''description control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents GridView1 As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents description As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''SqlDataSource1 control.
+    '''frm control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents SqlDataSource1 As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents frm As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
     '''btnSave control.
