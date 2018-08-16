@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class admin
+Partial Public Class adminCreate
     
     '''<summary>
     '''form1 control.

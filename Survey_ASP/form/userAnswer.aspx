@@ -15,7 +15,6 @@
         <div>
             <p> <%=listContent%> </p>
         </div>
-        
 
         <div style="background-color:inherit; height: 100px" >
             <div id="userInfo" class="sidenav">
@@ -34,6 +33,14 @@
             <div>
                 <p> 
                     Please fill out the following survey.
+                </p>
+                <p> 
+                    <asp:Label ID="lblname" runat="server"></asp:Label>
+                </p>
+                <p> 
+                    <asp:GridView ID="GridView1" runat="server">
+                    </asp:GridView>
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
                 </p>
             </div>
 

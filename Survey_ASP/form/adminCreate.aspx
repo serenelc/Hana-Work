@@ -1,4 +1,4 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="adminCreate.aspx.vb" Inherits="Survey.admin" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="adminCreate.aspx.vb" Inherits="Survey.adminCreate" %>
 
 <!DOCTYPE html>
 
@@ -157,7 +157,6 @@
             buttonClose.name = "buttonCloseQ_name" + newCountQ;
             buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> ';
             divGroup.appendChild(buttonClose);
-            // divGroup.appendchild();
             let br = document.createElement('br');
             br.id = "break_id" + newCountQ;
             br.name = "break_name" + newCountQ;

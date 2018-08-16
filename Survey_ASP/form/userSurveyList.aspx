@@ -33,12 +33,12 @@
                 </p>
                 <div>
                     
-                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Survey.My.MySettings.ConnStringDatabaseSurvey %>" 
+                    <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:Survey.My.MySettings.ConnStringDatabaseSurvey %>" 
                         SelectCommand="SELECT subjectName, subjectDetail, createDate, subjectId from surveyMaster where statusComp = 0"
                         ></asp:SqlDataSource>
                     
-                    <asp:GridView ID="surveyList" runat="server" Width="615px" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10" 
-                        ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlDataSource1">
+                    <asp:GridView ID="surveyList" runat="server" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10" 
+                        ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlSurveyListSource">
                         <Columns>
                             <asp:BoundField DataField="subjectName" HeaderText="Survey Name" SortExpression="subjectName" />
                             <asp:BoundField DataField="subjectDetail" HeaderText="Details" SortExpression="subjectDetail" />
@@ -84,13 +84,17 @@
         <%--Script to check if user is admin--%>
         <script>
             function isAdmin() {
-                <%--if (<%=Session("UserType")%> = "ADMIN") {
-                    console.log("user is admin");
+                //alert("function");
+                let btn = document.getElementById("btnBack");
+                //TODO: not entering if statement
+                if (<%=Session("UserType")%> == "ADMIN") {
+                    btn.style = "visibility: visible;";
+                    alert("admin");
                 }
                 else {
-                    console.log("user is not admin");
-                }--%>
-                console.log(<%=Session("UserType")%>);
+                    btn.style = "visibility: hidden;";
+                    alert("not admin");
+                }
             }
             isAdmin();
         </script>

@@ -5,6 +5,9 @@ Public Class userAnswer
 
     Public listContent As New List(Of String)
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        If Session("En") Is Nothing Then
+            Response.Redirect("index.aspx")
+        End If
         If IsPostBack() = False Then
             Dim subId = Request.QueryString("subjectId")
             Call getSurveyContent(subId)
@@ -47,7 +50,7 @@ Public Class userAnswer
             Dim xquestionId As Integer = 0
             Dim xquestionName As String = ""
             Dim xquestionType As String = ""
-            Dim xsectionorderId As Integer = 0
+            'Dim xsectionorderId As Integer = 0
 
 
 
@@ -56,6 +59,7 @@ Public Class userAnswer
             If dt.Rows.Count > 0 Then
                 For Each r In dt.Rows
                     xsubjectId = r("subjectId")
+                    lblname.Text = r("subjectName")
                     xsubjectName = r("subjectName")
                     xsubjectDetail = r("subjectDetail")
                     xstatus = r("status")
@@ -67,7 +71,7 @@ Public Class userAnswer
 
                     xsectionId = r("sectionId")
                     xsectionName = r("sectionName")
-                    xsectionorderId = r("sectionorderId")
+                    'xsectionorderId = r("sectionorderId")
 
                     xquestionId = r("questionId")
                     xquestionName = r("questionName")
@@ -77,7 +81,7 @@ Public Class userAnswer
                     If xTitle = 0 Then
                         listContent.Add("surveyId=" + xsubjectId.ToString())
                         listContent.Add("txtTitle=" + xsubjectName)
-                        listContent.Add("txtDesc=" + xsubjectId.ToString())
+                        listContent.Add("txtDesc=" + xsubjectDetail.ToString())
                         listContent.Add("status=" + xstatus)
                         listContent.Add("statusComp=" + xstatusComp.ToString())
                         'listContent.Add("openDate=" + xopenDate.ToString())
@@ -90,14 +94,14 @@ Public Class userAnswer
                     If xSection <> xsectionId Then
                         listContent.Add("sectionId=" + xsectionId.ToString())
                         listContent.Add("sectionName=" + xsectionName)
-                        listContent.Add("sectionorderId" + xsectionorderId.ToString())
+                        'listContent.Add("sectionorderId=" + xsectionorderId.ToString())
 
                         xSection = xsectionId
                     End If
 
                     listContent.Add("questionId=" + xquestionId.ToString())
                     listContent.Add("questionName=" + xquestionName)
-                    listContent.Add("questionType" + xquestionType)
+                    listContent.Add("questionType=" + xquestionType)
 
                 Next
 

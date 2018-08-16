@@ -23,13 +23,13 @@ Partial Public Class userSurveyList
     Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
     
     '''<summary>
-    '''SqlDataSource1 control.
+    '''SqlSurveyListSource control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents SqlDataSource1 As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents SqlSurveyListSource As Global.System.Web.UI.WebControls.SqlDataSource
     
     '''<summary>
     '''surveyList control.
