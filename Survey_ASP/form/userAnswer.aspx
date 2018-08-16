@@ -25,7 +25,6 @@
             <div>
                 <asp:Label ID="title" runat="server"></asp:Label>
                 <asp:Label ID="description" runat="server"></asp:Label>
-                <br>
             </div>
 
             <div> 

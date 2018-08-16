@@ -23,10 +23,12 @@ Public Class userAnswer
             con.ConnectionString = My.Settings.ConnStringDatabaseSurvey
             con.Open()
             cmd.Connection = con
-            cmd.CommandText = "SELECT a.*, b.sectionId, b.sectionName, c.questionId, c.questionName, c.questionType, c.sectionorderId 
-                               from surveyMaster a left join surveySection b on a.subjectId = b.subjectId
-                               left join surveyQuestion c on b.sectionId = c.sectionId 
-                               where b.subjectId = " & xSubId.ToString()
+            cmd.CommandText = "SELECT a.*, b.sectionId, b.sectionName, c.questionId, c.questionName, c.questionType, 
+                               c.sectionorderId, d.answerId, d.answerName
+                               From surveyMaster a left Join surveySection b on a.subjectId = b.subjectId
+                               Left Join surveyQuestion c on b.sectionId = c.sectionId 
+                               Left Join surveyAnswer d on c.questionId = d.questionId
+                               where b.subjectId =" & xSubId.ToString()
 
             'create a DataReader and execute the SqlCommand
             Dim MyDataReader As SqlDataReader = cmd.ExecuteReader()
@@ -52,11 +54,13 @@ Public Class userAnswer
             Dim xquestionName As String = ""
             Dim xquestionType As String = ""
             'Dim xsectionorderId As Integer = 0
-
+            Dim xanswerId As Integer = 0
+            Dim xanswerName As String = ""
 
 
             Dim xTitle As Integer = 0
             Dim xSection As Integer = 0
+            Dim xQuestion As Integer = 0
             If dt.Rows.Count > 0 Then
                 For Each r In dt.Rows
                     xsubjectId = r("subjectId")
@@ -76,6 +80,9 @@ Public Class userAnswer
                     xquestionId = r("questionId")
                     xquestionName = r("questionName")
                     xquestionType = r("questionType")
+
+                    xanswerId = r("answerId")
+                    xanswerName = r("answerName")
 
 
                     If xTitle = 0 Then
@@ -99,9 +106,16 @@ Public Class userAnswer
                         xSection = xsectionId
                     End If
 
-                    listContent.Add("questionId=" + xquestionId.ToString())
-                    listContent.Add("questionName=" + xquestionName)
-                    listContent.Add("questionType=" + xquestionType)
+                    If xQuestion <> xquestionId Then
+                        listContent.Add("questionId=" + xquestionId.ToString())
+                        listContent.Add("questionName=" + xquestionName)
+                        listContent.Add("questionType=" + xquestionType)
+
+                        xQuestion = xquestionId
+                    End If
+
+                    listContent.Add("answerId=" + xanswerId.ToString())
+                    listContent.Add("answerName=" + xanswerName)
 
                 Next
 
@@ -131,6 +145,8 @@ Public Class userAnswer
         Dim questionIdLength As New Integer
         Dim questionNameLength As New Integer
         Dim questionTypeLength As New Integer
+        Dim answerIdLength As New Integer
+        Dim answerNameLength As New Integer
         txtTitleLength = 9
         txtDescLength = 8
         sectionIdLength = 10
@@ -138,6 +154,8 @@ Public Class userAnswer
         questionIdLength = 11
         questionNameLength = 13
         questionTypeLength = 13
+        answerIdLength = 9
+        answerNameLength = 11
 
         Dim t As String = "<p><h1 style='text-align: center'>"
         t += (listContent.Item(1)).Remove(0, txtTitleLength) + "</h1></p>"
@@ -146,26 +164,45 @@ Public Class userAnswer
 
         Dim i As Integer
         Dim s As String = ""
+        Dim rFlag As Integer = 0
+        Dim gFlag As Integer = 0
+        Dim rNameFlag As Integer = 0
         For i = 0 To (listContent.Count - 1)
             Dim v = listContent.Item(i)
             If (v.Contains("sectionName")) Then
                 s += "<h3 style='text-decoration: underline'>" + v.Remove(0, sectionNameLength) + "</h3>"
             End If
             If (v.Contains("questionName")) Then
-                s += "<p style='font-weight: bold'>" + v.Remove(0, questionNameLength) + "</p>"
+                s += "<div><p style='font-weight: bold'>" + v.Remove(0, questionNameLength) + "</p>"
+            End If
+            If (v.Contains("questionId")) Then
+                rNameFlag = v.Remove(0, questionIdLength)
             End If
             If (v.Contains("questionType")) Then
                 s += "<p>"
                 If (v.Contains("radio")) Then
-                    s += "radio: " + v.Remove(0, questionTypeLength)
+                    rFlag = 1
+                    s += "<div class='form-check'>"
                 End If
                 If (v.Contains("shortanswer")) Then
-                    s += "<textarea id = 'shortAns' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea>"
+                    rFlag = 0
+                    s += "<textarea id = 'shortAns' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea></div>"
                 End If
                 If (v.Contains("grid")) Then
-                    s += "grid: " + v.Remove(0, questionTypeLength)
+                    gFlag = 1
+                    rFlag = 0
+                    s += "grid atm </div>"
                 End If
                 s += "</p>"
+            End If
+            If (v.Contains("answerName") And rFlag = 1) Then
+                s += "<input type='radio' class='form-check-input' id='rad' name='rad' + " & rNameFlag.ToString()
+                s += "style ='padding-left: 30px;'>"
+                s += "<label class='form-check-label' style='padding-right: 20px;'>" + v.Remove(0, answerNameLength) + "</label>"
+            End If
+            If ((v.Contains("sectionId") Or v.Contains("questionId")) And rFlag = 1) Then
+                s += "</div></div>"
+                rFlag = 0
             End If
         Next
 
