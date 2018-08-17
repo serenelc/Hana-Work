@@ -91,7 +91,9 @@ Public Class adminCreate
                                 Else
                                     updateValue3 = updateValue2
                                 End If
-                                If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue3) = False) Then Throw New Exception("Save surveyMaster fail!")
+                                For ii As Integer = 1 To updateValue3
+                                    If (SaveSurveyAnswer(SQLConn, SQLTran, ii) = False) Then Throw New Exception("Save surveyMaster fail!")
+                                Next
                             Else
                                 If val.Contains("rad") = True Or val.Contains("short") = True Or val.Contains("grid") = True Then
                                     Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)

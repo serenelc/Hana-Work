@@ -14,10 +14,10 @@
         <div class="container align-items-center" style="background-image:url(../images/bg.jpeg); margin-top: 20px; background-color: white; height: 700px;">
                 <div class="mx-auto text-center" style="padding-top: 100px;">
                     <h1 class="mx-auto text-uppercase" style="color: white; font-weight:bold;">Employee Satisfaction Surveys</h1>
-                    <%--<asp:button runat="server" type="button" class="btn btn-primary"
-                    text="Login" Height="47px" Width="92px"
-                    data-toggle="modal" data-target="#exampleModal"/>--%>
-                    <p class="card-text" style="" ><a href="" data-toggle="modal" data-target="#exampleModal">Login</a></p>
+                    <button type="button" class="btn btn-primary"
+                     Height="47px" Width="92px"
+                    data-toggle="modal" data-target="#exampleModal">Login</button>
+                    <%--<p class="card-text" style="" ><a href="" data-toggle="modal" data-target="#exampleModal">Login</a></p>--%>
                 </div>
         </div>
         <div style="text-align: center;"> 

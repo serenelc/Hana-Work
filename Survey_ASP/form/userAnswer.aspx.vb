@@ -7,6 +7,10 @@ Public Class userAnswer
     Public txtTitle = ""
     Public txtDesc = ""
     Public xcreateDate = Date.Now
+    Public xsurveyId = 0
+    Public xquestionId = 0
+
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("En") Is Nothing Then
@@ -27,7 +31,7 @@ Public Class userAnswer
             con.Open()
             cmd.Connection = con
             cmd.CommandText = "SELECT a.*, b.sectionId, b.sectionName, c.questionId, c.questionName, c.questionType, 
-                               c.sectionorderId, d.answerId, d.answerName
+                               d.answerId, d.answerName
                                From surveyMaster a left Join surveySection b on a.subjectId = b.subjectId
                                Left Join surveyQuestion c on b.sectionId = c.sectionId 
                                Left Join surveyAnswer d on c.questionId = d.questionId
@@ -56,7 +60,6 @@ Public Class userAnswer
             Dim xquestionId As Integer = 0
             Dim xquestionName As String = ""
             Dim xquestionType As String = ""
-            'Dim xsectionorderId As Integer = 0
             Dim xanswerId As Integer = 0
             Dim xanswerName As String = ""
 
@@ -78,7 +81,6 @@ Public Class userAnswer
 
                     xsectionId = r("sectionId")
                     xsectionName = r("sectionName")
-                    'xsectionorderId = r("sectionorderId")
 
                     xquestionId = r("questionId")
                     xquestionName = r("questionName")
@@ -110,7 +112,6 @@ Public Class userAnswer
                     If xSection <> xsectionId Then
                         listContent.Add("sectionId=" + xsectionId.ToString())
                         listContent.Add("sectionName=" + xsectionName)
-                        'listContent.Add("sectionorderId=" + xsectionorderId.ToString())
 
                         xSection = xsectionId
                     End If
@@ -143,33 +144,13 @@ Public Class userAnswer
 
     End Sub
 
-    'ok so the title will go in place of the title already created on the page
-    'and then do a huge for loop through everything else to check for the prefix
-    'and then remove it up to the = and then output the content as per.
+
     Protected Sub printListContent()
-        Dim txtTitleLength As New Integer
-        Dim txtDescLength As New Integer
-        Dim sectionIdLength As New Integer
-        Dim sectionNameLength As New Integer
-        Dim questionIdLength As New Integer
-        Dim questionNameLength As New Integer
-        Dim questionTypeLength As New Integer
-        Dim answerIdLength As New Integer
-        Dim answerNameLength As New Integer
-        txtTitleLength = 9
-        txtDescLength = 8
-        sectionIdLength = 10
-        sectionNameLength = 12
-        questionIdLength = 11
-        questionNameLength = 13
-        questionTypeLength = 13
-        answerIdLength = 9
-        answerNameLength = 11
 
         Dim t As String = "<p><h1 style='text-align: center' id='txtTitle' name='txtTitle'>"
-        t += (listContent.Item(1)).Remove(0, txtTitleLength) + "</h1></p>"
+        t += (listContent.Item(1)).Substring(listContent.Item(1).IndexOf("=") + 1) + "</h1></p>"
 
-        Dim d As String = "<p  id='txtDesc' name='txtDesc'>" + (listContent.Item(2)).Remove(0, txtDescLength) + "</p>"
+        Dim d As String = "<p  id='txtDesc' name='txtDesc'>" + (listContent.Item(2)).Substring(listContent.Item(2).IndexOf("=") + 1) + "</p>"
 
         Dim i As Integer
         Dim s As String = ""
@@ -179,60 +160,66 @@ Public Class userAnswer
         Dim gNumRad As Integer = 0
         For i = 0 To (listContent.Count - 1)
             Dim v = listContent.Item(i)
+            If (v.Contains("surveyId=")) Then
+                xsurveyId = v.Substring(v.IndexOf("=") + 1)
+            End If
+            If (v.Contains("questionId=")) Then
+                xquestionId = v.Substring(v.IndexOf("=") + 1)
+                rNameFlag = v.Substring(v.IndexOf("=") + 1)
+            End If
             If (v.Contains("sectionName")) Then
-                s += "<br> <h3 style='text-decoration: underline' id='sectionTitle_name' name='sectionTitle_name'>" + v.Remove(0, sectionNameLength) + "</h3>"
+                s += "<br> <h3 style='text-decoration: underline' id='sectionTitle_name' name='sectionTitle_name'>" + v.Substring(v.IndexOf("=") + 1) + "</h3>"
             End If
             If (v.Contains("questionName")) Then
-                s += "<div><p style='font-weight: bold' id='questionInput_name' name='questionInput_name'>" + v.Remove(0, questionNameLength) + "</p>"
-            End If
-            If (v.Contains("questionId")) Then
-                rNameFlag = v.Remove(0, questionIdLength)
+                Dim gT = listContent.Item(i + 1)
+                Dim gI = listContent.Item(i + 2)
+                If (Not gI.Contains("answerId=0") And gT.Contains("grid")) Then
+                    s += "<div class='form-check-inline'><div class='col-7'><p id='questionInput_name' name='questionInput_name'>" + v.Substring(v.IndexOf("=") + 1) + "</div><div class='col-5'>"
+                Else
+                    s += "<div><p style='font-weight: bold' id='questionInput_name' name='questionInput_name'>" + v.Substring(v.IndexOf("=") + 1) + "</p>"
+                End If
             End If
             If (v.Contains("questionType")) Then
-                s += "<p>"
                 If (v.Contains("radio")) Then
                     rFlag = 1
                     gFlag = 0
-                    s += "<div class='form-check-inline'>"
+                    s += "<p><div class='form-check-inline'>"
                 End If
                 If (v.Contains("shortanswer")) Then
                     rFlag = 0
                     gFlag = 0
-                    s += "<textarea id = 'short' name='short' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea></div>"
+                    s += "<p><textarea id = 'short' name='short' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea></div>"
                 End If
                 If (v.Contains("grid")) Then
                     Dim w = listContent.Item(i + 1)
                     If (Not w.Contains("answerId=0")) Then
                         gFlag = 1
-                        s += "<div class='form-check-inline'>"
                     End If
                     rFlag = 0
-
                 End If
-                s += "</p>"
             End If
             If (v.Contains("answerName") And rFlag = 1) Then
-                s += "<input type='radio' class='form-check-input' id='rad' name='rad" + rNameFlag.ToString() + "'"
+                s += "<input type='radio' class='form-check-input' id='rad' name='rad" + "_" + xquestionId.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
-                s += "<label class='form-check-label' style='padding-right: 20px;'>" + v.Remove(0, answerNameLength) + "</label>"
+                s += "<label class='form-check-label' style='padding-right: 20px;'>" + v.Substring(v.IndexOf("=") + 1) + "</label>"
             End If
             If (v.Contains("answerName") And gFlag = 1) Then
-                Dim j As Integer
                 gNumRad = v.Substring(v.IndexOf("=") + 1)
-                For j = 1 To gNumRad
-                    s += "<input type='radio' class='form-check-input' id='grid' name='grid" + rNameFlag.ToString() + "'"
-                    s += "style ='padding-left: 30px;'>"
-                    s += "<label class='form-check-label' style='padding-right: 20px;'>" + j.ToString() + "</label>"
-                Next
-                s += "</div>"
+                s += "<input type='radio' class='form-check-input' id='grid' name='grid" + "_" + xquestionId.ToString() + "'"
+                s += "style ='padding-left: 30px;'>"
+                s += "<label class='form-check-label' style='padding-right: 20px;'>" + gNumRad.ToString() + "</label>"
             End If
             If ((v.Contains("sectionId") Or v.Contains("questionId")) And rFlag = 1) Then
                 s += "</div><br></div>"
                 rFlag = 0
             End If
             If ((v.Contains("sectionId") Or v.Contains("questionId")) And gFlag = 1) Then
-                s += "</div><br>"
+                s += "</div></p></div><br>"
                 gFlag = 0
+                Dim n = listContent.Item(i + 2)
+                If (Not n.Contains("grid")) Then
+                    s += "</div>"
+                End If
             End If
         Next
 
@@ -249,17 +236,20 @@ Public Class userAnswer
         txtTitle = Request.QueryString("txtTitle")
         txtDesc = Request.QueryString("txtDesc")
 
-        If (validateData() = False) Then
-            Exit Sub
-        End If
+        Dim xtxtTitle = Request.QueryString("title")
+        Dim xtxtDesc = Request.QueryString("description")
 
-        Dim ClientQueryList = Request.QueryString
-        Dim aa = ClientQueryList
+        'If (validateData() = False) Then
+        '    Exit Sub
+        'End If
+
+        'Dim ClientQueryList = Request.QueryString
+        'Dim aa = ClientQueryList
         Dim bb = ClientQueryString
 
         Dim strRep = ClientQueryString.Replace("+", " ")
         Dim strArr() = strRep.Split("&")
-
+        Dim val As String = ""
         'Dim SQLConn As New SqlConnection(My.Settings.ConnStringDatabaseSurvey)
         'Dim SQLTran As SqlTransaction
 

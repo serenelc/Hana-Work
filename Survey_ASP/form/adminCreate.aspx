@@ -227,7 +227,6 @@ won't delete because its id number won't match its question number. --%>
             let divShortAns = document.createElement('div');
             divShortAns.id = "divShortAns_id" + shortAnsCnt;
             divShortAns.name = "divShortAns_name" + shortAnsCnt;
-            //divShortAns.innerHTML = "<textarea id = 'txtDesc' class = 'form-control' rows = '2' placeholder = 'Answer' disabled></textarea>";
 
             let shortAns = document.createElement("textarea");
             shortAns.id = "shortAns" + shortAnsCnt;
