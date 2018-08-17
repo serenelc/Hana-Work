@@ -88,21 +88,12 @@
         <script>
             function isAdmin() {
                 let uType = "<%=Session("UserType").ToString()%>";
-                <%--alert("function");
                 let btn = document.getElementById("btnBack");
-                if (<%=Session("UserType")%> == "ADMIN") {
+                if ("ADMIN" == uType) {
                     btn.style = "visibility: visible;";
-                    alert("admin");
                 }
                 else {
                     btn.style = "visibility: hidden;";
-                    alert("not admin");
-                }--%<%--><%= Session["SessionName"].ToString() %>--%>
-                if ("ADMIN" == uType) {
-                    alert("admin");
-                }
-                else {
-                    alert("not admin");
                 }
             }
             isAdmin();

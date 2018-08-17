@@ -58,7 +58,7 @@ Public Class adminCreate
                         prmAnswerID = 0
                         prmAnswerOrder = 0
                         Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
-                        If (SaveSurveySection(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveyMaster fail!")
+                        If (SaveSurveySection(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveySection fail!")
                     Else
                         If val.Contains("questionInput_name") = True Then
                             Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
@@ -79,11 +79,11 @@ Public Class adminCreate
                             xupdateValueType = updateValueType
 
 
-                            If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType) = False) Then Throw New Exception("Save surveyMaster fail!")
+                            If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType) = False) Then Throw New Exception("Save surveyQuestion fail!")
                         Else
                             If xupdateValueType = "grid" Then
                                 Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
-                                If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, xupdateValueType) = False) Then Throw New Exception("Save surveyMaster fail!")
+                                If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, xupdateValueType) = False) Then Throw New Exception("Save surveyQuestion fail!")
                                 Dim updateValue2 As String = val.Substring(val.IndexOf("=") - 2, 2)
                                 Dim updateValue3 As String = ""
                                 If updateValue2.Contains("_") = True Then
@@ -92,12 +92,12 @@ Public Class adminCreate
                                     updateValue3 = updateValue2
                                 End If
                                 For ii As Integer = 1 To updateValue3
-                                    If (SaveSurveyAnswer(SQLConn, SQLTran, ii) = False) Then Throw New Exception("Save surveyMaster fail!")
+                                    If (SaveSurveyAnswer(SQLConn, SQLTran, ii) = False) Then Throw New Exception("Save surveyAnswer fail!")
                                 Next
                             Else
                                 If val.Contains("rad") = True Or val.Contains("short") = True Or val.Contains("grid") = True Then
                                     Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
-                                    If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveyMaster fail!")
+                                    If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveyAnswer fail!")
                                 End If
                             End If
 
@@ -119,7 +119,6 @@ Public Class adminCreate
     End Sub
     Function validateData()
         Try
-            'If Session("En") Is Nothing Then Throw New Exception("Please login first!")
             If txtTitle.Value = "" Then Throw New Exception("Please fill Title!")
             If txtDesc.Value = "" Then Throw New Exception("Please fill Description!")
         Catch ex As Exception

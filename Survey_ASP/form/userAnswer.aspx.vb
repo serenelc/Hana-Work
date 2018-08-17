@@ -4,13 +4,17 @@ Public Class userAnswer
     Inherits System.Web.UI.Page
 
     Public listContent As New List(Of String)
-    Public txtTitle = ""
-    Public txtDesc = ""
+    'Public txtTitle = ""
+    'Public txtDesc = ""
     Public xcreateDate = Date.Now
-    Public xsurveyId = 0
-    Public xquestionId = 0
-
-
+    Public xsurveyId As Integer = 0
+    Public xquestionId As Integer = 0
+    Public prmSubmitId As Integer = 0
+    Public prmSurveyId As Integer = 0
+    Public prmUserAnswerId As Integer = 0
+    Public prmQuestionID As Integer = 0
+    Public prmAnswerID As Integer = 0
+    Public prmAnswerComment As String = ""
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("En") Is Nothing Then
@@ -193,7 +197,8 @@ Public Class userAnswer
                 If (v.Contains("shortanswer")) Then
                     rFlag = 0
                     gFlag = 0
-                    s += "<p><textarea id = 'short' name='short' class = 'form-control' rows = '2' placeholder = 'Answer'></textarea></div>"
+                    s += "<p><textarea id = 'short' class = 'form-control' rows = '2' placeholder = 'Answer' name='short" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
+                    s += "></textarea></div>"
                 End If
                 If (v.Contains("grid")) Then
                     Dim w = listContent.Item(i + 1)
@@ -204,13 +209,13 @@ Public Class userAnswer
                 End If
             End If
             If (v.Contains("answerName") And rFlag = 1) Then
-                s += "<input type='radio' class='form-check-input' id='rad' name='rad" + "_" + xquestionId.ToString() + "_" + answerIdFlag.ToString() + "'"
+                s += "<input type='radio' class='form-check-input' id='rad' name='rad" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + v.Substring(v.IndexOf("=") + 1) + "</label>"
             End If
             If (v.Contains("answerName") And gFlag = 1) Then
                 gNumRad = v.Substring(v.IndexOf("=") + 1)
-                s += "<input type='radio' class='form-check-input' id='grid' name='grid" + "_" + xquestionId.ToString() + "_" + answerIdFlag.ToString() + "'"
+                s += "<input type='radio' class='form-check-input' id='grid' name='grid" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + gNumRad.ToString() + "</label>"
             End If
@@ -249,97 +254,138 @@ Public Class userAnswer
 
         Dim strRep = ClientQueryString.Replace("+", " ")
         Dim strArr() = strRep.Split("&")
-        Dim val As String = ""
-        'Dim SQLConn As New SqlConnection(My.Settings.ConnStringDatabaseSurvey)
-        'Dim SQLTran As SqlTransaction
+        'Dim val As String = ""
 
-        'SQLConn.Open()
-        'SQLTran = SQLConn.BeginTransaction
+        'Open connection database
+        Dim SQLConn As New SqlConnection(My.Settings.ConnStringDatabaseSurvey)
+        Dim SQLTran As SqlTransaction
 
-        'Try
-        '    'Save 
-        '    prmSubjid = 0
-        '    For i As Integer = 0 To strArr.Count - 1
-        '        Dim val As String = strArr(i).ToString()
-        '        If val.Contains("txtTitle=") = True Or val.Contains("txtDesc=") = True Then
-        '            If (SaveSurveyMaster(SQLConn, SQLTran) = False) Then Throw New Exception("Save surveyMaster fail!")
-        '        Else
-        '            If val.Contains("sectionTitle_name") = True Then
-        '                prmSectionID = 0
-        '                prmSectionOrder = 0
-        '                prmQuestionID = 0
-        '                prmQuestionOrder = 0
-        '                prmAnswerID = 0
-        '                prmAnswerOrder = 0
-        '                Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
-        '                If (SaveSurveySection(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveyMaster fail!")
-        '            Else
-        '                If val.Contains("questionInput_name") = True Then
-        '                    Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
-        '                    Dim val2 As String = strArr(i + 1).ToString()
-        '                    Dim updateValueType As String = ""
-        '                    If val2.Contains("rad") = True Then
-        '                        updateValueType = "radio"
-        '                    Else
-        '                        If val2.Contains("short") = True Then
-        '                            updateValueType = "shortanswer"
-        '                        Else
-        '                            If val2.Contains("grid") = True Then
-        '                                updateValueType = "grid"
-        '                            End If
-        '                        End If
-        '                    End If
+        SQLConn.Open()
+        SQLTran = SQLConn.BeginTransaction
 
-        '                    xupdateValueType = updateValueType
+        Try
+            'I don't know how to get the surveyId. Currently hardcoded.
+            prmSurveyId = 17
+            If (SaveSurveyUserSubmit(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserSubmit fail!")
 
+            For i As Integer = 0 To strArr.Count - 1
+                Dim xval As String = strArr(i).ToString()
 
-        '                    If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType) = False) Then Throw New Exception("Save surveyMaster fail!")
-        '                Else
-        '                    If xupdateValueType = "grid" Then
-        '                        Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
-        '                        If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, xupdateValueType) = False) Then Throw New Exception("Save surveyMaster fail!")
-        '                        Dim updateValue2 As String = val.Substring(val.IndexOf("=") - 2, 2)
-        '                        Dim updateValue3 As String = ""
-        '                        If updateValue2.Contains("_") = True Then
-        '                            updateValue3 = Right(updateValue2, 1)
-        '                        Else
-        '                            updateValue3 = updateValue2
-        '                        End If
-        '                        If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue3) = False) Then Throw New Exception("Save surveyMaster fail!")
-        '                    Else
-        '                        If val.Contains("rad") = True Or val.Contains("short") = True Or val.Contains("grid") = True Then
-        '                            Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
-        '                            If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveyMaster fail!")
-        '                        End If
-        '                    End If
+                If (Not xval.Contains("btnSave")) Then
+                    Dim indexE As Integer = xval.IndexOf("=")
+                    Dim indexQ As Integer = xval.IndexOf("Q")
+                    Dim indexA As Integer = xval.IndexOf("A")
+                    Dim qIdLength As Integer = indexA - indexQ - 2
+                    Dim aIdLength As Integer = indexE - indexA - 1
 
-        '                End If
-        '            End If
-        '        End If
-        '    Next
+                    prmQuestionID = xval.Substring(indexQ + 1, qIdLength)
+                    prmAnswerID = xval.Substring(indexA + 1, aIdLength)
+                    prmAnswerComment = xval.Substring(indexE + 1)
+                    replaceSymbol(prmAnswerComment)
 
-        '    SQLTran.Commit()
-        '    ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
-        '    Response.Redirect("adminHome.aspx")
-        'Catch ex As Exception
-        '    If (SQLTran IsNot Nothing) Then SQLTran.Rollback()
-        '    Dim errorMsg = "Error While inserting record On table..." & ex.Message & ",Insert Records"
-        '    ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & errorMsg & "Save')", True)
-        'Finally
-        '    SQLConn.Close()
-        'End Try
+                    'Dim updateValue As String = Val.Substring(Val.IndexOf("=") + 1)
+                    'If (SaveSurveyUserAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save SurveyUserAnswer fail!")
+                    If (SaveSurveyUserAnswer(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserAnswer fail!")
+                End If
+
+            Next
+
+            SQLTran.Commit()
+            'ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
+            Response.Redirect("userSurveyList.aspx")
+        Catch ex As Exception
+            If (SQLTran IsNot Nothing) Then SQLTran.Rollback()
+            Dim errorMsg = "Error While inserting record On table..." & ex.Message & ",Insert Records"
+            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & errorMsg & "Save')", True)
+        Finally
+            SQLConn.Close()
+        End Try
     End Sub
+    'Save SaveSurveyUserSubmit
+    Private Function SaveSurveyUserSubmit(ByRef SQLConn As SqlConnection, ByRef SQLTran As SqlTransaction) As Boolean
 
+        Dim str As String = String.Empty
+        'New
+
+        str = "INSERT INTO SurveyUserSubmit(subjectId, submitDate, submitBy) "
+        str = str + " VALUES(@subjectId, @submitDate, @submitBy); Set @submitID = SCOPE_IDENTITY() "
+        Using SQLCmd As New SqlCommand With {.Connection = SQLConn,
+                                                             .Transaction = SQLTran,
+                                                             .CommandType = CommandType.Text,
+                                                             .CommandText = str}
+            With SQLCmd
+                .Parameters.Clear()
+
+                .Parameters.AddWithValue("@subjectId", prmSurveyId)
+                .Parameters.AddWithValue("@submitDate", xcreateDate)
+                .Parameters.AddWithValue("@submitBy", Session("En"))
+
+                Dim prm_submitid As System.Data.SqlClient.SqlParameter = New SqlParameter("@submitID", SqlDbType.Int)
+                prm_submitid.Direction = ParameterDirection.Output
+                prm_submitid.SqlDbType = SqlDbType.Int
+                .Parameters.Add(prm_submitid)
+                .ExecuteNonQuery()
+
+                prmSubmitId = prm_submitid.Value
+            End With
+        End Using
+
+        Return True
+
+    End Function
+
+    'Save SaveSurveyUserAnswer
+    Private Function SaveSurveyUserAnswer(ByRef SQLConn As SqlConnection, ByRef SQLTran As SqlTransaction) As Boolean
+
+        Dim str As String = String.Empty
+        'New
+
+        str = "INSERT INTO SurveyUserAnswer(submitId, subjectId, questionId, answerId, answerComment) "
+        str = str + " VALUES(@submitId, @subjectId, @questionId, @answerId, @answerComment); Set @userAnswerId = SCOPE_IDENTITY() "
+        Using SQLCmd As New SqlCommand With {.Connection = SQLConn,
+                                                             .Transaction = SQLTran,
+                                                             .CommandType = CommandType.Text,
+                                                             .CommandText = str}
+            With SQLCmd
+                .Parameters.Clear()
+
+                .Parameters.AddWithValue("@submitId", prmSubmitId)
+                .Parameters.AddWithValue("@subjectId", prmSurveyId)
+                .Parameters.AddWithValue("@questionId", prmQuestionID)
+                .Parameters.AddWithValue("@answerId", prmAnswerID)
+                .Parameters.AddWithValue("@answerComment", prmAnswerComment)
+
+                Dim prm_userAnswerId As System.Data.SqlClient.SqlParameter = New SqlParameter("@userAnswerId", SqlDbType.Int)
+                prm_userAnswerId.Direction = ParameterDirection.Output
+                prm_userAnswerId.SqlDbType = SqlDbType.Int
+                .Parameters.Add(prm_userAnswerId)
+                .ExecuteNonQuery()
+
+                prmUserAnswerId = prm_userAnswerId.Value
+            End With
+        End Using
+
+        Return True
+
+    End Function
     Function validateData()
         Try
-            'If Session("En") Is Nothing Then Throw New Exception("Please login first!")
-            If txtTitle = "" Then Throw New Exception("Please fill Title!")
-            If txtDesc = "" Then Throw New Exception("Please fill Description!")
+            'If txtTitle = "" Then Throw New Exception("Please fill Title!")
+            'If txtDesc = "" Then Throw New Exception("Please fill Description!")
         Catch ex As Exception
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & ex.Message & "')", True)
             Return False
         End Try
         Return True
     End Function
+
+    Protected Sub replaceSymbol(sym As String)
+        If sym.Contains("%3f") Then
+            sym.Replace("%3f", "?")
+        End If
+        If sym.Contains("%27") Then
+            sym.Replace("%27", "'")
+        End If
+    End Sub
 
 End Class
