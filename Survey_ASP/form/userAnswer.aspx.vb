@@ -158,6 +158,7 @@ Public Class userAnswer
         Dim gFlag As Integer = 0
         Dim rNameFlag As Integer = 0
         Dim gNumRad As Integer = 0
+        Dim answerIdFlag As Integer = 0
         For i = 0 To (listContent.Count - 1)
             Dim v = listContent.Item(i)
             If (v.Contains("surveyId=")) Then
@@ -166,6 +167,10 @@ Public Class userAnswer
             If (v.Contains("questionId=")) Then
                 xquestionId = v.Substring(v.IndexOf("=") + 1)
                 rNameFlag = v.Substring(v.IndexOf("=") + 1)
+            End If
+            If (v.Contains("answerId")) Then
+                'gIdFlag = v.Remove(0, questionIdLength)
+                answerIdFlag = v.Substring(v.IndexOf("=") + 1)
             End If
             If (v.Contains("sectionName")) Then
                 s += "<br> <h3 style='text-decoration: underline' id='sectionTitle_name' name='sectionTitle_name'>" + v.Substring(v.IndexOf("=") + 1) + "</h3>"
@@ -199,13 +204,13 @@ Public Class userAnswer
                 End If
             End If
             If (v.Contains("answerName") And rFlag = 1) Then
-                s += "<input type='radio' class='form-check-input' id='rad' name='rad" + "_" + xquestionId.ToString() + "'"
+                s += "<input type='radio' class='form-check-input' id='rad' name='rad" + "_" + xquestionId.ToString() + "_" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + v.Substring(v.IndexOf("=") + 1) + "</label>"
             End If
             If (v.Contains("answerName") And gFlag = 1) Then
                 gNumRad = v.Substring(v.IndexOf("=") + 1)
-                s += "<input type='radio' class='form-check-input' id='grid' name='grid" + "_" + xquestionId.ToString() + "'"
+                s += "<input type='radio' class='form-check-input' id='grid' name='grid" + "_" + xquestionId.ToString() + "_" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + gNumRad.ToString() + "</label>"
             End If
@@ -233,18 +238,13 @@ Public Class userAnswer
     End Sub
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        txtTitle = Request.QueryString("txtTitle")
-        txtDesc = Request.QueryString("txtDesc")
-
-        Dim xtxtTitle = Request.QueryString("title")
-        Dim xtxtDesc = Request.QueryString("description")
 
         'If (validateData() = False) Then
         '    Exit Sub
         'End If
 
-        'Dim ClientQueryList = Request.QueryString
-        'Dim aa = ClientQueryList
+        Dim ClientQueryList = Request.QueryString
+        Dim aa = ClientQueryList
         Dim bb = ClientQueryString
 
         Dim strRep = ClientQueryString.Replace("+", " ")

@@ -15,7 +15,10 @@
 
         <div style="background-color:inherit; height: 100px" >
             <div id="userInfo" class="sidenav">
-                <label id= "info"><%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%></label> 
+                <label id= "info">
+                    <img src="../images/user.png" style="height: 40px; padding-right: 10px"/>
+                    <%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%>
+                </label>
             </div>
             <img src="../images/HANA-Logo-BW.png" style="float:left;" />
         </div>

@@ -15,7 +15,10 @@
 
         <div style="background-color:inherit; height: 100px" >
             <div id="userInfo" class="sidenav">
-                <label id= "info"><%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%></label> 
+                <label id= "info">
+                    <img src="../images/user.png" style="height: 40px; padding-right: 10px"/>
+                    <%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%>
+                </label> 
             </div>
             <img src="../images/HANA-Logo-BW.png" style="float:left;" />
         </div>
@@ -84,15 +87,21 @@
         <%--Script to check if user is admin--%>
         <script>
             function isAdmin() {
-                //alert("function");
+                let uType = "<%=Session("UserType").ToString()%>";
+                <%--alert("function");
                 let btn = document.getElementById("btnBack");
-                //TODO: not entering if statement
                 if (<%=Session("UserType")%> == "ADMIN") {
                     btn.style = "visibility: visible;";
                     alert("admin");
                 }
                 else {
                     btn.style = "visibility: hidden;";
+                    alert("not admin");
+                }--%<%--><%= Session["SessionName"].ToString() %>--%>
+                if ("ADMIN" == uType) {
+                    alert("admin");
+                }
+                else {
                     alert("not admin");
                 }
             }
