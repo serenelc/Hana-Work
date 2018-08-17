@@ -37,7 +37,7 @@
             <div id = "footer" style="background-color: white; height: 70px;">
                 <br>
                 <asp:button runat="server" id="btnSave" type="button" class="btn btn-success"
-                    style="float: right" Text="Save"/>
+                    style="float: right" Text="Save" />
                 <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
                     style="float: left;" Text="Back"/>
              </div>
@@ -51,15 +51,6 @@
             }
         </script>
 
-        <%--<script>
-            function loopThroughList() {
-                var i;
-                for (i = 0; i < <%=listContent%>; i++) {
-
-                }
-                <%=listContent%>
-            }
-        </script>--%>
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
