@@ -26,9 +26,12 @@
         </div>
 
          <div id ="main" class="container col-8" style="padding: 20px; background-color:white; min-height: 100%; width: 70%;">
-             <h3>Survey Complete</h3>
-             <p> Thank you for completing the survey.</p>
-             
+             <div>
+                <h1 style="text-align: center;">Survey Completed</h1>
+            </div>
+             <p style="text-align: center;"> Your responses have been successfully submitted. Thank you for completing the survey.</p>
+             <img style="margin-left: auto; margin-right: auto; display: block;" src="../images/thankyou.jpg"/>
+
              <div id = "footer" style="background-color: white; height: 70px;">
                 <br/>
                 <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
