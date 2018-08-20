@@ -7,8 +7,8 @@
 <head runat="server">
     <title>Survey Completed</title>
     <!-- Custom styles for this template -->
-    <link href="../css/userInfo.css" rel="stylesheet">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link href="../css/userInfo.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 
 <body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
@@ -26,16 +26,27 @@
         </div>
 
          <div id ="main" class="container col-8" style="padding: 20px; background-color:white; min-height: 100%; width: 70%;">
-             <p>Survey Complete</p>
+             <h3>Survey Complete</h3>
+             <p> Thank you for completing the survey.</p>
              
              <div id = "footer" style="background-color: white; height: 70px;">
-                <br>
+                <br/>
                 <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
-                    style="float: left;" Text="Back"/>
+                    style="float: left;" Text="Complete Another Survey"/>
+                 <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
+                    style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
              </div>
         
         </div>
     </form>
-</bod>
+
+     <%--Script to confirm logout--%>
+     <script>
+         function confirmLogout() {
+           return confirm("Are you sure you would like to logout?");
+         }
+     </script>
+
+</body>
 
 </html>

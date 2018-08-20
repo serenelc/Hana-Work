@@ -4,8 +4,6 @@ Public Class userAnswer
     Inherits System.Web.UI.Page
 
     Public listContent As New List(Of String)
-    'Public txtTitle = ""
-    'Public txtDesc = ""
     Public xcreateDate = Date.Now
     Public xsurveyId As Integer = 0
     Public xquestionId As Integer = 0
@@ -161,7 +159,7 @@ Public Class userAnswer
         Dim s As String = ""
         Dim rFlag As Integer = 0
         Dim gFlag As Integer = 0
-        Dim rNameFlag As Integer = 0
+        Dim aFlag As Integer = 0
         Dim gNumRad As Integer = 0
         Dim answerIdFlag As Integer = 0
         For i = 0 To (listContent.Count - 1)
@@ -169,10 +167,8 @@ Public Class userAnswer
 
             If (v.Contains("questionId=")) Then
                 xquestionId = v.Substring(v.IndexOf("=") + 1)
-                rNameFlag = v.Substring(v.IndexOf("=") + 1)
             End If
             If (v.Contains("answerId")) Then
-                'gIdFlag = v.Remove(0, questionIdLength)
                 answerIdFlag = v.Substring(v.IndexOf("=") + 1)
             End If
             If (v.Contains("sectionName")) Then
@@ -191,13 +187,14 @@ Public Class userAnswer
                 If (v.Contains("radio")) Then
                     rFlag = 1
                     gFlag = 0
+                    aFlag = 0
                     s += "<p><div class='form-check-inline'>"
                 End If
                 If (v.Contains("shortanswer")) Then
                     rFlag = 0
                     gFlag = 0
-                    s += "<p><textarea id='short' class='form-control' rows='2' placeholder='Answer' name='short" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
-                    s += "></textarea></div>"
+                    aFlag = 1
+
                 End If
                 If (v.Contains("grid")) Then
                     Dim w = listContent.Item(i + 1)
@@ -205,6 +202,7 @@ Public Class userAnswer
                         gFlag = 1
                     End If
                     rFlag = 0
+                    aFlag = 0
                 End If
             End If
             If (v.Contains("answerName") And rFlag = 1) Then
@@ -219,6 +217,10 @@ Public Class userAnswer
                 s += "<input type='radio' class='form-check-input' id='grid' name='grid" + xquestionId.ToString() + "' value='" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + gNumRad.ToString() + "</label>"
+            End If
+            If (v.Contains("answerName") And aFlag = 1) Then
+                s += "<p><textarea id='short' class='form-control' rows='2' placeholder='Answer' name='short" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
+                s += "></textarea></div>"
             End If
             If ((v.Contains("sectionId") Or v.Contains("questionId")) And rFlag = 1) Then
                 s += "</div><br></div>"
@@ -263,7 +265,6 @@ Public Class userAnswer
         SQLTran = SQLConn.BeginTransaction
 
         Try
-            'I don't know how to get the surveyId. Currently hardcoded.
             prmSurveyId = Session("surveyId")
             If (SaveSurveyUserSubmit(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserSubmit fail!")
 
@@ -276,17 +277,17 @@ Public Class userAnswer
                     Dim indexA As Integer = xval.IndexOf("_A")
                     Dim qIdLength As Integer = indexA - indexQ - 2
 
-                    prmQuestionID = xval.Substring(indexQ + 1, qIdLength)
-                    prmAnswerID = xval.Substring(indexA + 2)
+                    prmQuestionID = xval.Substring(indexQ + 2, qIdLength)
+
                     If (xval.Contains("short")) Then
+                        Dim aIdLength As Integer = indexE - indexA - 2
+                        prmAnswerID = xval.Substring(indexA + 2, aIdLength)
                         prmAnswerComment = xval.Substring(indexE + 1)
                     Else
+                        prmAnswerID = xval.Substring(indexA + 2)
                         prmAnswerComment = ""
                     End If
 
-
-                    'Dim updateValue As String = Val.Substring(Val.IndexOf("=") + 1)
-                    'If (SaveSurveyUserAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save SurveyUserAnswer fail!")
                     If (SaveSurveyUserAnswer(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserAnswer fail!")
                 End If
 
@@ -294,10 +295,10 @@ Public Class userAnswer
 
             SQLTran.Commit()
             'ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
-            Response.Redirect("userSurveyList.aspx")
+            Response.Redirect("userSurveyComplete.aspx")
         Catch ex As Exception
             If (SQLTran IsNot Nothing) Then SQLTran.Rollback()
-            Dim errorMsg = "Error While inserting record On table..." & ex.Message & ",Insert Records"
+            Dim errorMsg = "Error While inserting record On table..." & ex.Message & ", Insert Records"
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & errorMsg & "Save')", True)
         Finally
             SQLConn.Close()
