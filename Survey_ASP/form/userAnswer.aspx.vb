@@ -23,6 +23,7 @@ Public Class userAnswer
         If IsPostBack() = False Then
             Dim subId = Request.QueryString("subjectId")
             Call getSurveyContent(subId)
+            Session("surveyId") = xsurveyId.ToString()
         End If
     End Sub
 
@@ -165,9 +166,7 @@ Public Class userAnswer
         Dim answerIdFlag As Integer = 0
         For i = 0 To (listContent.Count - 1)
             Dim v = listContent.Item(i)
-            If (v.Contains("surveyId=")) Then
-                xsurveyId = v.Substring(v.IndexOf("=") + 1)
-            End If
+
             If (v.Contains("questionId=")) Then
                 xquestionId = v.Substring(v.IndexOf("=") + 1)
                 rNameFlag = v.Substring(v.IndexOf("=") + 1)
@@ -197,7 +196,7 @@ Public Class userAnswer
                 If (v.Contains("shortanswer")) Then
                     rFlag = 0
                     gFlag = 0
-                    s += "<p><textarea id = 'short' class = 'form-control' rows = '2' placeholder = 'Answer' name='short" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
+                    s += "<p><textarea id='short' class='form-control' rows='2' placeholder='Answer' name='short" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                     s += "></textarea></div>"
                 End If
                 If (v.Contains("grid")) Then
@@ -209,13 +208,15 @@ Public Class userAnswer
                 End If
             End If
             If (v.Contains("answerName") And rFlag = 1) Then
-                s += "<input type='radio' class='form-check-input' id='rad' name='rad" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
+                's += "<input type='radio' class='form-check-input' id='rad' name='rad" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
+                s += "<input type='radio' class='form-check-input' id='rad' name='rad" + xquestionId.ToString() + "' value='" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + v.Substring(v.IndexOf("=") + 1) + "</label>"
             End If
             If (v.Contains("answerName") And gFlag = 1) Then
                 gNumRad = v.Substring(v.IndexOf("=") + 1)
-                s += "<input type='radio' class='form-check-input' id='grid' name='grid" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
+                's += "<input type='radio' class='form-check-input' id='grid' name='grid" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
+                s += "<input type='radio' class='form-check-input' id='grid' name='grid" + xquestionId.ToString() + "' value='" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + gNumRad.ToString() + "</label>"
             End If
@@ -231,8 +232,10 @@ Public Class userAnswer
                     s += "</div>"
                 End If
             End If
+            If (v.Contains("surveyId=")) Then
+                xsurveyId = v.Substring(v.IndexOf("=") + 1)
+            End If
         Next
-
         title.Text = t
         description.Text = d
         frm.Text = s
@@ -243,10 +246,6 @@ Public Class userAnswer
     End Sub
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-
-        'If (validateData() = False) Then
-        '    Exit Sub
-        'End If
 
         Dim ClientQueryList = Request.QueryString
         Dim aa = ClientQueryList
@@ -265,7 +264,7 @@ Public Class userAnswer
 
         Try
             'I don't know how to get the surveyId. Currently hardcoded.
-            prmSurveyId = 17
+            prmSurveyId = Session("surveyId")
             If (SaveSurveyUserSubmit(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserSubmit fail!")
 
             For i As Integer = 0 To strArr.Count - 1
@@ -273,15 +272,18 @@ Public Class userAnswer
 
                 If (Not xval.Contains("btnSave")) Then
                     Dim indexE As Integer = xval.IndexOf("=")
-                    Dim indexQ As Integer = xval.IndexOf("Q")
-                    Dim indexA As Integer = xval.IndexOf("A")
+                    Dim indexQ As Integer = xval.IndexOf("_Q")
+                    Dim indexA As Integer = xval.IndexOf("_A")
                     Dim qIdLength As Integer = indexA - indexQ - 2
-                    Dim aIdLength As Integer = indexE - indexA - 1
 
                     prmQuestionID = xval.Substring(indexQ + 1, qIdLength)
-                    prmAnswerID = xval.Substring(indexA + 1, aIdLength)
-                    prmAnswerComment = xval.Substring(indexE + 1)
-                    replaceSymbol(prmAnswerComment)
+                    prmAnswerID = xval.Substring(indexA + 2)
+                    If (xval.Contains("short")) Then
+                        prmAnswerComment = xval.Substring(indexE + 1)
+                    Else
+                        prmAnswerComment = ""
+                    End If
+
 
                     'Dim updateValue As String = Val.Substring(Val.IndexOf("=") + 1)
                     'If (SaveSurveyUserAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save SurveyUserAnswer fail!")
@@ -368,24 +370,5 @@ Public Class userAnswer
         Return True
 
     End Function
-    Function validateData()
-        Try
-            'If txtTitle = "" Then Throw New Exception("Please fill Title!")
-            'If txtDesc = "" Then Throw New Exception("Please fill Description!")
-        Catch ex As Exception
-            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & ex.Message & "')", True)
-            Return False
-        End Try
-        Return True
-    End Function
-
-    Protected Sub replaceSymbol(sym As String)
-        If sym.Contains("%3f") Then
-            sym.Replace("%3f", "?")
-        End If
-        If sym.Contains("%27") Then
-            sym.Replace("%27", "'")
-        End If
-    End Sub
 
 End Class
