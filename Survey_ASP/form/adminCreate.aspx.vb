@@ -24,11 +24,13 @@ Public Class adminCreate
 
         txtTitle.Value = Request.QueryString("txtTitle")
         txtDesc.Value = Request.QueryString("txtDesc")
+        'closeDate.Value = Request.QueryString("closeDate")
 
         If (validateData() = False) Then
             Exit Sub
         End If
         xcreateDate = Date.Now
+        'closeDate.Value = Date.Now
         Dim ClientQueryList = Request.QueryString
         Dim aa = ClientQueryList
         Dim bb = ClientQueryString
@@ -134,8 +136,8 @@ Public Class adminCreate
         Dim str As String = String.Empty
         'New
         If prmSubjid = 0 Then
-            str = "INSERT INTO surveyMaster(subjectName,subjectDetail,status,openDate,createBy,createDate) "
-            str = str + " VALUES(@subjectName, @subjectDetail, @status,@openDate, @createBy,@createDate); Set @subj_ID = SCOPE_IDENTITY() "
+            str = "INSERT INTO surveyMaster(subjectName,subjectDetail,status,openDate,closeDate,createBy,createDate) "
+            str = str + " VALUES(@subjectName, @subjectDetail, @status,@openDate, @closeDate,@createBy,@createDate); Set @subj_ID = SCOPE_IDENTITY() "
             Using SQLCmd As New SqlCommand With {.Connection = SQLConn,
                                                              .Transaction = SQLTran,
                                                              .CommandType = CommandType.Text,
@@ -146,6 +148,7 @@ Public Class adminCreate
                     .Parameters.AddWithValue("@subjectDetail", txtDesc.Value)
                     .Parameters.AddWithValue("@status", "OPEN")
                     .Parameters.AddWithValue("@openDate", xcreateDate)
+                    '.Parameters.AddWithValue("@closeDate", closeDate.Value)
                     .Parameters.AddWithValue("@createBy", Session("En"))
                     .Parameters.AddWithValue("@createDate", xcreateDate)
 

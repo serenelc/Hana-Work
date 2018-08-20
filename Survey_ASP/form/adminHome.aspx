@@ -13,7 +13,7 @@
 
     <%--Need background colour to extend to bottom of page--%>
 
-<body style="background: linear-gradient(#a9c5f2, #619af4);">
+<body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
 
     <form id="form1" runat="server" method="get">
 
@@ -27,7 +27,7 @@
             <img src="../images/HANA-Logo-BW.png" style="float:left;" />
         </div>
         
-        <div id ="main" class="container" style="padding: 20px; background-color:white; width: 70%;">
+        <div id ="main" class="container col-8" style="padding: 20px; background-color:white; width: 70%;">
             
             <div>
                 <h1 style="text-align: center;"> Admin Home </h1>

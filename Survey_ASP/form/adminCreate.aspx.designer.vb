@@ -41,6 +41,15 @@ Partial Public Class adminCreate
     Protected WithEvents txtDesc As Global.System.Web.UI.HtmlControls.HtmlTextArea
     
     '''<summary>
+    '''closeDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents closeDate As Global.System.Web.UI.WebControls.Calendar
+    
+    '''<summary>
     '''btnSave control.
     '''</summary>
     '''<remarks>

@@ -14,7 +14,7 @@
 
 <%--Need background colour to extend to bottom of page--%>
 
-<body style="background: linear-gradient(#a9c5f2, #619af4);">
+<body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
 
     <form id="form1" runat="server" method="get">
 
@@ -28,13 +28,12 @@
             <img src="../images/HANA-Logo-BW.png" style="float: left;" />
         </div>
 
-        <div id="main" class="container" style="padding: 20px; background-color: white; width: 70%;">
+        <div id="main" class="container col-8" style="padding: 20px; background-color: white; width: 70%;">
 
             <div>
                 <h1 style="text-align: center;">Create A Survey </h1>
             </div>
-
-            <form>
+      
                 <div class="form-group">
                     <label>
                         <h3>Title</h3>
@@ -44,14 +43,16 @@
 
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea class="form-control" id="txtDesc" rows="2"
-                        placeholder="Short description about your survey" runat="server"></textarea>
+                    <textarea  runat="server" class="form-control" id="txtDesc" rows="2"
+                        placeholder="Short description about your survey"></textarea>
                 </div>
 
                 <%--Need user to be able to choose date in future only--%>
                 <div class="form-group">
                     <label>Survey close date</label>
-                    <input class="form-control" type="date" value="" id="date"/>
+                    <%--<input  type="date" id="closeDate" value=""/>--%>
+                    <%--<input runat="server" class="form-control" type="datetime-local" value="@DateTime.Now.ToString('s')" id="closeDate"/>--%>
+                    <asp:Calendar ID="closeDate" runat="server" Height="140px" Width="176px"></asp:Calendar>
                 </div>
 
                 <hr>
@@ -70,7 +71,6 @@
                     <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning" Text="Back" />
 
                 </div>
-
         </div>
 
     </form>
@@ -97,11 +97,11 @@
                 mm='0'+mm;
             }   
             var today = yyyy + '-' + mm + '-' + dd;
-            document.getElementById("date").value = today;
+            document.getElementById("closeDate").value = today;
             //return today;
         }
         
-        getDate();
+        //getDate();
     </script>
 
 
@@ -125,8 +125,17 @@
             divSecTitle.name = "sectionTitle_name" + countSec;
             divSecTitle.value = "<%=divSecTitle_val%>";
             divSecTitle.style = "margin-bottom: 20px; font-weight: bold; float: center; border-right: none; border-left: none; border-top: none; border-bottom-width: medium; border-bottom-color: black; width: 50%;";
+            divSection.appendChild(divSecTitle)
 
-            divSection.appendChild(divSecTitle, document.createElement("br"));
+            let sectionClose = document.createElement('button');
+            sectionClose.id = "sectionCloseQ_id" + countSec;
+            sectionClose.name = "sectionCloseQ_name" + countSec;
+            sectionClose.class = "btn"
+            sectionClose.style = "border: none; background-color: white;"
+            sectionClose.innerHTML = '<span aria-hidden="true">X</span> ';
+            divSection.appendChild(sectionClose);
+
+            divSection.appendChild(document.createElement("br"));
             newSection.before(divSection);
             console.log("adding a section");
             countSec = parseInt(countSec) + parseInt(1);
@@ -184,7 +193,7 @@
             let buttonClose = document.createElement('button');
             buttonClose.id = "buttonCloseQ_id" + newCountQ;
             buttonClose.name = "buttonCloseQ_name" + newCountQ;
-            buttonClose.class = "btn btn-danger"
+            buttonClose.class = "btn"
             buttonClose.style = "border-radius: 5px; border-style: solid; border-color: #cccccc"
             buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> ';
             divGroup.appendChild(buttonClose);
@@ -206,7 +215,6 @@ won't delete because its id number won't match its question number. --%>
 
     <%--Script to remove a question--%>
     <script>
-        var called = false;
         var idCount = 0; //GLOBAL VARIABLE
         function removeElement() {
             var idNum = this.id.slice(-2);
@@ -231,6 +239,15 @@ won't delete because its id number won't match its question number. --%>
             return false;
         }
     </script>
+
+    <%--Script to remove a section--%>
+    <%--<script>
+        function removeSection() {
+            var secIdNum = this.id.slice(-2);
+            document.getElementById("divSection_id" + secIdNum).remove();
+            this.removeElement();
+        }
+    </script>--%>
 
     <%--Script to get ID attribute--%>
     <script>
@@ -265,7 +282,7 @@ won't delete because its id number won't match its question number. --%>
             shortAns.id = "shortAns" + shortAnsCnt;
             shortAns.class = "form-control";
             shortAns.rows = "2";
-            shortAns.style = "width: 100%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"
+            shortAns.style = "width: 95%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"
             shortAns.placeholder = "Answer";
             shortAns.name = "shortAns_name" + shortAnsCnt;
 
@@ -305,7 +322,7 @@ won't delete because its id number won't match its question number. --%>
                 radLabel.placeholder = "Option " + parseInt(n);
                 radLabel.id = "radLabelId" + parseInt(radCnt);
                 radLabel.name = "radLabelName" + parseInt(radCnt);
-                radLabel.style = "margin-right: 10px; margin-top: 10px;";
+                radLabel.style = "margin-right: 10px; margin-bottom: 10px; border-radius: 5px; border-style: solid; border-color: #d8d8d8;";
 
                 divRadio.appendChild(document.createElement("br"));
                 divRadio.appendChild(radio);
@@ -335,7 +352,7 @@ won't delete because its id number won't match its question number. --%>
             var gridBody = "<div class='col-7'><div></div>";
 
             for (var r = 0; r < numRows; r++) {
-                gridBody += "<div><textarea type='text' class='form-control' placeholder='question' border:none name = 'gridQ_name"
+                gridBody += "<div><textarea type='text' class='form-control' placeholder='question' style='border-radius: 5px; border-style: solid; border-color: #d8d8d8;' name = 'gridQ_name"
                     + gridCnt + "_" + r + "_" + numCols + "' id='gridQ_Id" + gridCnt + "_" + r +"'></textarea></div>";
             }
 
@@ -343,7 +360,7 @@ won't delete because its id number won't match its question number. --%>
             for (var r = 0; r < numRows; r++) {
                 gridBody += "<div style='width:450px;'>";
                 for (var c = 0; c < numCols; c++) {
-                    gridBody += "<input type='radio' style='margin: 30px' name='gridRadio" + r + "'";
+                    gridBody += "<input type='radio' style='margin: 24px' name='gridRadio" + r + "'";
                     gridBody += " disabled><label>" + (c + 1) + "</label>";
                 }
                 gridBody += "</div>";

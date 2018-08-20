@@ -1,4 +1,17 @@
-﻿#userInfo label {
+﻿html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #619af4;
+    background: -webkit-gradient(linear, #a9c5f2, #619af4);
+}
+
+#userInfo label {
     position: absolute;
     right: -355px;
     transition: 0.3s;

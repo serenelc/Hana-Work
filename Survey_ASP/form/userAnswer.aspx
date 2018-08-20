@@ -3,13 +3,15 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head runat="server">
     <title>Survey</title>
     <!-- Custom styles for this template -->
     <link href="../css/userInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
-<body style="background: linear-gradient(#a9c5f2, #619af4);">
+
+<body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
 
     <form id="form1" runat="server" method="get">
 
@@ -23,7 +25,7 @@
             <img src="../images/HANA-Logo-BW.png" style="float:left;" />
         </div>
         
-        <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%; width: 70%;">
+        <div id ="main" class="container col-8" style="padding: 20px; background-color:white;  width: 70%;">
             
             <div>
                 <asp:Label ID="title" runat="server"></asp:Label>
