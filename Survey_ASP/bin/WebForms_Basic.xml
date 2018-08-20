@@ -37,7 +37,7 @@ Survey
  Returns the Asp log object.
  </summary>
 </member>
-<member name="F:Survey.admin._form1">
+<member name="F:Survey.adminCreate._form1">
 <summary>
 form1 control.
 </summary>
@@ -46,7 +46,7 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:Survey.admin._txtTitle">
+<member name="F:Survey.adminCreate._txtTitle">
 <summary>
 txtTitle control.
 </summary>
@@ -55,7 +55,7 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:Survey.admin._txtDesc">
+<member name="F:Survey.adminCreate._txtDesc">
 <summary>
 txtDesc control.
 </summary>
@@ -64,7 +64,7 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:Survey.admin._btnSave">
+<member name="F:Survey.adminCreate._btnSave">
 <summary>
 btnSave control.
 </summary>
@@ -73,7 +73,7 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:Survey.admin._btnBack">
+<member name="F:Survey.adminCreate._btnBack">
 <summary>
 btnBack control.
 </summary>
@@ -127,9 +127,27 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:Survey.index._form1">
+<member name="F:Survey.index._form2">
 <summary>
-form1 control.
+form2 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Survey.index._inputEn">
+<summary>
+inputEn control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Survey.index._inputPassword">
+<summary>
+inputPassword control.
 </summary>
 <remarks>
 Auto-generated field.
@@ -172,6 +190,60 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
+<member name="F:Survey.userAnswer._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Survey.userAnswer._title">
+<summary>
+title control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Survey.userAnswer._description">
+<summary>
+description control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Survey.userAnswer._frm">
+<summary>
+frm control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Survey.userAnswer._btnSave">
+<summary>
+btnSave control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Survey.userAnswer._btnBack">
+<summary>
+btnBack control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
 <member name="F:Survey.userSurveyList._form1">
 <summary>
 form1 control.
@@ -181,9 +253,36 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
+<member name="F:Survey.userSurveyList._SqlSurveyListSource">
+<summary>
+SqlSurveyListSource control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Survey.userSurveyList._surveyList">
+<summary>
+surveyList control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
 <member name="F:Survey.userSurveyList._btnLogout">
 <summary>
 btnLogout control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:Survey.userSurveyList._btnBack">
+<summary>
+btnBack control.
 </summary>
 <remarks>
 Auto-generated field.

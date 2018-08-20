@@ -39,13 +39,18 @@
                     <label>
                         <h3>Title</h3>
                     </label>
-                    <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title">
+                    <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title"/>
                 </div>
 
                 <div class="form-group">
                     <label>Description</label>
                     <textarea class="form-control" id="txtDesc" rows="2"
                         placeholder="Short description about your survey" runat="server"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Survey close date</label>
+                    <input class="form-control" type="date" value="" id="date" data-date-start-date="0"/>
                 </div>
 
                 <hr>
@@ -64,9 +69,7 @@
                     <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning" Text="Back" />
 
                 </div>
-        </div>
 
-        <div style="background-color: inherit; height: 100px">
         </div>
 
     </form>
@@ -76,6 +79,23 @@
         function confirmSave() {
             return confirm("Are you sure you have finished creating the survey?");
         }
+    </script>
+
+    <%--Script to get today's date in desired format--%>
+    <script>
+        var today = new Date();
+        var dd = today.getDate(); + 1; //survey has to close at least 1 day after it is created
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm='0'+mm;
+        } 
+        var today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("date").value = today;
     </script>
 
 
@@ -125,8 +145,8 @@
             let questionInput = document.createElement("input");
             questionInput.type = "text";
             questionInput.class = "form-control";
-            questionInput.style = "font-weight:bold;"
-            questionInput.placeholder = "Question";
+            questionInput.style = "font-weight:bold; width: 80%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"
+            questionInput.placeholder = "  Question";
             questionInput.required = true;
             questionInput.name = "questionInput_name" + newCountQ;
 
@@ -136,7 +156,7 @@
             divbutton.id = "divbuttonQ_id" + newCountQ;
             divbutton.name = "divbuttonQ_name" + newCountQ;
             divbutton.className = "input-group-append";
-            divbutton.innerHTML = '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Answer Type</button>';
+            divbutton.innerHTML = '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" style="border-radius: 5px; border-style: solid; border-color: #cccccc;" aria-haspopup="true" aria-expanded="false">Answer Type</button>';
 
             let divdropdown = document.createElement("div");
             divdropdown.id = "divdropdownQ_id" + newCountQ;
@@ -158,8 +178,11 @@
             let buttonClose = document.createElement('button');
             buttonClose.id = "buttonCloseQ_id" + newCountQ;
             buttonClose.name = "buttonCloseQ_name" + newCountQ;
+            buttonClose.class = "btn btn-danger"
+            buttonClose.style = "border-radius: 5px; border-style: solid; border-color: #cccccc"
             buttonClose.innerHTML = '<span aria-hidden="true">&times;</span> ';
             divGroup.appendChild(buttonClose);
+
             let br = document.createElement('br');
             br.id = "break_id" + newCountQ;
             br.name = "break_name" + newCountQ;
