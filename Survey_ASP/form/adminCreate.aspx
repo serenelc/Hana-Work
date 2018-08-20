@@ -48,9 +48,10 @@
                         placeholder="Short description about your survey" runat="server"></textarea>
                 </div>
 
+                <%--Need user to be able to choose date in future only--%>
                 <div class="form-group">
                     <label>Survey close date</label>
-                    <input class="form-control" type="date" value="" id="date" data-date-start-date="0"/>
+                    <input class="form-control" type="date" value="" id="date"/>
                 </div>
 
                 <hr>
@@ -83,19 +84,24 @@
 
     <%--Script to get today's date in desired format--%>
     <script>
-        var today = new Date();
-        var dd = today.getDate(); + 1; //survey has to close at least 1 day after it is created
-        var mm = today.getMonth() + 1; //January is 0!
-        var yyyy = today.getFullYear();
+        function getDate() {
+            var today = new Date();
+            var dd = today.getDate(); + 1; //survey has to close at least 1 day after it is created
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
 
-        if (dd < 10) {
-            dd = '0' + dd;
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm='0'+mm;
+            }   
+            var today = yyyy + '-' + mm + '-' + dd;
+            document.getElementById("date").value = today;
+            //return today;
         }
-        if (mm < 10) {
-            mm='0'+mm;
-        } 
-        var today = yyyy + '-' + mm + '-' + dd;
-        document.getElementById("date").value = today;
+        
+        getDate();
     </script>
 
 
@@ -147,7 +153,7 @@
             questionInput.class = "form-control";
             questionInput.style = "font-weight:bold; width: 80%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"
             questionInput.placeholder = "  Question";
-            questionInput.required = true;
+            //questionInput.required = true;
             questionInput.name = "questionInput_name" + newCountQ;
 
             divGroup.appendChild(questionInput);
@@ -195,12 +201,10 @@
 
     </script>
 
-    <%--  
-There is also the issue where if you add multiple questions and then remove them
-without adding an answer type, when you try to delete the question, the answer box 
+    <%--  TODO: Sometimes when you try to delete the question, the answer box 
 won't delete because its id number won't match its question number. --%>
 
-    <%--TODO: Script to remove a question--%>
+    <%--Script to remove a question--%>
     <script>
         var called = false;
         var idCount = 0; //GLOBAL VARIABLE
@@ -242,7 +246,10 @@ won't delete because its id number won't match its question number. --%>
     </script>
 
     <%--  Script to create answer options. Currently if you click on the drop down menu for the question below
-    having not chosen an answer type for the current question, the answer type automatically goes to the top question --%>
+    having not chosen an answer type for the current question, the answer type automatically goes to the top question. This 
+        is because when a question is created it gets given an id, say 1, so if you add 3 questions in a row, the questions
+        will have id 1, 2 and 3. However, the number indication for the answer will still be at 1 so when you click on the
+        third question and try to add an answer type, it will match its id of 1 to the question id 1.--%>
 
     <script>
         var cnt = 100;
@@ -258,6 +265,7 @@ won't delete because its id number won't match its question number. --%>
             shortAns.id = "shortAns" + shortAnsCnt;
             shortAns.class = "form-control";
             shortAns.rows = "2";
+            shortAns.style = "width: 100%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"
             shortAns.placeholder = "Answer";
             shortAns.name = "shortAns_name" + shortAnsCnt;
 
@@ -266,7 +274,9 @@ won't delete because its id number won't match its question number. --%>
             i = getID();
             document.getElementById(i).after(divShortAns);
             cnt = parseInt(cnt) + parseInt(1);
+            
             console.log("making a short answer");
+            console.log(divShortAns);
         }
 
         function makeRadBut() {
@@ -304,7 +314,8 @@ won't delete because its id number won't match its question number. --%>
             i = getID();
             document.getElementById(i).after(divRadio);
             cnt = parseInt(cnt) + parseInt(1);
-            console.log("making radio buttons")
+            console.log("making radio buttons");
+            console.log(divRadio);
         }
 
         function makeGrid() {
@@ -346,6 +357,7 @@ won't delete because its id number won't match its question number. --%>
             document.getElementById(i).after(divTable);
             cnt = parseInt(cnt) + parseInt(1);
             console.log("making multiple choice grid");
+            console.log(divTable);
         }
 
     </script>

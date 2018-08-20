@@ -36,16 +36,21 @@
                 </p>
                 <div>
                     
-                    <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:Survey.My.MySettings.ConnStringDatabaseSurvey %>" 
-                        SelectCommand="SELECT subjectName, subjectDetail, createDate, subjectId from surveyMaster where statusComp = 0"
-                        ></asp:SqlDataSource>
+                    <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString2 %>" 
+                        SelectCommand="Select subjectName, subjectDetail, openDate, subjectId  From surveyMaster where statusComp = 0 and subjectId not in 
+(select subjectId from surveyUserSubmit where submitBy = @xUserEn)"
+                        >
+                        <SelectParameters>
+                            <asp:SessionParameter Name="xUserEn" SessionField="EN" Type="String" />
+                        </SelectParameters>
+                    </asp:SqlDataSource>
                     
                     <asp:GridView ID="surveyList" runat="server" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10" 
                         ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlSurveyListSource">
                         <Columns>
                             <asp:BoundField DataField="subjectName" HeaderText="Survey Name" SortExpression="subjectName" />
                             <asp:BoundField DataField="subjectDetail" HeaderText="Details" SortExpression="subjectDetail" />
-                            <asp:BoundField DataField="createDate" HeaderText="Date Created" SortExpression="createDate" />
+                            <asp:BoundField DataField="openDate" HeaderText="Date Created" SortExpression="openDate" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
                                     <asp:Button ID="Button1" runat="server" class="btn btn-success" CommandName="Go"
