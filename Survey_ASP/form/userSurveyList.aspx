@@ -76,10 +76,10 @@
 
             <div id = "footer" style="background-color: white; height: 70px;">
                 <br>
-                <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
-                    style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
                 <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
                     style="float: left; visibility: hidden;" Text="Back"/>
+                <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
+                    style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
              </div>
         
         </div>

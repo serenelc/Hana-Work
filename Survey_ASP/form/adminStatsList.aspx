@@ -34,17 +34,17 @@
 
             <div>
                     
-                    <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString2 %>" 
-                        SelectCommand="Select subjectName, subjectDetail, openDate, subjectId  From surveyMaster"
+                    <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" 
+                        SelectCommand="SELECT [subjectName], [subjectDetail], [openDate], [subjectId] FROM [surveyMaster]"
                         >
                     </asp:SqlDataSource>
                     
                     <asp:GridView ID="surveyList" runat="server" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10" 
                         ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlSurveyListSource">
                         <Columns>
-                            <asp:BoundField DataField="subjectName" HeaderText="subjectName" SortExpression="subjectName" />
-                            <asp:BoundField DataField="subjectDetail" HeaderText="subjectDetail" SortExpression="subjectDetail" />
-                            <asp:BoundField DataField="openDate" HeaderText="openDate" SortExpression="openDate" />
+                            <asp:BoundField DataField="subjectName" HeaderText="Survey Name" SortExpression="subjectName" />
+                            <asp:BoundField DataField="subjectDetail" HeaderText="Details" SortExpression="subjectDetail" />
+                            <asp:BoundField DataField="openDate" HeaderText="Open Date" SortExpression="openDate" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
                                     <%--TODO: This button will go to the individual survey statistic pages.--%>

@@ -14,4 +14,11 @@
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
         Response.Redirect("login.aspx")
     End Sub
+
+    Private Sub surveyList_RowCommand(sender As Object, e As GridViewCommandEventArgs) Handles surveyList.RowCommand
+        If (e.CommandName = "Go") Then
+            Response.Redirect("results.aspx?subjectId=" + e.CommandArgument.ToString())
+        End If
+    End Sub
+
 End Class

@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class userSurveyList
+Partial Public Class results
     
     '''<summary>
     '''form1 control.
@@ -23,22 +23,31 @@ Partial Public Class userSurveyList
     Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
     
     '''<summary>
-    '''SqlSurveyListSource control.
+    '''title control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents SqlSurveyListSource As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents title As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''surveyList control.
+    '''description control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents surveyList As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents description As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''graphs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents graphs As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
     '''btnBack control.
