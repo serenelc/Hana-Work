@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class adminStatsList
+Partial Public Class adminAllSurveys
     
     '''<summary>
     '''form1 control.

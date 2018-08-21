@@ -1,11 +1,11 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="adminStatsList.aspx.vb" Inherits="Survey.adminStatsList" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="adminAllSurveys.aspx.vb" Inherits="Survey.adminAllSurveys" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
-    <title>Statistics</title>
+    <title>All Surveys</title>
     <!-- Custom styles for this template -->
     <link href="../css/userInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -28,7 +28,7 @@
         <div id ="main" class="container col-8" style="padding: 20px; background-color:white; width: 70%;">
             
             <div>
-                <h1 style="text-align: center;"> Statistics </h1>
+                <h1 style="text-align: center;"> All Surveys </h1>
                 <br>
             </div>
 
@@ -47,9 +47,14 @@
                             <asp:BoundField DataField="openDate" HeaderText="Open Date" SortExpression="openDate" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
-                                    <%--TODO: This button will go to the individual survey statistic pages.--%>
-                                    <asp:Button ID="Button1" runat="server" class="btn btn-success" CommandName="Go"
+                                    <asp:Button ID="go" runat="server" class="btn btn-success" CommandName="Go"
                                     Text="Go" CommandArgument='<%# Eval("subjectId") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField ShowHeader="False">
+                                <ItemTemplate>
+                                    <asp:Button ID="sendMail" runat="server" class="btn btn-primary" CommandName="SendMail"
+                                    Text="Send Email" CommandArgument='<%# Eval("subjectId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="subjectId" HeaderText="subjectId" InsertVisible="False" ReadOnly="True" SortExpression="subjectId" Visible="False" />
@@ -71,7 +76,7 @@
                 <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
                     style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
                 <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
-                    style="float: left" Text="Back"/>
+                    style="float: left; height: 31px;" Text="Back"/>
             </div>
         
         </div>

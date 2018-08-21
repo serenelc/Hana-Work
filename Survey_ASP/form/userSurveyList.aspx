@@ -38,7 +38,7 @@
                 </p>
                 <div>
                     
-                    <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString2 %>" 
+                    <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" 
                         SelectCommand="Select subjectName, subjectDetail, openDate, subjectId  From surveyMaster where statusComp = 0 and subjectId not in 
 (select subjectId from surveyUserSubmit where submitBy = @xUserEn)"
                         >

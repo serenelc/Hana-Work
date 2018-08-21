@@ -41,8 +41,8 @@
                 </div>
                 
                 <div>
-                     <a href="adminStatsList.aspx" style="text-decoration: none; color: white; display: block;">
-                        <button type="button" class="btn btn-secondary btn-lg btn-block">Survey Statistics</button>
+                     <a href="adminAllSurveys.aspx" style="text-decoration: none; color: white; display: block;">
+                        <button type="button" class="btn btn-secondary btn-lg btn-block">All Surveys</button>
                      </a>
                     <br>
                 </div>
