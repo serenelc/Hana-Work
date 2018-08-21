@@ -7,12 +7,10 @@
 <head runat="server">
     <title>Admin Create</title>
     <!-- Custom styles for this template -->
-    <link href="../css/userInfo.css" rel="stylesheet">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link href="../css/userInfo.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-
-<%--Need background colour to extend to bottom of page--%>
 
 <body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
 
@@ -61,7 +59,7 @@
                     onclick="addSection();">
                     Add a Section</button>
                 <button type="button" class="btn btn-info" id="addQ2"
-                    onclick="addQuestion();">
+                    onclick="addQuestion()">
                     Add a Question</button>
 
                 <div id="save" style="background-color: white; height: 70px;">
@@ -143,19 +141,19 @@
 
     </script>
 
-    <%--Script to add a question and choose an answer type--%>
+    <%--Script to add a question and choose an answer type. Then disable the drop down once an answer type has been chosen--%>
     <script>
 
         var countQ = 100;
+        var newCountQ;
         function addQuestion() {
 
-            var newCountQ = countQ.toString().slice(-2);
+            newCountQ = countQ.toString().slice(-2);
 
             let divGroup = document.createElement("div");
             divGroup.id = "divGroupQ_id" + newCountQ;
             divGroup.name = "divGroupQ_name" + newCountQ;
             divGroup.className = "input-group";
-            //divGroup.innerHTML = '<input type="text" class="form-control" style="font-weight:bold;" placeholder="Question" name="questionName">';
 
             let questionInput = document.createElement("input");
             questionInput.type = "text";
@@ -171,21 +169,21 @@
             divbutton.id = "divbuttonQ_id" + newCountQ;
             divbutton.name = "divbuttonQ_name" + newCountQ;
             divbutton.className = "input-group-append";
-            divbutton.innerHTML = '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" style="border-radius: 5px; border-style: solid; border-color: #cccccc;" aria-haspopup="true" aria-expanded="false">Answer Type</button>';
+            divbutton.innerHTML = '<button id="answerType' + newCountQ + '"class="btn btn-primary dropdown-toggle" style ="border-radius: 5px; border-color: #d15ecc; background-color: #d15ecc;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Answer Type</button>';
 
             let divdropdown = document.createElement("div");
             divdropdown.id = "divdropdownQ_id" + newCountQ;
             divdropdown.name = "divdropdownQ_name" + newCountQ;
             divdropdown.className = "dropdown-menu";
-            divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut()">Radio Button</a>';
+            divdropdown.innerHTML = '<a class="dropdown-item" href="javascript:makeRadBut()" onclick=disable()>Radio Button</a>';
             let adropdown2 = document.createElement("a");
             adropdown2.id = "adropdown2Q_id" + newCountQ;
             adropdown2.name = "adropdown2Q_name" + newCountQ;
-            adropdown2.innerHTML = '<a class="dropdown-item" href="javascript:makeGrid()">Multiple Choice Grid</a>';
+            adropdown2.innerHTML = '<a class="dropdown-item" href="javascript:makeGrid()" onclick=disable()>Multiple Choice Grid</a>';
             let adropdown3 = document.createElement("a");
             adropdown3.id = "adropdown3Q_id" + newCountQ;
             adropdown3.name = "adropdown3Q_name" + newCountQ;
-            adropdown3.innerHTML = '<a class="dropdown-item" href="javascript:makeShortAns()">Short Answer</a>';
+            adropdown3.innerHTML = '<a class="dropdown-item" href="javascript:makeShortAns()" onclick=disable()>Short Answer</a>';
             divdropdown.appendChild(adropdown2).appendChild(adropdown3);
 
             divGroup.appendChild(divbutton).appendChild(divdropdown);
@@ -208,7 +206,14 @@
             console.log("Adding a question");
         }
 
+        function disable() {
+            var toDisable = "answerType" + newCountQ;
+            document.getElementById(toDisable).disabled = true;
+        }
+
     </script>
+
+
 
     <%--  TODO: Sometimes when you try to delete the question, the answer box 
 won't delete because its id number won't match its question number. --%>

@@ -7,8 +7,8 @@
 <head runat="server">
     <title>Survey</title>
     <!-- Custom styles for this template -->
-    <link href="../css/userInfo.css" rel="stylesheet">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link href="../css/userInfo.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 
 <body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">

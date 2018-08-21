@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
-    <%--Need background colour to extend to bottom of page--%>
-
 <body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
 
     <form id="form1" runat="server" method="get">
