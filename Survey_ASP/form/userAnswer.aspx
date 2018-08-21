@@ -32,6 +32,7 @@
                 <asp:Label ID="description" runat="server"></asp:Label>
             </div>
 
+            <%--Data got from the database will go into the frm section--%>
             <div> 
                     <asp:Label ID="frm" runat="server"></asp:Label>
             </div>

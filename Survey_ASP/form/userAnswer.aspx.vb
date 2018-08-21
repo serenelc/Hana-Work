@@ -206,14 +206,12 @@ Public Class userAnswer
                 End If
             End If
             If (v.Contains("answerName") And rFlag = 1) Then
-                's += "<input type='radio' class='form-check-input' id='rad' name='rad" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "<input type='radio' class='form-check-input' id='rad' name='rad" + xquestionId.ToString() + "' value='" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + v.Substring(v.IndexOf("=") + 1) + "</label>"
             End If
             If (v.Contains("answerName") And gFlag = 1) Then
                 gNumRad = v.Substring(v.IndexOf("=") + 1)
-                's += "<input type='radio' class='form-check-input' id='grid' name='grid" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "<input type='radio' class='form-check-input' id='grid' name='grid" + xquestionId.ToString() + "' value='" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + gNumRad.ToString() + "</label>"
@@ -279,6 +277,7 @@ Public Class userAnswer
 
                     prmQuestionID = xval.Substring(indexQ + 2, qIdLength)
 
+                    'Short answers have a different layout
                     If (xval.Contains("short")) Then
                         Dim aIdLength As Integer = indexE - indexA - 2
                         prmAnswerID = xval.Substring(indexA + 2, aIdLength)
@@ -304,6 +303,7 @@ Public Class userAnswer
             SQLConn.Close()
         End Try
     End Sub
+
     'Save SaveSurveyUserSubmit
     Private Function SaveSurveyUserSubmit(ByRef SQLConn As SqlConnection, ByRef SQLTran As SqlTransaction) As Boolean
 

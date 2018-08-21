@@ -34,7 +34,6 @@
 
             <div>
                 <div>
-                    <%--<img src="../images/make-survey.jpeg" style="width: 100px;"/>--%>
                     <a href="adminCreate.aspx" style="text-decoration: none; color: white; display: block;">
                         <button type="button" class="btn btn-secondary btn-lg btn-block"> Create a survey</button>
                     </a>
@@ -42,7 +41,6 @@
                 </div>
                 
                 <div>
-                    <%--<img src="../images/statistics.jpg" style="width: 100px;"/>--%>
                      <a href="adminStatsList.aspx" style="text-decoration: none; color: white; display: block;">
                         <button type="button" class="btn btn-secondary btn-lg btn-block">Survey Statistics</button>
                      </a>
@@ -50,7 +48,6 @@
                 </div>
 
                 <div>
-                     <%--<img src="../images/statistics.jpg" style="width: 100px;"/>--%>
                     <a href="userSurveyList.aspx" style="text-decoration: none; color: white; display: block;">
                         <button type="button" class="btn btn-secondary btn-lg btn-block">Answer a survey</button>
                     </a>
@@ -63,7 +60,6 @@
                     <br>
                     <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
                     style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
-                    <%-- <asp:button runat="server" id="btnDelete" type="button" class="btn btn-danger">Delete</asp:button> --%>
              </div>
         
         </div>
@@ -72,6 +68,7 @@
                  
         </div>
 
+        <%--Script to confirm logout--%>
         <script>
             function confirmLogout() {
                 return confirm("Are you sure you would like to logout?");

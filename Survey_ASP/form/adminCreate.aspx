@@ -106,7 +106,9 @@
     <%--Script to add a section/sub topic--%>
     <script>
 
-        var countSec = 0;
+        var countSec = 0; //global variable
+        //var secNum = 0; //global variable
+        //var secFlag = 0;
 
         function addSection() {
 
@@ -131,6 +133,7 @@
             sectionClose.class = "btn"
             sectionClose.style = "border: none; background-color: white;"
             sectionClose.innerHTML = '<span aria-hidden="true">X</span> ';
+            //sectionClose.onclick = removeSection;
             divSection.appendChild(sectionClose);
 
             divSection.appendChild(document.createElement("br"));
@@ -141,7 +144,7 @@
 
     </script>
 
-    <%--Script to add a question and choose an answer type. Then disable the drop down once an answer type has been chosen--%>
+    <%--Script to add a question and choose an answer type, then disable the drop down once an answer type has been chosen--%>
     <script>
 
         var countQ = 100;
@@ -213,34 +216,72 @@
 
     </script>
 
-
-
-    <%--  TODO: Sometimes when you try to delete the question, the answer box 
-won't delete because its id number won't match its question number. --%>
-
-    <%--Script to remove a question--%>
+    <%--Script to remove a question and section. TODO: removeSection()--%>
     <script>
         var idCount = 0; //GLOBAL VARIABLE
+
+        //function removeSection() {
+        //    secFlag = 1;
+        //    this.removeElement();
+        //}
+
         function removeElement() {
+            //var indexS = this.id.indexOf(":S");
+            //var indexU = this.id.indexOf("_");
             var idNum = this.id.slice(-2);
+
+            //if (secFlag = 1) {
+            //    secNum = countSec;
+            //    document.getElementById("divSection_id" + countSec).remove();
+            //}
+
             document.getElementById("divGroupQ_id" + idNum).remove();
             document.getElementById("break_id" + idNum).remove();
             if (document.getElementById("divRadio_id" + idNum) != null) {
                 document.getElementById("divRadio_id" + idNum).remove();
                 console.log("REMOVING RADIO BUTTON");
+                idCount--;
             }
             else if (document.getElementById("divShortAns_id" + idNum) != null) {
                 document.getElementById("divShortAns_id" + idNum).remove();
                 console.log("REMOVING SHORT ANSWER");
+                idCount--;
             }
             else if (document.getElementById("divTable_id" + idNum) != null) {
                 document.getElementById("divTable_id" + idNum).remove();
                 console.log("REMOVING MULTIPLE CHOICE GRID");
+                idCount--;
             }
             else {
                 //do nothing
             }
-            idCount--;
+            
+
+            //if (document.getElementById("divGroupQ_idS:" + secNum + "_" + idNum) != null) {
+            //    secNum = this.id.substr(indexS + 2, indexU - indexS);
+            //    document.getElementById("divGroupQ_idS:" + secNum + "_" + idNum).remove();
+            //    document.getElementById("break_idS:" + secNum + "_" + idNum).remove();
+            //}
+            
+            //if (document.getElementById("divRadio_idS:" + secNum + "_" + idNum) != null) {
+            //    document.getElementById("divRadio_idS:" + secNum + "_" + idNum).remove();
+            //    console.log("REMOVING RADIO BUTTON");
+            //    idCount--;
+            //}
+            //else if (document.getElementById("divShortAns_idS:" + secNum + "_" + idNum) != null) {
+            //    document.getElementById("divShortAns_idS:" + secNum + "_" + idNum).remove();
+            //    console.log("REMOVING SHORT ANSWER");
+            //    idCount--;
+            //}
+            //else if (document.getElementById("divTable_idS:" + secNum + "_" + idNum) != null) {
+            //    document.getElementById("divTable_idS:" + secNum + "_" + idNum).remove();
+            //    console.log("REMOVING MULTIPLE CHOICE GRID");
+            //    idCount--;
+            //}
+            //else {
+                
+            //}
+
             return false;
         }
     </script>
@@ -248,9 +289,30 @@ won't delete because its id number won't match its question number. --%>
     <%--Script to remove a section--%>
     <%--<script>
         function removeSection() {
-            var secIdNum = this.id.slice(-2);
-            document.getElementById("divSection_id" + secIdNum).remove();
-            this.removeElement();
+            document.getElementById("divSection_id" + countSec).remove();
+            var secNum = countSec;
+            document.getElementById("divGroupQ_idS:" + secNum + "_" + idNum).remove();
+            document.getElementById("break_idS:" + secNum + "_" + idNum).remove();
+            if (document.getElementById("divRadio_idS:" + secNum + "_" + idNum) != null) {
+                document.getElementById("divRadio_idS:" + secNum + "_" + idNum).remove();
+                console.log("REMOVING RADIO BUTTON");
+                idCount--;
+            }
+            else if (document.getElementById("divShortAns_idS:" + secNum + "_" + idNum) != null) {
+                document.getElementById("divShortAns_idS:" + secNum + "_" + idNum).remove();
+                console.log("REMOVING SHORT ANSWER");
+                idCount--;
+            }
+            else if (document.getElementById("divTable_idS:" + secNum + "_" + idNum) != null) {
+                document.getElementById("divTable_idS:" + secNum + "_" + idNum).remove();
+                console.log("REMOVING MULTIPLE CHOICE GRID");
+                idCount--;
+            }
+            else {
+                //do nothing
+            }
+
+            return false;
         }
     </script>--%>
 
@@ -258,7 +320,6 @@ won't delete because its id number won't match its question number. --%>
     <script>
         function getID() {
             idCount = parseInt(idCount);
-            console.log(idCount);
             console.log(document.getElementsByClassName("input-group"));
             var elem = document.getElementsByClassName("input-group")[idCount];
             idCount = parseInt(idCount) + parseInt(1);

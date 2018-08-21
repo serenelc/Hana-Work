@@ -76,6 +76,7 @@
         
         </div>
 
+        <%--Script to confirm logout--%>
         <script>
             function confirmLogout() {
                 return confirm("Are you sure you would like to logout?");
