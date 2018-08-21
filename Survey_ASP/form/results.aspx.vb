@@ -114,20 +114,16 @@ Public Class results
                 y(i) = Convert.ToInt32(radDt.Rows(i)(1))
             Next
 
-            Str += "<asp:Chart id='pieChart' runat=server>
-                        <series>
-                            <asp:Series ChartType='Pie' Name='Series1' IsValueShownAsLabel='True'></asp:Series>
-                        </series>                        
-                        <chartareas>
-                            <asp:ChartArea Name='pieArea1'></asp:ChartArea>
-                        </chartareas>
-                        <Legends>
-                            <asp:Legend Name='pieLegend'></asp:Legend>
-                        </Legends>
-                    </asp:Chart>"
+            str += "<asp:Chart id='pieChart' runat=server> <series> <asp:Series ChartType='Pie' Name='Series1' IsValueShownAsLabel='True'> <Points>"
+            For j As Integer = 0 To radDt.Rows.Count - 1
+                str += "<asp:DataPoint AxisLabel= '" + x(j) + "' "
+                str += "YValues= '" + y(j).ToString() + "'/>"
+            Next
+            str += "</Points> </asp:Series> </series> <chartareas> <asp:ChartArea Name='pieArea1'></asp:ChartArea> </chartareas> <Legends> <asp:Legend Name='pieLegend'></asp:Legend> </Legends></asp:Chart>"
             str += "<p>testing testing</p>"
 
             graphs.Text = str
+
             'pieChart.Series.Clear()
             'pieChart.Titles.Clear
             'Dim T As Title = pieChart.Titles.Add(xQuestionName)
