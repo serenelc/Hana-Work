@@ -9,4 +9,5 @@ TO DO:
 - IN PROGRESS: Make a page to show graphs and summaries of an individual survey
 - Make the survey close date only in the future on adminCreate
 - Have a manual button so the admin can close the survey before the chosen close date if desired
-- IN PROGRESS: Have an option so the admin can choose who they want to send the email to
+- IN PROGRESS: Have an option so the admin can choose who they want to send the email to -> mail button will go to another page where there is a list of all employees and their emails. admin can select users from that list to email about that specific survey.
+- IN PROGRESS: Staff in HR requested that the sections look more colourful and prettier.

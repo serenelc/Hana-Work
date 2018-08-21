@@ -173,6 +173,7 @@ Public Class userAnswer
             End If
             If (v.Contains("sectionName")) Then
                 s += "<br> <h3 style='text-decoration: underline' id='sectionTitle_name' name='sectionTitle_name'>" + v.Substring(v.IndexOf("=") + 1) + "</h3>"
+                s += "<div class='pointer'><p>Testing out some shapes to make the section headers more interesting</p></div>"
             End If
             If (v.Contains("questionName")) Then
                 Dim gT = listContent.Item(i + 1)

@@ -55,6 +55,7 @@
                                 <ItemTemplate>
                                     <asp:Button ID="sendMail" runat="server" class="btn btn-primary" CommandName="SendMail"
                                     Text="Send Email" CommandArgument='<%# Eval("subjectId") %>' />
+                                    <%--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>--%>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="subjectId" HeaderText="subjectId" InsertVisible="False" ReadOnly="True" SortExpression="subjectId" Visible="False" />
@@ -76,10 +77,31 @@
                 <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
                     style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
                 <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
-                    style="float: left; height: 31px;" Text="Back"/>
+                    style="float: left;" Text="Back"/>
             </div>
         
         </div>
+
+        <!--email menu-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
         <%--Script to confirm logout--%>
         <script>
