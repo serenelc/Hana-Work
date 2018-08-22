@@ -7,8 +7,9 @@
 <head runat="server">
     <title>All Surveys</title>
     <!-- Custom styles for this template -->
-    <link href="../css/userInfo.css" rel="stylesheet">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/userInfo.css"/>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <%--<link rel="stylesheet" href="../node_modules/bootstrap-toggle/css/bootstrap2-toggle.min.css" />--%>
 </head>
 
 <body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
@@ -33,6 +34,12 @@
             </div>
 
             <div>
+                <p> 
+                    Click on the column title to sort the table.
+                </p>
+                <div>
+
+            <div>
                     
                     <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" 
                         SelectCommand="SELECT [subjectName], [subjectDetail], [openDate], [subjectId] FROM [surveyMaster]"
@@ -55,7 +62,11 @@
                                 <ItemTemplate>
                                     <asp:Button ID="sendMail" runat="server" class="btn btn-primary" CommandName="SendMail"
                                     Text="Send Email" CommandArgument='<%# Eval("subjectId") %>' />
-                                    <%--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>--%>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField ShowHeader="False">
+                                <ItemTemplate>
+                                    <input type="checkbox" data-toggle="toggle">
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="subjectId" HeaderText="subjectId" InsertVisible="False" ReadOnly="True" SortExpression="subjectId" Visible="False" />
@@ -82,27 +93,6 @@
         
         </div>
 
-        <!--email menu-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
         <%--Script to confirm logout--%>
         <script>
             function confirmLogout() {
@@ -113,6 +103,7 @@
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
         <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <%--<script src="../node_modules/bootstrap-toggle/js/bootstrap2-toggle.min.js"></script>--%>
 
     </form>
 

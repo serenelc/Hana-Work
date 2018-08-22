@@ -78,7 +78,4 @@ Public Class adminAllSurveys
         Response.Redirect("index.aspx")
     End Sub
 
-    'Protected Sub surveyList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles surveyList.SelectedIndexChanged
-
-    'End Sub
 End Class

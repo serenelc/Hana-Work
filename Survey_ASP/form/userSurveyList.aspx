@@ -34,12 +34,12 @@
 
             <div>
                 <p> 
-                    The following surveys are currently open.
+                    The following surveys are currently open. Click on the column title to sort the table.
                 </p>
                 <div>
                     
                     <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" 
-                        SelectCommand="Select subjectName, subjectDetail, openDate, subjectId  From surveyMaster where statusComp = 0 and subjectId not in 
+                        SelectCommand="Select subjectName, subjectDetail, openDate, closeDate, subjectId  From surveyMaster where statusComp = 0 and subjectId not in 
 (select subjectId from surveyUserSubmit where submitBy = @xUserEn)"
                         >
                         <SelectParameters>
@@ -48,14 +48,15 @@
                     </asp:SqlDataSource>
                     
                     <asp:GridView ID="surveyList" runat="server" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10" 
-                        ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlSurveyListSource">
+                        ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlSurveyListSource" AllowSorting="True">
                         <Columns>
-                            <asp:BoundField DataField="subjectName" HeaderText="Survey Name" SortExpression="subjectName" />
+                            <asp:BoundField DataField="subjectName" HeaderText="Survey Title" SortExpression="subjectName" />
                             <asp:BoundField DataField="subjectDetail" HeaderText="Details" SortExpression="subjectDetail" />
-                            <asp:BoundField DataField="openDate" HeaderText="Date Created" SortExpression="openDate" />
-                            <asp:TemplateField ShowHeader="False">
+                            <asp:BoundField DataField="openDate" HeaderText="Open Date" SortExpression="openDate" />
+                            <asp:BoundField DataField="closeDate" HeaderText="Close Date" SortExpression="closeDate" />
+                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
-                                    <asp:Button ID="Button1" runat="server" class="btn btn-success" CommandName="Go"
+                                    <asp:Button ID="go" runat="server" class="btn btn-success" CommandName="Go"
                                     Text="Go" CommandArgument='<%# Eval("subjectId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>

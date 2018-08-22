@@ -47,9 +47,7 @@
 
             <%--Need user to be able to choose date in future only--%>
             <div class="form-group">
-                <label>Survey close date (please choose a date in the future)</label>
-                <%--<input id="closeDate" type="date" value="" />--%>
-                <%--<asp:Calendar ID="closeDate" runat="server" Height="140px" Width="176px"></asp:Calendar>--%>
+                <label>Survey close date (The survey will close automatically at 00:00 of the day chosen)</label>
                 <input class="w-input input" id="closeDate" type="date" name="close" min="2018-08-22" style="width: 60%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"/>
             </div>
 
@@ -80,7 +78,7 @@
         }
     </script>
 
-    <%--Script to set the minimum date to today. TODO: Cannot get chosen date.--%>
+    <%--Script to set the minimum date to today.--%>
     <script>
 
         $(document).ready(function () {

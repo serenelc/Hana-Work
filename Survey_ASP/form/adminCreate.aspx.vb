@@ -48,12 +48,9 @@ Public Class adminCreate
                 Dim val As String = strArr(i).ToString()
                 If val.Contains("close=") Then
                     Dim d = val.Substring(val.IndexOf("=") + 1)
-                    '        Dim edate = "10/12/2009"
-                    '        Dim expenddt As Date = Date.ParseExact(edate, "dd/MM/yyyy",
-                    'System.Globalization.DateTimeFormatInfo.InvariantInfo)
                     Dim parsed = Date.Parse(d)
 
-                    prmCloseDate = New DateTime(parsed.Year, parsed.Month, parsed.Day, Date.Now.Hour, Date.Now.Minute, Date.Now.Second)
+                    prmCloseDate = New DateTime(parsed.Year, parsed.Month, parsed.Day, 0, 0, 0)
 
                     If (Not validateData()) Then
                         Exit Sub

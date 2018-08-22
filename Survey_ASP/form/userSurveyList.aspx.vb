@@ -7,6 +7,33 @@ Public Class userSurveyList
         If Session("En") Is Nothing Then
             Response.Redirect("index.aspx")
         End If
+        updateDatabase()
+    End Sub
+
+    Private Sub updateDatabase()
+        Dim dt As New DataTable
+        Dim con As New SqlConnection
+        Dim cmd As New SqlCommand
+        Try
+            con.ConnectionString = My.Settings.ConnStringDatabaseSurvey
+            con.Open()
+            cmd.Connection = con
+            cmd.CommandText = "UPDATE SurveyMaster SET status='CLOSED', statusComp=1 WHERE closeDate < GETDATE()"
+
+            'create a DataReader and execute the SqlCommand
+            Dim MyDataReader As SqlDataReader = cmd.ExecuteReader()
+
+            'load the reader into the datatable
+            dt.Load(MyDataReader)
+
+            'clean up
+            MyDataReader.Close()
+        Catch ex As Exception
+            Dim errorMsg = "Error while updating database"
+            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & errorMsg & "')", True)
+        Finally
+            con.Close()
+        End Try
     End Sub
 
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
