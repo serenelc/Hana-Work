@@ -7,6 +7,5 @@ TO DO:
 - Fix the issue on adminCreate where if you add many questions in a row without choosing answer types, when you click on the last question to add an answer, the answer type will be assigned to the top available question.
 - Convert e.g. %3f into ? or %27 into '
 - Make a page to show graphs and summaries of an individual survey
-- IN PROGRESS: Make the survey close date only in the future on adminCreate
-- Have a manual button so the admin can close the survey before the chosen close date if desired
+- IN PROGRESS: Have a manual button so the admin can close the survey before the chosen close date if desired
 - IN PROGRESS: Have an option so the admin can choose who they want to send the email to -> mail button will go to another page where there is a list of all employees and their emails. admin can select users from that list to email about that specific survey.

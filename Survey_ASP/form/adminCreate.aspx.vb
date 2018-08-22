@@ -4,6 +4,7 @@ Public Class adminCreate
     Inherits System.Web.UI.Page
 
     Public divSecTitle_val = ""
+    Public prmCloseDate As DateTime
     Public prmSubjid As Integer = 0
     Public prmSectionID As Integer = 0
     Public prmSectionOrder As Integer = 0
@@ -24,13 +25,9 @@ Public Class adminCreate
 
         txtTitle.Value = Request.QueryString("txtTitle")
         txtDesc.Value = Request.QueryString("txtDesc")
-        'closeDate.Value = Request.QueryString("closeDate")
 
-        If (validateData() = False) Then
-            Exit Sub
-        End If
         xcreateDate = Date.Now
-        'closeDate.Value = Date.Now
+
         Dim ClientQueryList = Request.QueryString
         Dim aa = ClientQueryList
         Dim bb = ClientQueryString
@@ -49,7 +46,19 @@ Public Class adminCreate
             prmSubjid = 0
             For i As Integer = 0 To strArr.Count - 1
                 Dim val As String = strArr(i).ToString()
-                If val.Contains("txtTitle=") = True Or val.Contains("txtDesc=") = True Then
+                If val.Contains("close=") Then
+                    Dim d = val.Substring(val.IndexOf("=") + 1)
+                    '        Dim edate = "10/12/2009"
+                    '        Dim expenddt As Date = Date.ParseExact(edate, "dd/MM/yyyy",
+                    'System.Globalization.DateTimeFormatInfo.InvariantInfo)
+                    Dim parsed = Date.Parse(d)
+
+                    prmCloseDate = New DateTime(parsed.Year, parsed.Month, parsed.Day, Date.Now.Hour, Date.Now.Minute, Date.Now.Second)
+
+                    If (Not validateData()) Then
+                        Exit Sub
+                    End If
+
                     If (SaveSurveyMaster(SQLConn, SQLTran) = False) Then Throw New Exception("Save surveyMaster fail!")
                 Else
                     If val.Contains("sectionTitle_name") = True Then
@@ -79,7 +88,6 @@ Public Class adminCreate
                             End If
 
                             xupdateValueType = updateValueType
-
 
                             If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType) = False) Then Throw New Exception("Save surveyQuestion fail!")
                         Else
@@ -119,10 +127,11 @@ Public Class adminCreate
             SQLConn.Close()
         End Try
     End Sub
+
     Function validateData()
         Try
-            If txtTitle.Value = "" Then Throw New Exception("Please fill Title!")
-            If txtDesc.Value = "" Then Throw New Exception("Please fill Description!")
+            If txtTitle.Value = "" Then Throw New Exception("Please fill in the Title")
+            If txtDesc.Value = "" Then Throw New Exception("Please fill in the Description")
         Catch ex As Exception
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & ex.Message & "')", True)
             Return False
@@ -136,8 +145,8 @@ Public Class adminCreate
         Dim str As String = String.Empty
         'New
         If prmSubjid = 0 Then
-            str = "INSERT INTO surveyMaster(subjectName,subjectDetail,status,openDate,createBy,createDate) "
-            str = str + " VALUES(@subjectName, @subjectDetail, @status,@openDate,@createBy,@createDate); Set @subj_ID = SCOPE_IDENTITY() "
+            str = "INSERT INTO surveyMaster(subjectName,subjectDetail,status,openDate,closeDate,createBy,createDate) "
+            str = str + " VALUES(@subjectName, @subjectDetail, @status,@openDate,@closeDate,@createBy,@createDate); Set @subj_ID = SCOPE_IDENTITY() "
             Using SQLCmd As New SqlCommand With {.Connection = SQLConn,
                                                              .Transaction = SQLTran,
                                                              .CommandType = CommandType.Text,
@@ -148,7 +157,7 @@ Public Class adminCreate
                     .Parameters.AddWithValue("@subjectDetail", txtDesc.Value)
                     .Parameters.AddWithValue("@status", "OPEN")
                     .Parameters.AddWithValue("@openDate", xcreateDate)
-                    '.Parameters.AddWithValue("@closeDate", closeDate.Value)
+                    .Parameters.AddWithValue("@closeDate", prmCloseDate)
                     .Parameters.AddWithValue("@createBy", Session("En"))
                     .Parameters.AddWithValue("@createDate", xcreateDate)
 

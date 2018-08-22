@@ -7,8 +7,8 @@
 <head runat="server">
     <title>Admin Create</title>
     <!-- Custom styles for this template -->
-    <link href="../css/userInfo.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link href="../css/userInfo.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -18,8 +18,8 @@
 
         <div style="background-color: inherit; height: 100px">
             <div id="userInfo" class="sidenav">
-                <label id= "info">
-                    <img src="../images/user.png" style="height: 40px; padding-right: 10px"/>
+                <label id="info">
+                    <img src="../images/user.png" style="height: 40px; padding-right: 10px" />
                     <%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%>
                 </label>
             </div>
@@ -31,44 +31,44 @@
             <div>
                 <h1 style="text-align: center;">Create A Survey </h1>
             </div>
-      
-                <div class="form-group">
-                    <label>
-                        <h3>Title</h3>
-                    </label>
-                    <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title"/>
-                </div>
 
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea  runat="server" class="form-control" id="txtDesc" rows="2"
-                        placeholder="Short description about your survey"></textarea>
-                </div>
+            <div class="form-group">
+                <label>
+                    <h3>Title</h3>
+                </label>
+                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title" />
+            </div>
 
-                <%--Need user to be able to choose date in future only--%>
-                <div class="form-group">
-                    <label>Survey close date</label>
-                    <%--<input  type="date" id="closeDate" value=""/>--%>
-                    <%--<input runat="server" class="form-control" type="datetime-local" value="@DateTime.Now.ToString('s')" id="closeDate"/>--%>
-                    <asp:Calendar ID="closeDate" runat="server" Height="140px" Width="176px"></asp:Calendar>
-                </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea runat="server" class="form-control" id="txtDesc" rows="2"
+                    placeholder="Short description about your survey"></textarea>
+            </div>
 
-                <hr>
+            <%--Need user to be able to choose date in future only--%>
+            <div class="form-group">
+                <label>Survey close date (please choose a date in the future)</label>
+                <%--<input id="closeDate" type="date" value="" />--%>
+                <%--<asp:Calendar ID="closeDate" runat="server" Height="140px" Width="176px"></asp:Calendar>--%>
+                <input class="w-input input" id="closeDate" type="date" name="close" min="2018-08-22" style="width: 60%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"/>
+            </div>
 
-                <button type="button" class="btn btn-info" id="newSection"
-                    onclick="addSection();">
-                    Add a Section</button>
-                <button type="button" class="btn btn-info" id="addQ2"
-                    onclick="addQuestion()">
-                    Add a Question</button>
+            <hr>
 
-                <div id="save" style="background-color: white; height: 70px;">
-                    <br>
-                    <asp:Button runat="server" ID="btnSave" type="button" class="btn btn-success"
-                        Style="float: right" Text="Save" OnClick="btnSave_Click" OnClientClick="return confirmSave()" />
-                    <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning" Text="Back" />
+            <button type="button" class="btn btn-info" id="newSection"
+                onclick="addSection();">
+                Add a Section</button>
+            <button type="button" class="btn btn-info" id="addQ2"
+                onclick="addQuestion()">
+                Add a Question</button>
 
-                </div>
+            <div id="save" style="background-color: white; height: 70px;">
+                <br>
+                <asp:Button runat="server" ID="btnSave" type="button" class="btn btn-success"
+                    Style="float: right" Text="Save" OnClick="btnSave_Click" OnClientClick="return confirmSave()" />
+                <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning" Text="Back" />
+
+            </div>
         </div>
 
     </form>
@@ -80,26 +80,27 @@
         }
     </script>
 
-    <%--Script to get today's date in desired format--%>
+    <%--Script to set the minimum date to today. TODO: Cannot get chosen date.--%>
     <script>
-        function getDate() {
-            var today = new Date();
-            var dd = today.getDate(); + 1; //survey has to close at least 1 day after it is created
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
 
+        $(document).ready(function () {
+            //var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yy = today.getFullYear();
             if (dd < 10) {
                 dd = '0' + dd;
             }
             if (mm < 10) {
-                mm='0'+mm;
-            }   
-            var today = yyyy + '-' + mm + '-' + dd;
-            document.getElementById("closeDate").value = today;
-            //return today;
-        }
-        
-        //getDate();
+                mm = '0' + mm;
+            }
+            var rightnow = yy + '-' + mm + '-' + dd;
+            $('#closeDate').attr('min', rightnow);
+        });
+
+        var currentDate = $( ".selector" ).datepicker( "getDate" );
+        console.log(currentDate);
+
     </script>
 
 
@@ -255,14 +256,14 @@
             else {
                 //do nothing
             }
-            
+
 
             //if (document.getElementById("divGroupQ_idS:" + secNum + "_" + idNum) != null) {
             //    secNum = this.id.substr(indexS + 2, indexU - indexS);
             //    document.getElementById("divGroupQ_idS:" + secNum + "_" + idNum).remove();
             //    document.getElementById("break_idS:" + secNum + "_" + idNum).remove();
             //}
-            
+
             //if (document.getElementById("divRadio_idS:" + secNum + "_" + idNum) != null) {
             //    document.getElementById("divRadio_idS:" + secNum + "_" + idNum).remove();
             //    console.log("REMOVING RADIO BUTTON");
@@ -279,7 +280,7 @@
             //    idCount--;
             //}
             //else {
-                
+
             //}
 
             return false;
@@ -353,11 +354,11 @@
             shortAns.name = "shortAns_name" + shortAnsCnt;
 
             divShortAns.appendChild(shortAns);
-            
+
             i = getID();
             document.getElementById(i).after(divShortAns);
             cnt = parseInt(cnt) + parseInt(1);
-            
+
             console.log("making a short answer");
             console.log(divShortAns);
         }
@@ -419,7 +420,7 @@
 
             for (var r = 0; r < numRows; r++) {
                 gridBody += "<div><textarea type='text' class='form-control' placeholder='question' style='border-radius: 5px; border-style: solid; border-color: #d8d8d8;' name = 'gridQ_name"
-                    + gridCnt + "_" + r + "_" + numCols + "' id='gridQ_Id" + gridCnt + "_" + r +"'></textarea></div>";
+                    + gridCnt + "_" + r + "_" + numCols + "' id='gridQ_Id" + gridCnt + "_" + r + "'></textarea></div>";
             }
 
             gridBody += "</div><div class='col-5' style='overflow:scroll;height:auto;width:100%;overflow-y:hidden;overflow-x:scroll;'>";
