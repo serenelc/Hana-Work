@@ -5,7 +5,7 @@ Main project is to create a survey template (along the lines of google forms) so
 TO DO:
 - Add a section delete button on adminCreate -> add some sort of flag to each question so we know which section it is part of, then we can delete all the questions within the section.
 - Fix the issue on adminCreate where if you add many questions in a row without choosing answer types, when you click on the last question to add an answer, the answer type will be assigned to the top available question.
-- Convert e.g. %3f into ? or %27 into '
 - Make a page to show graphs and summaries of an individual survey
-- IN PROGRESS: Have a manual button so the admin can close the survey before the chosen close date if desired. -> Once a survey is closed the admin can no longer send emails on it and survey will not show up on userSurveyList. If it is passed the survey close date, then the survey status must be changed to CLOSED in the database.
-- IN PROGRESS: Have an option so the admin can choose who they want to send the email to -> mail button will go to another page where there is a list of all employees and their emails. admin can select users from that list to email about that specific survey.
+- IN PROGRESS: close dates
+		-> Have a manual button so the admin can close the survey before the chosen close date if desired.  
+- Have an option so the admin can choose who they want to send the email to -> mail button will go to another page where there is a list of all employees and their emails. admin can select users from that list to email about that specific survey.

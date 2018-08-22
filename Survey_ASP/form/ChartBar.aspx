@@ -7,31 +7,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link href="../css/userInfo.css" rel="stylesheet">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
-<body>
+<body style="background: linear-gradient(#a9c5f2, #619af4);">
     <form id="form1" runat="server">
-        <div>
+        <div id ="main" class="container" style="padding: 20px; background-color:white; min-height: 100%; width: 70%;">
             <asp:Label ID="Label1" runat="server" Font-Bold="True" Text="Survey Chart"></asp:Label>
             <br />
             <br />
             <br />
-            <br />
-            <asp:Chart ID="pieChart" runat="server" Width="907px">
-                <series>
-                    <asp:Series ChartType="Pie" Name="Series1" >
+            <asp:Chart ID="ChartForKPIInLoop" runat="server">
+                <Series>
+                    <asp:Series ChartType="StackedBar" Name="Series1">
                     </asp:Series>
-                </series>
-                <chartareas>
+                </Series>
+                <ChartAreas>
                     <asp:ChartArea Name="ChartArea1">
                     </asp:ChartArea>
-                </chartareas>
-                <Legends>
-                    <asp:Legend Name="Legend1">
-                    </asp:Legend>
-                </Legends>
+                </ChartAreas>
             </asp:Chart>
             <br />
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="select B.answerName,count(*) as cntAnswer from surveyUserAnswer A
+
+            <div id="divTable" runat="server"></div>
+              <div id="divImage" runat="server" >             
+  
+               </div>
+           
+            <br />
+            <%-- <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="select B.answerName,count(*) as cntAnswer from surveyUserAnswer A
 left join surveyAnswer B  on A.questionId = B.questionId and A.answerId = B.answerId
 where A.subjectId = 16 
 and A.questionId = 34
@@ -51,7 +55,33 @@ group by A.subjectId,B.answerName
                     <br />
                 </ItemTemplate>
                 <SelectedItemStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
-            </asp:DataList>
+            </asp:DataList>--%>            <%--<asp:Chart ID="chart1" runat="server">
+                <Series>
+
+                    <asp:Series ChartArea="ChartArea1" Name="Series1" ></asp:Series>
+                    <asp:Series ChartArea="ChartArea1" Name="Series2" ></asp:Series>
+                    <asp:Series ChartArea="ChartArea1" Name="Series3" ></asp:Series>
+                    <asp:Series ChartArea="ChartArea1" Name="Series4" ></asp:Series>
+
+                </Series>
+                <ChartAreas>
+                    <asp:ChartArea Name="ChartArea1" ></asp:ChartArea>
+                </ChartAreas>
+            </asp:Chart>--%>
+
+           <%-- <asp:Chart ID="chtCategoriesProductCount" runat="server" Width="550" Height="350"> 
+               <Series> 
+                  <asp:Series Name="Categories" ChartType="Bar" Palette="Chocolate" ChartArea="MainChartArea"></asp:Series> 
+               </Series> 
+    
+               <ChartAreas> 
+                  <asp:ChartArea Name="MainChartArea" Area3DStyle-Enable3D="true"> 
+                  </asp:ChartArea> 
+               </ChartAreas> 
+            </asp:Chart>--%>
+
+
+
             <br />
             <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="Select B.questionName ,A.answerComment from  surveyUserAnswer A  
  inner Join surveyQuestion B On A.questionId = B.questionId 
@@ -63,7 +93,7 @@ And A.questionId = @xQuestionId">
                 </SelectParameters>
             </asp:SqlDataSource>
             <br />
-            <asp:Chart ID="chtCategoriesProductCountBarChart" runat="server" EnableViewState="True" Width="710px"> 
+            <%--<asp:Chart ID="StackedBarChart" runat="server" EnableViewState="True" Width="710px"> 
                 <Legends>
                     <asp:Legend Name="Legend1">
                     </asp:Legend>
@@ -73,12 +103,14 @@ And A.questionId = @xQuestionId">
                </Titles> 
 
                <Series> 
-                  <asp:Series Name="Answer 1" ChartType="StackedBar" ChartArea="MainChartArea" BorderWidth="5" Color="Red" IsValueShownAsLabel="True" Legend="Legend1"></asp:Series> 
-                   <asp:Series ChartArea="MainChartArea" ChartType="StackedBar" IsValueShownAsLabel="True" Legend="Legend1" Name="Answer 2">
+                 
+                  <asp:Series Name="Answer 1" ChartType="StackedBar" ChartArea="MainChartArea" BorderWidth="5" Color="Red" IsValueShownAsLabel="True" Legend="Legend1" >
+                  </asp:Series> 
+                   <asp:Series Name="Answer 2"  ChartType="StackedBar" ChartArea="MainChartArea" IsValueShownAsLabel="True" Legend="Legend1" >
                    </asp:Series>
-                   <asp:Series ChartArea="MainChartArea" ChartType="StackedBar" IsValueShownAsLabel="True" Legend="Legend1" Name="Answer 3">
+                   <asp:Series Name="Answer 3" ChartType="StackedBar" ChartArea="MainChartArea" IsValueShownAsLabel="True" Legend="Legend1" >
                    </asp:Series>
-                   <asp:Series ChartArea="MainChartArea" ChartType="StackedBar" Legend="Legend1" Name="Answer 4">
+                   <asp:Series Name="Answer 4" ChartType="StackedBar" ChartArea="MainChartArea" IsValueShownAsLabel="True"  Legend="Legend1" >
                    </asp:Series>
                </Series>
 
@@ -86,7 +118,8 @@ And A.questionId = @xQuestionId">
                   <asp:ChartArea Name="MainChartArea"> 
                   </asp:ChartArea> 
                </ChartAreas> 
-            </asp:Chart>
+            </asp:Chart>--%>
+            
             <br />
             <br />
             <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand=" select B.answerName,A.questionId,C.questionName,count(*) as cntAnswer from surveyUserAnswer A

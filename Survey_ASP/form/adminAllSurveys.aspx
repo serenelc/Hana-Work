@@ -9,7 +9,7 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="../css/userInfo.css"/>
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-    <%--<link rel="stylesheet" href="../node_modules/bootstrap-toggle/css/bootstrap2-toggle.min.css" />--%>
+    <link rel="stylesheet" href="../node_modules/bootstrap-toggle/css/bootstrap2-toggle.min.css" />
 </head>
 
 <body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
@@ -42,7 +42,7 @@
             <div>
                     
                     <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" 
-                        SelectCommand="SELECT [subjectName], [subjectDetail], [openDate], [subjectId] FROM [surveyMaster]"
+                        SelectCommand="SELECT [subjectName], [subjectDetail], [subjectId], [status], [closeDate] FROM [surveyMaster]"
                         >
                     </asp:SqlDataSource>
                     
@@ -51,17 +51,20 @@
                         <Columns>
                             <asp:BoundField DataField="subjectName" HeaderText="Survey Name" SortExpression="subjectName" />
                             <asp:BoundField DataField="subjectDetail" HeaderText="Details" SortExpression="subjectDetail" />
-                            <asp:BoundField DataField="openDate" HeaderText="Open Date" SortExpression="openDate" />
+                            <asp:BoundField DataField="subjectId" HeaderText="subjectId" SortExpression="subjectId" InsertVisible="False" ReadOnly="True" Visible="False" />
+                            <asp:BoundField DataField="status" HeaderText="Status" SortExpression="status" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
                                     <asp:Button ID="go" runat="server" class="btn btn-success" CommandName="Go"
                                     Text="Go" CommandArgument='<%# Eval("subjectId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField ShowHeader="False">
+                            <asp:TemplateField HeaderText="Mail">
                                 <ItemTemplate>
-                                    <asp:Button ID="sendMail" runat="server" class="btn btn-primary" CommandName="SendMail"
-                                    Text="Send Email" CommandArgument='<%# Eval("subjectId") %>' />
+                                    <%--<asp:Button ID="sendMail" runat="server" class="btn btn-primary" CommandName="SendMail"
+                                    Text="Send Email" CommandArgument='<%# Eval("subjectId") %>' />--%>
+                                    <asp:ImageButton ID="sendMail" runat="server" ImageUrl="../images/mail.png" Width="40" CommandName="SendMail"
+                                    Text="Send Email" CommandArgument='<%# Eval("subjectId") %>'/>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField ShowHeader="False">
@@ -69,7 +72,7 @@
                                     <input type="checkbox" data-toggle="toggle">
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="subjectId" HeaderText="subjectId" InsertVisible="False" ReadOnly="True" SortExpression="subjectId" Visible="False" />
+                            <asp:BoundField DataField="closeDate" HeaderText="closeDate" SortExpression="closeDate" Visible="False" />
                         </Columns>
                         <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
                         <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
@@ -103,7 +106,7 @@
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
         <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <%--<script src="../node_modules/bootstrap-toggle/js/bootstrap2-toggle.min.js"></script>--%>
+        <script src="../node_modules/bootstrap-toggle/js/bootstrap2-toggle.min.js"></script>
 
     </form>
 

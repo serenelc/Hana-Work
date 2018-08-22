@@ -32,40 +32,31 @@ Partial Public Class ChartBar
     Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''pieChart control.
+    '''ChartForKPIInLoop control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents pieChart As Global.System.Web.UI.DataVisualization.Charting.Chart
+    Protected WithEvents ChartForKPIInLoop As Global.System.Web.UI.DataVisualization.Charting.Chart
     
     '''<summary>
-    '''SqlDataSource2 control.
+    '''divTable control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents SqlDataSource2 As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents divTable As Global.System.Web.UI.HtmlControls.HtmlGenericControl
     
     '''<summary>
-    '''lblSubject0 control.
+    '''divImage control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblSubject0 As Global.System.Web.UI.WebControls.Label
-    
-    '''<summary>
-    '''DataList1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents DataList1 As Global.System.Web.UI.WebControls.DataList
+    Protected WithEvents divImage As Global.System.Web.UI.HtmlControls.HtmlGenericControl
     
     '''<summary>
     '''SqlDataSource3 control.
@@ -75,15 +66,6 @@ Partial Public Class ChartBar
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents SqlDataSource3 As Global.System.Web.UI.WebControls.SqlDataSource
-    
-    '''<summary>
-    '''chtCategoriesProductCountBarChart control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chtCategoriesProductCountBarChart As Global.System.Web.UI.DataVisualization.Charting.Chart
     
     '''<summary>
     '''SqlDataSource4 control.

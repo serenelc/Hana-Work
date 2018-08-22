@@ -8,6 +8,33 @@ Public Class adminAllSurveys
         If Session("En") Is Nothing Then
             Response.Redirect("index.aspx")
         End If
+        updateDatabase()
+    End Sub
+
+    Private Sub updateDatabase()
+        Dim dataT As New DataTable
+        Dim connect As New SqlConnection
+        Dim command As New SqlCommand
+        Try
+            connect.ConnectionString = My.Settings.ConnStringDatabaseSurvey
+            connect.Open()
+            command.Connection = connect
+            command.CommandText = "UPDATE SurveyMaster SET status='CLOSED', statusComp=1 WHERE closeDate < GETDATE()"
+
+            'create a DataReader and execute the SqlCommand
+            Dim MyDataReader As SqlDataReader = command.ExecuteReader()
+
+            'load the reader into the datatable
+            dataT.Load(MyDataReader)
+
+            'clean up
+            MyDataReader.Close()
+        Catch ex As Exception
+            Dim errorMsg = "Error while updating database"
+            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & errorMsg & "')", True)
+        Finally
+            connect.Close()
+        End Try
     End Sub
 
     Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
@@ -19,9 +46,24 @@ Public Class adminAllSurveys
             Response.Redirect("results.aspx?subjectId=" + e.CommandArgument.ToString())
         End If
         If (e.CommandName = "SendMail") Then
+            If (checkIfClosed(e.CommandArgument.ToString())) Then
+                Response.Write("<script LANGUAGE='JavaScript' >alert('This survey is closed. You cannot send mail!')</script>")
+                Exit Sub
+            End If
             SendEmail(e.CommandArgument.ToString())
         End If
     End Sub
+
+    Function checkIfClosed(xsubId) As Boolean
+        Dim sqlClosed = " Select * from  surveyMaster where subjectId = " + xsubId.ToString + " and statusComp = 1"
+        Dim dt As DataTable = GetData(sqlClosed)
+
+        If (dt.Rows.Count > 0) Then
+            Return True
+        End If
+
+        Return False
+    End Function
 
     Private Shared Function GetData(query As String) As DataTable
         Dim dt As New DataTable()

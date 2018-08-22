@@ -44,7 +44,7 @@ Public Class adminCreate
         Try
             'Save 
             prmSubjid = 0
-            For i As Integer = 0 To strArr.Count - 1
+            For i As Integer = 0 To strArr.Count - 2
                 Dim val As String = strArr(i).ToString()
                 If val.Contains("close=") Then
                     Dim d = val.Substring(val.IndexOf("=") + 1)
@@ -116,6 +116,7 @@ Public Class adminCreate
             SQLTran.Commit()
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
             Response.Redirect("adminHome.aspx")
+
         Catch ex As Exception
             If (SQLTran IsNot Nothing) Then SQLTran.Rollback()
             Dim errorMsg = "Error While inserting record On table..." & ex.Message & ",Insert Records"
@@ -129,6 +130,7 @@ Public Class adminCreate
         Try
             If txtTitle.Value = "" Then Throw New Exception("Please fill in the Title")
             If txtDesc.Value = "" Then Throw New Exception("Please fill in the Description")
+            'If prmCloseDate Then
         Catch ex As Exception
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & ex.Message & "')", True)
             Return False

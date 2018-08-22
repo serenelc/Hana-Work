@@ -5,6 +5,6 @@
     End Sub
 
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs)
-        Response.Redirect("login.aspx")
+        Response.Redirect("index.aspx")
     End Sub
 End Class
