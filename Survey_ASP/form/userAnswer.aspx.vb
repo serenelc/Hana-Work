@@ -13,6 +13,7 @@ Public Class userAnswer
     Public prmQuestionID As Integer = 0
     Public prmAnswerID As Integer = 0
     Public prmAnswerComment As String = ""
+    Public c As Integer = 0
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("En") Is Nothing Then
@@ -173,13 +174,13 @@ Public Class userAnswer
             End If
             If (v.Contains("sectionName")) Then
                 s += "<br><h3 style='background-color:" + colorWheel() + ";"
-                s += "border-radius: 5px;' id='sectionTitle_name' name='sectionTitle_name'>" + v.Substring(v.IndexOf("=") + 1) + "</h3>"
+                s += "border-radius: 5px; padding-left: 5px;' id='sectionTitle_name' name='sectionTitle_name'>" + v.Substring(v.IndexOf("=") + 1) + "</h3>"
             End If
             If (v.Contains("questionName")) Then
                 Dim gT = listContent.Item(i + 1)
                 Dim gI = listContent.Item(i + 2)
                 If (Not gI.Contains("answerId=0") And gT.Contains("grid")) Then
-                    s += "<div class='form-check-inline'><div class='col-7'><p id='questionInput_name' name='questionInput_name'>" + v.Substring(v.IndexOf("=") + 1) + "</div><div class='col-5'>"
+                    s += "<div class='form-check-inline col-12'><div class='col-6'><p id='questionInput_name' name='questionInput_name'>" + v.Substring(v.IndexOf("=") + 1) + "</div><div class='col-6' style='overflow:scroll;height:auto;width:100%;overflow-y:hidden;overflow-x:scroll;'>"
                 Else
                     s += "<div><p style='font-weight: bold' id='questionInput_name' name='questionInput_name'>" + v.Substring(v.IndexOf("=") + 1) + "</p>"
                 End If
@@ -243,7 +244,6 @@ Public Class userAnswer
     End Sub
 
     Private Function colorWheel()
-        Dim c = 0
         Dim colorList As New List(Of String)
         colorList.Add("#f46e42")
         colorList.Add("#f4e541")
