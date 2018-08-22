@@ -172,8 +172,8 @@ Public Class userAnswer
                 answerIdFlag = v.Substring(v.IndexOf("=") + 1)
             End If
             If (v.Contains("sectionName")) Then
-                s += "<br> <h3 style='text-decoration: underline' id='sectionTitle_name' name='sectionTitle_name'>" + v.Substring(v.IndexOf("=") + 1) + "</h3>"
-                s += "<div class='pointer'><p>Testing out some shapes to make the section headers more interesting</p></div>"
+                s += "<br><h3 style='background-color:" + colorWheel() + ";"
+                s += "border-radius: 5px;' id='sectionTitle_name' name='sectionTitle_name'>" + v.Substring(v.IndexOf("=") + 1) + "</h3>"
             End If
             If (v.Contains("questionName")) Then
                 Dim gT = listContent.Item(i + 1)
@@ -241,6 +241,27 @@ Public Class userAnswer
         description.Text = d
         frm.Text = s
     End Sub
+
+    Private Function colorWheel()
+        Dim c = 0
+        Dim colorList As New List(Of String)
+        colorList.Add("#f46e42")
+        colorList.Add("#f4e541")
+        colorList.Add("#7ff441")
+        colorList.Add("#41f467")
+        colorList.Add("#41eef4")
+        colorList.Add("#4173f4")
+        colorList.Add("#6a41f4")
+        colorList.Add("#a641f4")
+        colorList.Add("#f441d9")
+        colorList.Add("#f44161")
+        c = c + 1
+        If (c = colorList.Count - 1) Then
+            c = 0
+        End If
+        Return colorList.Item(c)
+
+    End Function
 
     Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
         Response.Redirect("userSurveyList.aspx")

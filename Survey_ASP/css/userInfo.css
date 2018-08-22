@@ -37,9 +37,10 @@ body {
 
 .pointer {
     width: 200px;
-    height: 40px;
+    height: 50px;
     position: relative;
-    background: red;
+    background: #f46e42;
+    /*Other colors: #f4e541 #7ff441 #41f467 #41eef4 #4173f4 #6a41f4 #a641f4 #f441d9 #f44161*/
 }
 
 .pointer:after {
@@ -61,7 +62,7 @@ body {
      bottom: 0;
      width: 0;
      height: 0;
-     border-left: 20px solid red;
+     border-left: 20px solid #f46e42;
      border-top: 20px solid transparent;
      border-bottom: 20px solid transparent;
- }
+}

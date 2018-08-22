@@ -136,8 +136,8 @@ Public Class adminCreate
         Dim str As String = String.Empty
         'New
         If prmSubjid = 0 Then
-            str = "INSERT INTO surveyMaster(subjectName,subjectDetail,status,openDate,closeDate,createBy,createDate) "
-            str = str + " VALUES(@subjectName, @subjectDetail, @status,@openDate, @closeDate,@createBy,@createDate); Set @subj_ID = SCOPE_IDENTITY() "
+            str = "INSERT INTO surveyMaster(subjectName,subjectDetail,status,openDate,createBy,createDate) "
+            str = str + " VALUES(@subjectName, @subjectDetail, @status,@openDate,@createBy,@createDate); Set @subj_ID = SCOPE_IDENTITY() "
             Using SQLCmd As New SqlCommand With {.Connection = SQLConn,
                                                              .Transaction = SQLTran,
                                                              .CommandType = CommandType.Text,
