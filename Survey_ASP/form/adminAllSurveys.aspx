@@ -69,7 +69,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
-                                    <input type="checkbox" data-toggle="toggle">
+                                    <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed" data-size="mini" data-onstyle="primary" data-offstyle="info">
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="closeDate" HeaderText="closeDate" SortExpression="closeDate" Visible="False" />

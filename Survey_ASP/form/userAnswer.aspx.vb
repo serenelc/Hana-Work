@@ -272,16 +272,19 @@ Public Class userAnswer
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
 
-        Dim ClientQueryList = Request.QueryString
+        '   Dim ClientQueryList = Request.QueryString
+        Dim ClientQueryList = Request.Form
 
-        Dim strRep = ClientQueryString.Replace("+", " ")
-        Dim strArr() = strRep.Split("&")
-
-        Dim strArr2 As New List(Of String)
+        'Dim strRep = ClientQueryString.Replace("+", " ")
+        'Dim strArr() = strRep.Split("&")
+        Dim xxx As String = ""
+        Dim arrKey As New List(Of String)
+        Dim arrItem As New List(Of String)
         For i As Integer = 0 To ClientQueryList.Count - 1
             'ignore the first 3 items which are random gobbeldy goop
             If (i > 2) Then
-                strArr2.Add(ClientQueryList.Item(i))
+                arrKey.Add(ClientQueryList.Keys(i))
+                arrItem.Add(ClientQueryList.Item(i))
             End If
         Next
 
@@ -298,23 +301,25 @@ Public Class userAnswer
             prmSurveyId = Session("surveyId")
             If (SaveSurveyUserSubmit(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserSubmit fail!")
 
-            For i As Integer = 0 To strArr.Count - 1
-                Dim xval As String = strArr(i).ToString()
+            For i As Integer = 0 To arrKey.Count - 1
+                Dim xval As String = arrItem(i).ToString()
+                Dim xKey As String = arrKey(i).ToString()
 
-                If (Not xval.Contains("btnSave")) Then
-                    Dim indexE As Integer = xval.IndexOf("=")
+                If (Not xKey.Contains("btnSave")) Then
                     Dim indexQ As Integer = xval.IndexOf("_Q")
                     Dim indexA As Integer = xval.IndexOf("_A")
                     Dim qIdLength As Integer = indexA - indexQ - 2
 
-                    prmQuestionID = xval.Substring(indexQ + 2, qIdLength)
-
                     'Short answers have a different layout
-                    If (xval.Contains("short_Q")) Then
-                        Dim aIdLength As Integer = indexE - indexA - 2
-                        prmAnswerID = xval.Substring(indexA + 2, aIdLength)
-                        prmAnswerComment = strArr2(i).ToString
+                    If (xKey.Contains("short_Q")) Then
+                        indexA = xKey.IndexOf("_A")
+                        indexQ = xKey.IndexOf("_Q")
+                        qIdLength = indexA - indexQ - 2
+                        prmQuestionID = xKey.Substring(indexQ + 2, qIdLength)
+                        prmAnswerID = xKey.Substring(indexA + 2)
+                        prmAnswerComment = xval
                     Else
+                        prmQuestionID = xval.Substring(indexQ + 2, qIdLength)
                         prmAnswerID = xval.Substring(indexA + 2)
                         prmAnswerComment = ""
                     End If

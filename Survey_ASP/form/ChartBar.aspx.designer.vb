@@ -50,6 +50,15 @@ Partial Public Class ChartBar
     Protected WithEvents divTable As Global.System.Web.UI.HtmlControls.HtmlGenericControl
     
     '''<summary>
+    '''StackedBarChart2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents StackedBarChart2 As Global.System.Web.UI.DataVisualization.Charting.Chart
+    
+    '''<summary>
     '''divImage control.
     '''</summary>
     '''<remarks>

@@ -11,11 +11,11 @@ Public Class ChartBar
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        Call xxx()
-        Exit Sub
+        'Call xxx()
+        'Exit Sub
 
         QsubjectId = Request.QueryString("subjectId")
-        QsubjectId = 16
+        QsubjectId = 1
 
         'Count user submit and question
         Dim xSql = " select A.subjectId,A.questionId,B.questionName,B.questionType "
@@ -197,7 +197,7 @@ Public Class ChartBar
             Dim xSql = " Select convert(int,B.answerName) as answerName,A.questionId,C.questionName,count(*) As cntAnswer from surveyUserAnswer A "
             xSql = xSql + " Left Join surveyAnswer B  on A.questionId = B.questionId And A.answerId = B.answerId "
             xSql = xSql + " Left Join surveyQuestion C on C.questionId = A.questionId "
-            xSql = xSql + " where A.subjectId = 16  "
+            xSql = xSql + " where A.subjectId =  " + QsubjectId.ToString()
             xSql = xSql + " And A.questionId in ( " + strSplit + ") "
             xSql = xSql + " Group by A.questionId, B.answerName, C.questionName "
             xSql = xSql + "order by answerName,questionId, cntAnswer "
@@ -212,7 +212,7 @@ Public Class ChartBar
                 Dim div2 = New HtmlGenericControl("div")
                 div2.Attributes.Add("id", "divInferior")
                 divImage.Controls.Add(div2)
-                Dim StackedBarChart2 = New Chart()
+                'Dim StackedBarChart2 = New Chart()
 
                 'Remove the Default Series.
                 'If Chart1.Series.Count() = 1 Then
@@ -340,20 +340,20 @@ Public Class ChartBar
 
             'Add Series to the Chart.
 
-            ChartForKPIInLoop.Series.Add(New Series(country))
+            StackedBarChart2.Series.Add(New Series(country))
 
             'StackedBarChart.Legends.Add("Legend1")
             'StackedBarChart.Series(country).Legend = "Legend1"
 
-            ChartForKPIInLoop.Series(country).IsValueShownAsLabel = True
-            ChartForKPIInLoop.Series(country).ChartType = SeriesChartType.StackedBar
-            ChartForKPIInLoop.Series(country).Points.DataBindXY(x, y)
+            StackedBarChart2.Series(country).IsValueShownAsLabel = True
+            StackedBarChart2.Series(country).ChartType = SeriesChartType.StackedBar
+            StackedBarChart2.Series(country).Points.DataBindXY(x, y)
         Next
 
 
 
         'StackedBarChart.Legends(0).Enabled = True
-        div.Controls.Add(ChartForKPIInLoop)
+        div.Controls.Add(StackedBarChart2)
 
     End Sub
 

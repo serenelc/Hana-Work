@@ -28,8 +28,25 @@
                 </ChartAreas>
             </asp:Chart>
             <br />
+            <br />
+            <br />
 
-            <div id="divTable" runat="server"></div>
+            <div id="divTable" runat="server">
+                <asp:Chart ID="StackedBarChart2" runat="server" Width="717px">
+                    <Series>
+                        <asp:Series ChartType="StackedBar" IsValueShownAsLabel="True" Legend="Legend1" Name="Series1">
+                        </asp:Series>
+                    </Series>
+                    <ChartAreas>
+                        <asp:ChartArea Name="ChartArea1">
+                        </asp:ChartArea>
+                    </ChartAreas>
+                    <Legends>
+                        <asp:Legend Name="Legend1">
+                        </asp:Legend>
+                    </Legends>
+                </asp:Chart>
+            </div>
               <div id="divImage" runat="server" >             
   
                </div>
@@ -55,7 +72,7 @@ group by A.subjectId,B.answerName
                     <br />
                 </ItemTemplate>
                 <SelectedItemStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
-            </asp:DataList>--%>            <%--<asp:Chart ID="chart1" runat="server">
+            </asp:DataList>--%><%--<asp:Chart ID="chart1" runat="server">
                 <Series>
 
                     <asp:Series ChartArea="ChartArea1" Name="Series1" ></asp:Series>
@@ -68,7 +85,6 @@ group by A.subjectId,B.answerName
                     <asp:ChartArea Name="ChartArea1" ></asp:ChartArea>
                 </ChartAreas>
             </asp:Chart>--%>
-
            <%-- <asp:Chart ID="chtCategoriesProductCount" runat="server" Width="550" Height="350"> 
                <Series> 
                   <asp:Series Name="Categories" ChartType="Bar" Palette="Chocolate" ChartArea="MainChartArea"></asp:Series> 
