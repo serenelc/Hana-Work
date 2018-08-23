@@ -175,6 +175,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="form\adminCreate.aspx" />
+    <Content Include="form\adminCreateComplete.aspx" />
     <Content Include="form\adminHome.aspx" />
     <Content Include="form\adminAllSurveys.aspx" />
     <Content Include="form\ChartBar.aspx" />
@@ -201,10 +202,26 @@
     <Content Include="images\HANA-Logo.png" />
     <Content Include="images\hana-simple-logo.jpg" />
     <Content Include="images\header.jpg" />
+    <Content Include="images\mail.png" />
     <Content Include="images\make-survey.jpeg" />
     <Content Include="images\statistics.jpeg" />
-    <Content Include="images\thankyou.jpeg" />
+    <Content Include="images\thankyou.jpg" />
     <Content Include="images\user.png" />
+    <Content Include="node_modules\bootstrap-toggle\css\bootstrap-toggle.css" />
+    <Content Include="node_modules\bootstrap-toggle\css\bootstrap-toggle.min.css" />
+    <Content Include="node_modules\bootstrap-toggle\css\bootstrap2-toggle.css" />
+    <Content Include="node_modules\bootstrap-toggle\css\bootstrap2-toggle.min.css" />
+    <Content Include="node_modules\bootstrap-toggle\doc\header.png" />
+    <Content Include="node_modules\bootstrap-toggle\doc\nyt.png" />
+    <Content Include="node_modules\bootstrap-toggle\doc\nytdev.svg" />
+    <Content Include="node_modules\bootstrap-toggle\doc\script.js" />
+    <Content Include="node_modules\bootstrap-toggle\doc\stylesheet.css" />
+    <Content Include="node_modules\bootstrap-toggle\Gruntfile.js" />
+    <Content Include="node_modules\bootstrap-toggle\index.html" />
+    <Content Include="node_modules\bootstrap-toggle\js\bootstrap-toggle.js" />
+    <Content Include="node_modules\bootstrap-toggle\js\bootstrap-toggle.min.js" />
+    <Content Include="node_modules\bootstrap-toggle\js\bootstrap2-toggle.js" />
+    <Content Include="node_modules\bootstrap-toggle\js\bootstrap2-toggle.min.js" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.css.map" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.min.css.map" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-reboot.css.map" />
@@ -419,6 +436,13 @@
     <Content Include="packages\WebGrease.1.6.0\WebGrease.1.6.0.nupkg" />
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
+    <Content Include="node_modules\bootstrap-toggle\.npmignore" />
+    <Content Include="node_modules\bootstrap-toggle\bower.json" />
+    <Content Include="node_modules\bootstrap-toggle\js\bootstrap-toggle.min.js.map" />
+    <Content Include="node_modules\bootstrap-toggle\js\bootstrap2-toggle.min.js.map" />
+    <Content Include="node_modules\bootstrap-toggle\LICENSE" />
+    <Content Include="node_modules\bootstrap-toggle\package.json" />
+    <Content Include="node_modules\bootstrap-toggle\README.md" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.min.css" />
@@ -769,6 +793,13 @@
     </Compile>
     <Compile Include="form\adminCreate.aspx.vb">
       <DependentUpon>adminCreate.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="form\adminCreateComplete.aspx.designer.vb">
+      <DependentUpon>adminCreateComplete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="form\adminCreateComplete.aspx.vb">
+      <DependentUpon>adminCreateComplete.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="form\adminHome.aspx.designer.vb">
