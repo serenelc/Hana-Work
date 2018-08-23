@@ -29,12 +29,27 @@ Public Class adminCreate
         xcreateDate = Date.Now
 
         Dim ClientQueryList = Request.QueryString
-        Dim aa = ClientQueryList
-        Dim bb = ClientQueryString
 
         Dim strRep = ClientQueryString.Replace("+", " ")
+        'strArr has all the inputted data including flags indicating what each of the fields are
         Dim strArr() = strRep.Split("&")
+        'strArr2 has all the inputted data and can take Thai characters, but does not have flags indicating what each of the fields are.
+        Dim strArr2 As New List(Of String)
+        For i As Integer = 0 To ClientQueryList.Count - 2
+            If i > 2 Then
+                'radio fields put all the radio options into 1 field so they need to be split.
+                Dim strSplit() = ClientQueryList.Item(i).Split(",")
+                If strSplit.Count > 1 Then
+                    For y As Integer = 0 To strSplit.Count - 1
+                        strArr2.Add(strSplit(y).ToString())
+                    Next
+                Else
+                    strArr2.Add(ClientQueryList.Item(i))
+                End If
+            End If
+        Next
 
+        Dim SaveComp = False
         Dim SQLConn As New SqlConnection(My.Settings.ConnStringDatabaseSurvey)
         Dim SQLTran As SqlTransaction
 
@@ -47,7 +62,8 @@ Public Class adminCreate
             For i As Integer = 0 To strArr.Count - 2
                 Dim val As String = strArr(i).ToString()
                 If val.Contains("close=") Then
-                    Dim d = val.Substring(val.IndexOf("=") + 1)
+                    'Dim d = val.Substring(val.IndexOf("=") + 1)
+                    Dim d = strArr2.Item(i)
                     Dim parsed = Date.Parse(d)
 
                     prmCloseDate = New DateTime(parsed.Year, parsed.Month, parsed.Day, 0, 0, 0)
@@ -65,11 +81,13 @@ Public Class adminCreate
                         prmQuestionOrder = 0
                         prmAnswerID = 0
                         prmAnswerOrder = 0
-                        Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
+                        'Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
+                        Dim updateValue = strArr2.Item(i)
                         If (SaveSurveySection(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveySection fail!")
                     Else
                         If val.Contains("questionInput_name") = True Then
-                            Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
+                            'Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
+                            Dim updateValue = strArr2.Item(i)
                             Dim val2 As String = strArr(i + 1).ToString()
                             Dim updateValueType As String = ""
                             If val2.Contains("rad") = True Then
@@ -89,7 +107,8 @@ Public Class adminCreate
                             If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType) = False) Then Throw New Exception("Save surveyQuestion fail!")
                         Else
                             If xupdateValueType = "grid" Then
-                                Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
+                                '  Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
+                                Dim updateValue = strArr2.Item(i)
                                 If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, xupdateValueType) = False) Then Throw New Exception("Save surveyQuestion fail!")
                                 Dim updateValue2 As String = val.Substring(val.IndexOf("=") - 2, 2)
                                 Dim updateValue3 As String = ""
@@ -103,7 +122,8 @@ Public Class adminCreate
                                 Next
                             Else
                                 If val.Contains("rad") = True Or val.Contains("short") = True Or val.Contains("grid") = True Then
-                                    Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
+                                    'Dim updateValue As String = val.Substring(val.IndexOf("=") + 1)
+                                    Dim updateValue = strArr2.Item(i)
                                     If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveyAnswer fail!")
                                 End If
                             End If
@@ -113,16 +133,22 @@ Public Class adminCreate
                 End If
             Next
 
+            SaveComp = True
             SQLTran.Commit()
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
-            Response.Redirect("adminHome.aspx")
 
         Catch ex As Exception
-            If (SQLTran IsNot Nothing) Then SQLTran.Rollback()
+            ' If (SQLTran IsNot Nothing) Then SQLTran.Rollback()
             Dim errorMsg = "Error While inserting record On table..." & ex.Message & ",Insert Records"
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & errorMsg & "Save')", True)
-        Finally
+            SQLTran.Rollback()
             SQLConn.Close()
+        Finally
+            If SaveComp Then
+                SQLConn.Close()
+                Response.Redirect("adminHome.aspx")
+            End If
+
         End Try
     End Sub
 

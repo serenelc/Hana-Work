@@ -217,6 +217,9 @@ Public Class userAnswer
                 s += "<input type='radio' class='form-check-input' id='grid' name='grid" + xquestionId.ToString() + "' value='" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
                 s += "style ='padding-left: 30px;'>"
                 s += "<label class='form-check-label' style='padding-right: 20px;'>" + gNumRad.ToString() + "</label>"
+                If (i = listContent.Count - 1) Then
+                    s += "</div>"
+                End If
             End If
             If (v.Contains("answerName") And aFlag = 1) Then
                 s += "<p><textarea id='short' class='form-control' rows='2' placeholder='Answer' name='short" + "_Q" + xquestionId.ToString() + "_A" + answerIdFlag.ToString() + "'"
@@ -270,16 +273,23 @@ Public Class userAnswer
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
 
         Dim ClientQueryList = Request.QueryString
-        Dim aa = ClientQueryList
-        Dim bb = ClientQueryString
 
         Dim strRep = ClientQueryString.Replace("+", " ")
         Dim strArr() = strRep.Split("&")
-        'Dim val As String = ""
+
+        Dim strArr2 As New List(Of String)
+        For i As Integer = 0 To ClientQueryList.Count - 1
+            'ignore the first 3 items which are random gobbeldy goop
+            If (i > 2) Then
+                strArr2.Add(ClientQueryList.Item(i))
+            End If
+        Next
 
         'Open connection database
         Dim SQLConn As New SqlConnection(My.Settings.ConnStringDatabaseSurvey)
         Dim SQLTran As SqlTransaction
+
+        Dim SaveComp = False
 
         SQLConn.Open()
         SQLTran = SQLConn.BeginTransaction
@@ -300,10 +310,10 @@ Public Class userAnswer
                     prmQuestionID = xval.Substring(indexQ + 2, qIdLength)
 
                     'Short answers have a different layout
-                    If (xval.Contains("short")) Then
+                    If (xval.Contains("short_Q")) Then
                         Dim aIdLength As Integer = indexE - indexA - 2
                         prmAnswerID = xval.Substring(indexA + 2, aIdLength)
-                        prmAnswerComment = xval.Substring(indexE + 1)
+                        prmAnswerComment = strArr2(i).ToString
                     Else
                         prmAnswerID = xval.Substring(indexA + 2)
                         prmAnswerComment = ""
@@ -314,15 +324,22 @@ Public Class userAnswer
 
             Next
 
+            SaveComp = True
             SQLTran.Commit()
-            'ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
-            Response.Redirect("userSurveyComplete.aspx")
+            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
+
         Catch ex As Exception
-            If (SQLTran IsNot Nothing) Then SQLTran.Rollback()
+
             Dim errorMsg = "Error While inserting record On table..." & ex.Message & ", Insert Records"
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & errorMsg & "Save')", True)
-        Finally
+            SQLTran.Commit()
             SQLConn.Close()
+
+        Finally
+            If SaveComp Then
+                SQLConn.Close()
+                Response.Redirect("userSurveyComplete.aspx")
+            End If
         End Try
     End Sub
 

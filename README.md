@@ -9,3 +9,7 @@ TO DO:
 - IN PROGRESS: close dates
 		-> Have a manual button so the admin can close the survey before the chosen close date if desired.  
 - Have an option so the admin can choose who they want to send the email to -> mail button will go to another page where there is a list of all employees and their emails. admin can select users from that list to email about that specific survey.
+- IN PROGRESS: testing
+		-> adding a model survey
+		-> Adding around 50 responses
+- Get users logged in by their passwords so can differentiate between admins and users.
