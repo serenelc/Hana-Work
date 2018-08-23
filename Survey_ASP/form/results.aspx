@@ -34,29 +34,8 @@
 
             <%--Data got from the database will go into the graphs section--%>
             <div> 
-                    <asp:Label ID="graphs" runat="server"></asp:Label>
+                    <p> Graphs will go here</p>
             </div>
-
-             <asp:Chart id='pieChart' runat=server>
-                        <series>
-                            <asp:Series ChartType='Pie' Name='Series1' IsValueShownAsLabel='True'>
-                                <Points>
-				                    <asp:DataPoint AxisLabel="Hello" YValues="10" />
-				                    <asp:DataPoint AxisLabel="A" YValues="20" />
-
-				                    <asp:DataPoint AxisLabel="B" YValues="30" />
-				                    <asp:DataPoint AxisLabel="C" YValues="40" />
-
-			                    </Points>
-                            </asp:Series>
-                        </series>                        
-                        <chartareas>
-                            <asp:ChartArea Name='pieArea1'></asp:ChartArea>
-                        </chartareas>
-                        <Legends>
-                            <asp:Legend Name='pieLegend'></asp:Legend>
-                        </Legends>
-                    </asp:Chart>
 
             <div id = "footer" style="background-color: white; height: 70px;">
                 <br>

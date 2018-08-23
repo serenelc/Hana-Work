@@ -275,9 +275,6 @@ Public Class userAnswer
         '   Dim ClientQueryList = Request.QueryString
         Dim ClientQueryList = Request.Form
 
-        'Dim strRep = ClientQueryString.Replace("+", " ")
-        'Dim strArr() = strRep.Split("&")
-        Dim xxx As String = ""
         Dim arrKey As New List(Of String)
         Dim arrItem As New List(Of String)
         For i As Integer = 0 To ClientQueryList.Count - 1

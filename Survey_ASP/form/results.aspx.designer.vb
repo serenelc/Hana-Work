@@ -41,24 +41,6 @@ Partial Public Class results
     Protected WithEvents description As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''graphs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents graphs As Global.System.Web.UI.WebControls.Label
-    
-    '''<summary>
-    '''pieChart control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents pieChart As Global.System.Web.UI.DataVisualization.Charting.Chart
-    
-    '''<summary>
     '''btnBack control.
     '''</summary>
     '''<remarks>

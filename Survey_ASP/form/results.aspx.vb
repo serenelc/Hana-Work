@@ -12,7 +12,6 @@ Public Class results
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         QsubjectId = Request.QueryString("subjectId")
-        QsubjectId = 16
 
         'Get the survey title and description
         Dim sqlTitleDesc = "select subjectName, subjectDetail from surveyMaster where subjectId = " + QsubjectId.ToString()
@@ -36,47 +35,58 @@ Public Class results
         title.Text = t
         description.Text = d
 
-        'Count how many users have submitted responses and gett the question type
-        Dim xSql = " select A.subjectId,A.questionId,B.questionName,B.questionType "
-        xSql = xSql + " ,CntUserSubmit = (select count(*) as CntUserSubmit from surveyUserSubmit A where subjectId = " + QsubjectId.ToString() + ") "
-        xSql = xSql + " from surveyUserAnswer A "
-        xSql = xSql + " inner join surveyQuestion B on A.questionId = B.questionId "
-        xSql = xSql + " where subjectId = " + QsubjectId.ToString()
-        xSql = xSql + " group by A.subjectId,A.questionId,B.questionName,B.questionType "
+        'Get all the sections in the survey
+        Dim sqlSection = "Select a.subjectId, a.subjectName, b.sectionId, b.sectionName from surveyMaster a"
+        sqlSection = sqlSection + " inner Join surveySection b on a.subjectId = b.subjectId"
+        sqlSection = sqlSection + " where a.subjectId = " + QsubjectId.ToString()
+        Dim dtSection As DataTable = GetData(sqlSection)
+        Dim dtQuestion As DataTable
+        Dim dtAnswer As DataTable
 
-        Dim dt As DataTable = GetData(xSql)
-        Dim objArrListGrid As ArrayList
-        objArrListGrid = New ArrayList
-        Dim objStrListGrid As String = ""
-        Dim gridTrue As Boolean = False
-        If dt.Rows.Count > 0 Then
-            For Each r In dt.Rows
-                TotalUserSubmit = r("CntUserSubmit")
 
-                If r("QuestionType") = "radio" Then
-                    Call ChartradioShow(r("QuestionId"), r("QuestionName"))
+        If (dtSection.Rows.Count > 0) Then
+            For Each r In dtSection.Rows
+                'Call getData(QsubjectId, r("sectionId"))
+                Dim sec = r("sectionId")
 
-                End If
-                'If r("QuestionType") = "shortanswer" Then
-                '    Call ChartshortanswerShow(r("QuestionId"), r("QuestionName"))
-                'End If
-                'If r("QuestionType") = "grid" Then
-                '    gridTrue = True
-                '    Dim xx = r("QuestionId")
-                '    objArrListGrid.Add(xx)
-                '    objStrListGrid = r("subjectId")
+                'Get all the questions in that section of the survey
+                Dim sqlQuestion = "Select a.sectionId, a.sectionName, b.questionId, b.questionName from surveySection a"
+                sqlQuestion = sqlQuestion + " inner Join surveyQuestion b on a.sectionId = b.sectionId"
+                sqlQuestion = sqlQuestion + " where a.sectionId = " + sec.ToString()
+                dtQuestion = GetData(sqlQuestion)
 
-                'Else
-                '    If gridTrue = True Then
-                '        objStrListGrid = r("subjectId")
-                '        Call ChartgridShow(objArrListGrid, objStrListGrid)
-                '    End If
+                For Each q In dtQuestion.Rows
+                    Dim ques = q("questionId")
 
-                '    gridTrue = False
-                '    objArrListGrid.Clear()
-                'End If
+                    Dim sqlCount = "Select b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, count(d.answerId) as cnt"
+                    sqlCount = sqlCount + " from surveyMaster b"
+                    sqlCount = sqlCount + " inner join surveySection a On a.subjectId = b.subjectId"
+                    sqlCount = sqlCount + " inner join surveyQuestion c On a.sectionId = c.sectionId"
+                    sqlCount = sqlCount + " inner join surveyAnswer f On c.questionId = f.questionId"
+                    sqlCount = sqlCount + " left join surveyUserAnswer d On d.answerId = f.answerId"
+                    sqlCount = sqlCount + " where b.subjectId = " + QsubjectId.ToString()
+                    sqlCount = sqlCount + " And c.questionId = " + ques.ToString()
+                    sqlCount = sqlCount + " group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId"
+                    sqlCount = sqlCount + " order by answerId"
+
+                    dtAnswer = GetData(sqlCount)
+
+                Next
+
             Next
         End If
+
+        'Count how many users have submitted responses And get the question type
+        'Dim xSql = " select A.subjectId,A.questionId,B.questionName,B.questionType "
+        'xSql = xSql + " ,CntUserSubmit = (select count(*) as CntUserSubmit from surveyUserSubmit A where subjectId = " + QsubjectId.ToString() + ") "
+        'xSql = xSql + " from surveyUserAnswer A "
+        'xSql = xSql + " inner join surveyQuestion B on A.questionId = B.questionId "
+        'xSql = xSql + " where subjectId = " + QsubjectId.ToString()
+        'xSql = xSql + " group by A.subjectId,A.questionId,B.questionName,B.questionType "
+
+    End Sub
+
+    Private Sub getData(subjId, quesId)
 
     End Sub
 
@@ -92,148 +102,6 @@ Public Class results
         sda.Fill(dt)
         Return dt
     End Function
-
-    Private Sub ChartradioShow(xQuestionId, xQuestionName)
-
-        Dim xSql = " select aa.answerName,isnull(bb.answerSum,0) as answerSum from ( "
-        xSql = xSql + " select A.answerId,A.questionId,B.questionName,A.answerName from surveyAnswer A  "
-        xSql = xSql + " inner join surveyQuestion B on B.questionId = A.questionId "
-        xSql = xSql + " where A.questionId = " + xQuestionId.ToString() + " ) aa "
-        xSql = xSql + " left join ( "
-        xSql = xSql + " select answerId, count(*) as answerSum   "
-        xSql = xSql + " from surveyUserAnswer  "
-        xSql = xSql + " where subjectId = " + QsubjectId.ToString() + " and  questionId = " + xQuestionId.ToString()
-        xSql = xSql + " group by answerId "
-        xSql = xSql + " ) bb on aa.answerId = bb.answerId "
-        Dim radDt As DataTable = GetData(xSql)
-        If radDt.Rows.Count > 0 Then
-            Dim x As String() = New String(radDt.Rows.Count - 1) {}
-            Dim y As Integer() = New Integer(radDt.Rows.Count - 1) {}
-            For i As Integer = 0 To radDt.Rows.Count - 1
-                x(i) = radDt.Rows(i)(0).ToString()
-                y(i) = Convert.ToInt32(radDt.Rows(i)(1))
-            Next
-
-            str += "<asp:Chart id='pieChart' runat=server> <series> <asp:Series ChartType='Pie' Name='Series1' IsValueShownAsLabel='True'> <Points>"
-            For j As Integer = 0 To radDt.Rows.Count - 1
-                str += "<asp:DataPoint AxisLabel= '" + x(j) + "' "
-                str += "YValues= '" + y(j).ToString() + "'/>"
-            Next
-            str += "</Points> </asp:Series> </series> <chartareas> <asp:ChartArea Name='pieArea1'></asp:ChartArea> </chartareas> <Legends> <asp:Legend Name='pieLegend'></asp:Legend> </Legends></asp:Chart>"
-            str += "<p>testing testing</p>"
-
-            graphs.Text = str
-
-            'pieChart.Series.Clear()
-            'pieChart.Titles.Clear
-            'Dim T As Title = pieChart.Titles.Add(xQuestionName)
-            'With T
-            '    .ForeColor = Color.Black
-            '    .BackColor = Color.LightBlue
-            '    .Font = New System.Drawing.Font("Times New Roman", 11.0F, System.Drawing.FontStyle.Bold)
-            '    .BorderColor = Color.Black
-            'End With
-            'pieChart.Series(0).Points.DataBindXY(x, y)
-            'pieChart.Series(0).ChartType = SeriesChartType.Pie
-            'pieChart.Series(0).Legend = "Legend1"
-            'pieChart.Series(0).IsValueShownAsLabel = "True"
-            'pieChart.ChartAreas("ChartArea1").Area3DStyle.Enable3D = True
-            'pieChart.Legends(0).Enabled = True
-
-        End If
-
-    End Sub
-    Private Sub ChartshortanswerShow(xQuestionId, xQuestionName)
-
-        'Session("subjectId") = QsubjectId.ToString()
-        'Session("questionId") = xQuestionId.ToString()
-        'Dim xSql = " Select B.questionName ,A.answerComment from  surveyUserAnswer A  "
-        'xSql = xSql + " inner Join surveyQuestion B On A.questionId = B.questionId "
-        'xSql = xSql + " where A.subjectId = " + Session("subjectId")
-        'xSql = xSql + " And A.questionId = " + Session("questionId")
-        'Dim dt3 As DataTable = GetData(xSql)
-        'If dt3.Rows.Count > 0 Then
-        '    DataList1.DataBind()
-        'End If
-    End Sub
-    Private Sub ChartgridShow(xobjArrListGrid, xobjStrListGrid)
-        'Dim strSplit As String = ""
-        'For i = 0 To xobjArrListGrid.Count - 1
-        '    If strSplit = "" Then
-        '        strSplit = xobjArrListGrid(i)
-        '    Else
-        '        strSplit = strSplit + "," + xobjArrListGrid(i).ToString()
-        '    End If
-        'Next
-
-        'If strSplit <> "" Then
-
-        '    'Dim xSql = " Select B.answerName,A.questionId,C.questionName,count(*) As cntAnswer from surveyUserAnswer A "
-        '    'xSql = xSql + " Left Join surveyAnswer B  on A.questionId = B.questionId And A.answerId = B.answerId "
-        '    'xSql = xSql + " Left Join surveyQuestion C on C.questionId = A.questionId "
-        '    'xSql = xSql + " where A.subjectId = 16  "
-        '    'xSql = xSql + " And A.questionId in ( " + strSplit + ") "
-        '    'xSql = xSql + " Group by A.questionId, B.answerName, C.questionName "
-        '    Dim xSqlField As String = ""
-        '    Dim xSqlWhere As String = ""
-        '    Dim xSqlmaxQuestion As String = ""
-        '    Dim xSqlmax = " select max(answerName) as maxQuestion from surveyAnswer A where  questionId in (" + strSplit + ") "
-        '    Dim dtmax As DataTable = GetData(xSqlmax)
-        '    If dtmax.Rows.Count > 0 Then
-        '        xSqlmaxQuestion = CInt(Int(dtmax.Rows(0).Item("maxQuestion")))
-
-
-        '        For ii As Integer = 1 To xSqlmaxQuestion
-        '            If xSqlField = "" Then
-        '                xSqlField = "isnull([" + ii.ToString() + "],0) As [" + ii.ToString() + "]"
-        '                xSqlWhere = "[" + ii.ToString() + "]"
-        '            Else
-        '                xSqlField = xSqlField + ",isnull([" + ii.ToString() + "],0) As [" + ii.ToString() + "]"
-        '                xSqlWhere = xSqlWhere + ",[" + ii.ToString() + "]"
-        '            End If
-        '        Next
-        '    End If
-
-        '    Dim xSql = " Select questionName," + xSqlField + " from ( "
-        '    xSql = xSql + " Select B.answerName,A.questionId,C.questionName,count(*) As cntAnswer from surveyUserAnswer A "
-        '    xSql = xSql + " Left Join surveyAnswer B  on A.questionId = B.questionId And A.answerId = B.answerId "
-        '    xSql = xSql + " Left Join surveyQuestion C on C.questionId = A.questionId "
-        '    xSql = xSql + " where A.subjectId =  " + xobjStrListGrid
-        '    xSql = xSql + " And A.questionId in ( " + strSplit + ") "
-        '    xSql = xSql + " Group by A.questionId, B.answerName, C.questionName "
-        '    xSql = xSql + " ) PivotExample "
-
-        '    xSql = xSql + " PIVOT "
-        '    xSql = xSql + " ( "
-        '    xSql = xSql + " SUM(cntAnswer) "
-        '    xSql = xSql + " For answerName IN (" + xSqlWhere + ") "
-
-        '    xSql = xSql + " ) A "
-        '    xSql = xSql + " order by questionId "
-
-
-        '    Dim dt4 As DataTable = GetData(xSql)
-        '    If dt4.Rows.Count > 0 Then
-        '        chtCategoriesProductCountBarChart.Series("Answer 1").XValueMember = "questionName"
-        '        chtCategoriesProductCountBarChart.Series("Answer 1").YValueMembers = "1"
-
-        '        chtCategoriesProductCountBarChart.Series("Answer 2").XValueMember = "questionName"
-        '        chtCategoriesProductCountBarChart.Series("Answer 2").YValueMembers = "2"
-
-        '        chtCategoriesProductCountBarChart.Series("Answer 3").XValueMember = "questionName"
-        '        chtCategoriesProductCountBarChart.Series("Answer 3").YValueMembers = "3"
-
-        '        chtCategoriesProductCountBarChart.Series("Answer 4").XValueMember = "questionName"
-        '        chtCategoriesProductCountBarChart.Series("Answer 4").YValueMembers = "4"
-
-        '        chtCategoriesProductCountBarChart.DataSource = dt4
-        '        chtCategoriesProductCountBarChart.DataBind()
-
-
-        '    End If
-
-        'End If
-    End Sub
 
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
         Response.Redirect("index.aspx")
