@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Drawing
+Imports System.IO
 Imports System.Web.UI.DataVisualization.Charting
 
 Public Class results
@@ -43,6 +44,15 @@ Public Class results
         Dim dtQuestion As DataTable
         Dim dtAnswer As DataTable
 
+        Dim dtExcel As New DataTable
+        dtExcel.Columns.Add("subjectName", GetType(String))
+        dtExcel.Columns.Add("sectionId", GetType(Integer))
+        dtExcel.Columns.Add("sectionName", GetType(String))
+        dtExcel.Columns.Add("questionId", GetType(Integer))
+        dtExcel.Columns.Add("questionName", GetType(String))
+        dtExcel.Columns.Add("questionType", GetType(String))
+        dtExcel.Columns.Add("answerId", GetType(Integer))
+        dtExcel.Columns.Add("cnt", GetType(Integer))
 
         If (dtSection.Rows.Count > 0) Then
             For Each r In dtSection.Rows
@@ -71,7 +81,45 @@ Public Class results
 
                     dtAnswer = GetData(sqlCount)
 
+                    If dtAnswer.Rows.Count > 0 Then
+                        For Each a In dtAnswer.Rows
+                            Dim nr As DataRow = dtExcel.NewRow
+                            nr("subjectName") = dtAnswer("subjectName")
+                            nr("sectionId") = dtAnswer("sectionId")
+                            nr("sectionName") = dtAnswer("sectionName")
+                            nr("questionId") = dtAnswer("questionId")
+                            nr("questionName") = dtAnswer("questionName")
+                            nr("questionType") = dtAnswer("questionType")
+                            nr("answerId") = dtAnswer("answerId")
+                            nr("cnt") = dtAnswer("cnt")
+                            dtExcel.Rows.Add(nr)
+
+                        Next
+
+                    Else
+                        Dim nr2 As DataRow = dtExcel.NewRow
+                        nr2("subjectName") = dtSection("subjectName")
+                        nr2("sectionId") = dtQuestion("sectionId")
+                        nr2("sectionName") = dtQuestion("sectionName")
+                        nr2("questionId") = dtQuestion("questionId")
+                        nr2("questionName") = dtQuestion("questionName")
+                        nr2("questionType") = "grid"
+                        nr2("answerId") = 0
+                        nr2("cnt") = 0
+                        dtExcel.Rows.Add(nr2)
+                    End If
+
+
                 Next
+
+                If dtExcel.Rows.Count > 0 Then
+
+                    Call ExportToExcel(dtExcel)
+                    Dim warningMsg = "Export(Excel file) Success."
+                    ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & warningMsg & "Save')", True)
+
+                End If
+
 
             Next
         End If
@@ -86,9 +134,47 @@ Public Class results
 
     End Sub
 
-    Private Sub getData(subjId, quesId)
+    Protected Sub ExportToExcel(xExceloutPut)
+        Response.Clear()
+        Response.Buffer = True
+        Response.AddHeader("content-disposition", "attachment;filename=GridViewExport.xls")
+        Response.Charset = ""
+        Response.ContentType = "application/vnd.ms-excel"
+        Using sw As New StringWriter()
+            Dim hw As New HtmlTextWriter(sw)
 
+            Dim GridView1 As New GridView
+            GridView1.DataSource = xExceloutPut
+
+            'To Export all pages
+            GridView1.AllowPaging = False
+
+            GridView1.HeaderRow.BackColor = Color.White
+            For Each cell As TableCell In GridView1.HeaderRow.Cells
+                cell.BackColor = GridView1.HeaderStyle.BackColor
+            Next
+            For Each row As GridViewRow In GridView1.Rows
+                row.BackColor = Color.White
+                For Each cell As TableCell In row.Cells
+                    If row.RowIndex Mod 2 = 0 Then
+                        cell.BackColor = GridView1.AlternatingRowStyle.BackColor
+                    Else
+                        cell.BackColor = GridView1.RowStyle.BackColor
+                    End If
+                    cell.CssClass = "textmode"
+                Next
+            Next
+
+            GridView1.RenderControl(hw)
+            'style to format numbers to string
+            Dim style As String = "<style> .textmode { } </style>"
+            Response.Write(style)
+            Response.Output.Write(sw.ToString())
+            Response.Flush()
+            Response.[End]()
+        End Using
     End Sub
+
 
     Private Shared Function GetData(query As String) As DataTable
         Dim dt As New DataTable()
