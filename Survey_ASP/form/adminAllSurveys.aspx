@@ -35,7 +35,7 @@
 
             <div>
                 <p> 
-                    Click on the column title to sort the table.
+                    Click on the column title to sort the table. Click on the Open or Close button to manually reopen your survey or manually close your survey early.
                 </p>
                 <div>
 
@@ -53,7 +53,7 @@
                             <asp:BoundField DataField="subjectDetail" HeaderText="Details" SortExpression="subjectDetail" />
                             <asp:BoundField DataField="subjectId" HeaderText="subjectId" SortExpression="subjectId" InsertVisible="False" ReadOnly="True" Visible="False" />
                             <asp:BoundField DataField="status" HeaderText="Status" SortExpression="status" />
-                            <asp:TemplateField ShowHeader="False">
+                            <asp:TemplateField HeaderText="Results">
                                 <ItemTemplate>
                                     <asp:Button ID="results" runat="server" class="btn btn-success" CommandName="Results"
                                     Text="Results" CommandArgument='<%# Eval("subjectId") %>' />
@@ -71,6 +71,12 @@
                                     <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed" data-size="mini" data-onstyle="primary" data-offstyle="info">
                                 </ItemTemplate>
                             </asp:TemplateField>--%>
+                            <asp:TemplateField HeaderText="Open/Close Survey">
+                                <ItemTemplate>
+                                    <asp:Button ID="openClose" runat="server" class="btn btn-primary" CommandName="Toggle"
+                                    Text="Open or Close" CommandArgument='<%# Eval("subjectId") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField DataField="closeDate" HeaderText="closeDate" SortExpression="closeDate" Visible="False" />
                         </Columns>
                         <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
