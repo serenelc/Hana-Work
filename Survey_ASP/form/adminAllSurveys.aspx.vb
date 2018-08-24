@@ -35,7 +35,9 @@ Public Class adminAllSurveys
                 openSurvey(e.CommandArgument.ToString())
             Else
                 Response.Write("<script LANGUAGE='JavaScript' >alert('Closing this survey')</script>")
+                closeSurvey(e.CommandArgument.ToString())
             End If
+            Response.Redirect("adminAllSurveys.aspx")
         End If
     End Sub
 
@@ -47,7 +49,7 @@ Public Class adminAllSurveys
             connect.ConnectionString = My.Settings.ConnStringDatabaseSurvey
             connect.Open()
             command.Connection = connect
-            command.CommandText = "UPDATE SurveyMaster SET status='OPEN', statusComp=0, closeDate = " + inAMonth + "WHERE subjectId= " + subjId
+            command.CommandText = "UPDATE SurveyMaster SET status='OPEN', statusComp=0, closeDate = '" + inAMonth + "' WHERE subjectId= " + subjId
 
             'create a DataReader and execute the SqlCommand
             Dim MyDataReader As SqlDataReader = command.ExecuteReader()
@@ -73,7 +75,7 @@ Public Class adminAllSurveys
             connect.ConnectionString = My.Settings.ConnStringDatabaseSurvey
             connect.Open()
             command.Connection = connect
-            command.CommandText = "UPDATE SurveyMaster SET status='CLOSE', statusComp=1, closeDate = " + now + "WHERE subjectId= " + subjId
+            command.CommandText = "UPDATE SurveyMaster SET status='CLOSE', statusComp=1, closeDate = '" + now + "' WHERE subjectId= " + subjId
 
             'create a DataReader and execute the SqlCommand
             Dim MyDataReader As SqlDataReader = command.ExecuteReader()

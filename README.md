@@ -7,7 +7,6 @@ TO DO:
 - Fix the issue on adminCreate where if you add many questions in a row without choosing answer types, when you click on the last question to add an answer, the answer type will be assigned to the top available question.
 - IN PROGRESS: Graphs and summaries of data
 - IN PROGRESS: close dates
-		-> Have a manual button so the admin can close the survey before the chosen close date if desired.
-		-> manual button doesn't fill box atm.
+		-> trying to figure out if the toggle switch will work or whether I can change the button text to be open or close depending on the current status.
 - IN PROGRESS: testing
 - Get users logged in by their passwords so can differentiate between admins and users.

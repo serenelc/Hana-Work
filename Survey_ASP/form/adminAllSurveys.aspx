@@ -35,7 +35,8 @@
 
             <div>
                 <p> 
-                    Click on the column title to sort the table. Click on the Open or Close button to manually reopen your survey or manually close your survey early.
+                    Click on the column title to sort the table. Click on the Open or Close button to manually reopen your survey or manually close your survey early. 
+                    If you choose to reopen a survey, the new close date will be automatically set to this time and date next month.
                 </p>
                 <div>
 
