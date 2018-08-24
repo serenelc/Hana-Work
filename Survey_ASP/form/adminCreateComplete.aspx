@@ -29,8 +29,11 @@
              <div>
                 <h1 style="text-align: center;">Survey Created</h1>
             </div>
-             <p style="text-align: center;"> Your survey has been successfully created. It will now be available for users to complete. Click below to send an email informing users that the survey is now open.</p>
-             <%--<img style="margin-left: auto; margin-right: auto; display: block;" src="../images/thankyou.jpg"/>--%>
+             <p style="text-align: center;"> Your survey has been successfully created. It will now be available for users to complete. 
+                 Click <a href="adminAllSurveys.aspx" style="font-weight: bold;">HERE</a> to see a list of all surveys that have been created. There you will have the option
+                 to send an email informing employees that the survey is now open, view results and manually open/close surveys.
+             </p>
+             <img style="margin-left: auto; margin-right: auto; display: block; width: 70%" src="../images/success.jpg"/>
 
              <div id = "footer" style="background-color: white; height: 70px;">
                 <br/>

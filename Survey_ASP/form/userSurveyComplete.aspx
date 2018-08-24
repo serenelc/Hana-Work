@@ -30,7 +30,7 @@
                 <h1 style="text-align: center;">Survey Completed</h1>
             </div>
              <p style="text-align: center;"> Your responses have been successfully submitted. Thank you for completing the survey.</p>
-             <img style="margin-left: auto; margin-right: auto; display: block;" src="../images/thankyou.jpg"/>
+             <img style="margin-left: auto; margin-right: auto; display: block; width: 80%" src="../images/thankyou.jpg"/>
 
              <div id = "footer" style="background-color: white; height: 70px;">
                 <br/>

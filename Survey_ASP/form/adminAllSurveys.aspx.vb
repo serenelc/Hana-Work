@@ -31,11 +31,14 @@ Public Class adminAllSurveys
         End If
         If (e.CommandName = "Toggle") Then
             If (checkIfClosed(e.CommandArgument.ToString())) Then
-                Response.Write("<script LANGUAGE='JavaScript' >alert('Opening this survey')</script>")
-                openSurvey(e.CommandArgument.ToString())
+                If MsgBox("Are you sure you want to open this survey?", vbQuestion + vbYesNo) = vbYes Then
+                    openSurvey(e.CommandArgument.ToString())
+                End If
+
             Else
-                Response.Write("<script LANGUAGE='JavaScript' >alert('Closing this survey')</script>")
-                closeSurvey(e.CommandArgument.ToString())
+                If MsgBox("Are you sure you want to close this survey?", vbQuestion + vbYesNo) = vbYes Then
+                    closeSurvey(e.CommandArgument.ToString())
+                End If
             End If
             Response.Redirect("adminAllSurveys.aspx")
         End If

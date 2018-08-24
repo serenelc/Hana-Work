@@ -146,9 +146,8 @@ Public Class adminCreate
         Finally
             If SaveComp Then
                 SQLConn.Close()
-                Response.Redirect("adminHome.aspx")
+                Response.Redirect("adminCreateComplete.aspx")
             End If
-
         End Try
     End Sub
 
