@@ -16,6 +16,7 @@ Public Class sendmail
         If Session("En") Is Nothing Then
             Response.Redirect("index.aspx")
         End If
+
         xsubjectId = Request.QueryString("subjectId")
         surveySql = "Select * from surveyMaster where subjectId = " + xsubjectId.ToString
         dt = GetData(surveySql)

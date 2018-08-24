@@ -45,7 +45,6 @@
                     placeholder="Short description about your survey"></textarea>
             </div>
 
-            <%--Need user to be able to choose date in future only--%>
             <div class="form-group">
                 <label>Survey close date (The survey will close automatically at 00:00 of the day chosen)</label>
                 <input class="w-input input" id="closeDate" type="date" name="close" min="2018-08-22" style="width: 60%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"/>
@@ -82,7 +81,6 @@
     <script>
 
         $(document).ready(function () {
-            //var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth() + 1;
             var yy = today.getFullYear();
@@ -104,41 +102,42 @@
 
     <%--Script to add a section/sub topic--%>
     <script>
-
-        var countSec = 0; //global variable
-        //var secNum = 0; //global variable
-        //var secFlag = 0;
+        var countSec = 100; 
+        var newCountSec;
 
         function addSection() {
 
+            newCountSec = countSec.toString().slice(-2);
+
             let divSection = document.createElement("div");
             divSection.className = "container";
-            divSection.id = "divSection_id" + countSec;
-            divSection.name = "divSection_name" + countSec;
+            divSection.id = "divSection_id" + newCountSec;
+            divSection.name = "divSection_name" + newCountSec;
 
             let divSecTitle = document.createElement("input");
             divSecTitle.className = "form-control-lg";
             divSecTitle.type = "text";
             divSecTitle.placeholder = "Section Title";
-            divSecTitle.id = "sectionTitle_id" + countSec;
-            divSecTitle.name = "sectionTitle_name" + countSec;
+            divSecTitle.id = "sectionTitle_id" + newCountSec;
+            divSecTitle.name = "sectionTitle_name" + newCountSec;
             divSecTitle.value = "<%=divSecTitle_val%>";
             divSecTitle.style = "margin-bottom: 20px; font-weight: bold; float: center; border-right: none; border-left: none; border-top: none; border-bottom-width: medium; border-bottom-color: black; width: 50%;";
             divSection.appendChild(divSecTitle)
 
             let sectionClose = document.createElement('button');
-            sectionClose.id = "sectionCloseQ_id" + countSec;
-            sectionClose.name = "sectionCloseQ_name" + countSec;
+            sectionClose.id = "sectionCloseQ_id" + newCountSec;
+            sectionClose.name = "sectionCloseQ_name" + newCountSec;
             sectionClose.class = "btn"
             sectionClose.style = "border: none; background-color: white;"
             sectionClose.innerHTML = '<span aria-hidden="true">X</span> ';
-            //sectionClose.onclick = removeSection;
+            sectionClose.onclick = removeSection;
             divSection.appendChild(sectionClose);
 
             divSection.appendChild(document.createElement("br"));
             newSection.before(divSection);
             console.log("adding a section");
             countSec = parseInt(countSec) + parseInt(1);
+
         }
 
     </script>
@@ -219,21 +218,16 @@
     <script>
         var idCount = 0; //GLOBAL VARIABLE
 
-        //function removeSection() {
-        //    secFlag = 1;
-        //    this.removeElement();
-        //}
+        function removeSection() {
+            var secIdNum = this.id.slice(-2);
+            document.getElementById("divSection_id" + secIdNum);
+        }
 
         function removeElement() {
-            //var indexS = this.id.indexOf(":S");
-            //var indexU = this.id.indexOf("_");
+
             var idNum = this.id.slice(-2);
 
-            //if (secFlag = 1) {
-            //    secNum = countSec;
-            //    document.getElementById("divSection_id" + countSec).remove();
-            //}
-
+            
             document.getElementById("divGroupQ_id" + idNum).remove();
             document.getElementById("break_id" + idNum).remove();
             if (document.getElementById("divRadio_id" + idNum) != null) {
@@ -285,36 +279,7 @@
         }
     </script>
 
-    <%--Script to remove a section--%>
-    <%--<script>
-        function removeSection() {
-            document.getElementById("divSection_id" + countSec).remove();
-            var secNum = countSec;
-            document.getElementById("divGroupQ_idS:" + secNum + "_" + idNum).remove();
-            document.getElementById("break_idS:" + secNum + "_" + idNum).remove();
-            if (document.getElementById("divRadio_idS:" + secNum + "_" + idNum) != null) {
-                document.getElementById("divRadio_idS:" + secNum + "_" + idNum).remove();
-                console.log("REMOVING RADIO BUTTON");
-                idCount--;
-            }
-            else if (document.getElementById("divShortAns_idS:" + secNum + "_" + idNum) != null) {
-                document.getElementById("divShortAns_idS:" + secNum + "_" + idNum).remove();
-                console.log("REMOVING SHORT ANSWER");
-                idCount--;
-            }
-            else if (document.getElementById("divTable_idS:" + secNum + "_" + idNum) != null) {
-                document.getElementById("divTable_idS:" + secNum + "_" + idNum).remove();
-                console.log("REMOVING MULTIPLE CHOICE GRID");
-                idCount--;
-            }
-            else {
-                //do nothing
-            }
-
-            return false;
-        }
-    </script>--%>
-
+    
     <%--Script to get ID attribute--%>
     <script>
         function getID() {

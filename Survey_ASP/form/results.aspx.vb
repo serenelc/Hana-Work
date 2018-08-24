@@ -12,16 +12,20 @@ Public Class results
     Dim dtExcel As New DataTable
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        If Session("En") Is Nothing Then
+            Response.Redirect("index.aspx")
+        End If
 
         If Not IsPostBack() Then
             Session("QsubjectId") = Request.QueryString("subjectId")
             getTitleDesc()
-
+        Else
+            DataList1.DataBind()
         End If
 
     End Sub
 
-    Private Shared Function GetData(query As String) As DataTable
+    Private Shared Function getContent(query As String) As DataTable
         Dim dt As New DataTable()
         Dim cmd As New SqlCommand(query)
         Dim constr As [String] = My.Settings.ConnStringDatabaseSurvey
@@ -38,7 +42,7 @@ Public Class results
 
         'Get the survey title and description
         Dim sqlTitleDesc = "select subjectName, subjectDetail from surveyMaster where subjectId = " + Session("QsubjectId").ToString()
-        Dim dtTitleDesc As DataTable = GetData(sqlTitleDesc)
+        Dim dtTitleDesc As DataTable = getContent(sqlTitleDesc)
         Dim xTitle As String = ""
         Dim xDesc As String = ""
 
@@ -59,13 +63,104 @@ Public Class results
         description.Text = d
     End Sub
 
+    Private Shared Function GetData(ByVal query As String) As DataTable
+        Dim constr As String = My.Settings.ConnStringDatabaseSurvey
+        Using con As SqlConnection = New SqlConnection(constr)
+            Using sda As SqlDataAdapter = New SqlDataAdapter(query, con)
+                Dim dt As DataTable = New DataTable()
+                sda.Fill(dt)
+                Return dt
+            End Using
+        End Using
+    End Function
+
+    Private Sub DataList1_ItemDataBound(sender As Object, e As DataListItemEventArgs) Handles DataList1.ItemDataBound
+        Try
+            Dim ChartPie As Chart = e.Item.FindControl("ChartPie")
+            Dim Chartx1 As Chart = e.Item.FindControl("Chart21")
+            Dim xsectionIdLabel As Label = e.Item.FindControl("sectionIdLabel")
+            ChartPie.Visible = False
+            Chartx1.Visible = False
+
+            Dim query As String = "Select b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName, "
+            query = query + " count(d.answerId) As cnt "
+            query = query + " From surveyMaster b  "
+            query = query + " inner Join surveySection a On a.subjectId = b.subjectId  "
+            query = query + " inner Join surveyQuestion c On a.sectionId = c.sectionId  "
+            query = query + " inner Join surveyAnswer f On c.questionId = f.questionId  "
+            query = query + " Left Join surveyUserAnswer d On d.answerId = f.answerId "
+            query = query + " where questionType = 'grid' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            'And c.questionId = 24 
+            query = query + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName "
+            query = query + " order by a.sectionId, c.questionId "
+
+            Dim dt As DataTable = GetData(query)
+
+            If dt.Rows.Count > 0 Then
+
+                'Get the DISTINCT answerName.
+                Dim countries As List(Of String) = (From p In dt.AsEnumerable()
+                                                    Select p.Field(Of String)("answerName")).Distinct().ToList()
+
+                'Loop through the answerName.
+                For Each country As String In countries
+
+                    'Get the questionName for each answerName.
+                    Dim x As String() = (From p In dt.AsEnumerable()
+                                         Where p.Field(Of String)("answerName") = country
+                                         Order By p.Field(Of String)("questionName")
+                                         Select p.Field(Of String)("questionName")).ToArray()
+
+
+
+                    'Get the Total of Orders for each answerName.
+                    Dim y As Integer() = (From p In dt.AsEnumerable()
+                                          Where p.Field(Of String)("answerName") = country
+                                          Order By p.Field(Of String)("questionName")
+                                          Select p.Field(Of Integer)("cnt")).ToArray()
+
+                    'Add Series to the Chart.
+                    Chartx1.Series.Add(New Series(country))
+                    Chartx1.Titles("Items").Font = New System.Drawing.Font("Times New Roman", 25, System.Drawing.FontStyle.Bold)
+                    Chartx1.Titles("Items").Text = dt.Rows(0)("sectionName").ToString()
+                    Chartx1.Series(country).IsValueShownAsLabel = True
+                    Chartx1.Series(country).ChartType = SeriesChartType.Bar
+                    Chartx1.Series(country).Points.DataBindXY(x, y)
+                Next
+
+                Chartx1.Legends(0).Enabled = True
+                Chartx1.Visible = True
+            End If
+
+            'Pie Chart
+            Dim query2 As String = "Select a.sectionName, c.questionType "
+            query2 = query2 + " , f.answerName,  count(d.answerId) As cnt   "
+            query2 = query2 + " From surveyMaster b    "
+            query2 = query2 + " inner Join surveySection a On a.subjectId = b.subjectId    "
+            query2 = query2 + " inner Join surveyQuestion c On a.sectionId = c.sectionId    "
+            query2 = query2 + " inner Join surveyAnswer f On c.questionId = f.questionId    "
+            query2 = query2 + " Left Join surveyUserAnswer d On d.answerId = f.answerId   "
+            query2 = query2 + " where questionType = 'radio' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            query2 = query2 + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  "
+            Dim dtpie As DataTable = GetData(query2)
+            If dtpie.Rows.Count > 0 Then
+                'ChartPie.Titles("Series1").Font = New System.Drawing.Font("Times New Roman", 25, System.Drawing.FontStyle.Bold)
+                ChartPie.Titles("Title1").Text = dtpie.Rows(0)("sectionName").ToString()
+                ChartPie.Visible = True
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
     Private Sub getExcel()
 
         'Get all the sections in the survey
         Dim sqlSection = "Select a.subjectId, a.subjectName, b.sectionId, b.sectionName from surveyMaster a"
         sqlSection = sqlSection + " inner Join surveySection b on a.subjectId = b.subjectId"
         sqlSection = sqlSection + " where a.subjectId = " + Session("QsubjectId").ToString()
-        Dim dtSection As DataTable = GetData(sqlSection)
+        Dim dtSection As DataTable = getContent(sqlSection)
         Dim dtQuestion As DataTable
         Dim dtAnswer As DataTable
 
@@ -88,7 +183,7 @@ Public Class results
                 Dim sqlQuestion = "Select a.sectionId, a.sectionName, b.questionId, b.questionName from surveySection a"
                 sqlQuestion = sqlQuestion + " inner Join surveyQuestion b on a.sectionId = b.sectionId"
                 sqlQuestion = sqlQuestion + " where a.sectionId = " + sec.ToString()
-                dtQuestion = GetData(sqlQuestion)
+                dtQuestion = getContent(sqlQuestion)
 
                 For Each q In dtQuestion.Rows
                     Dim ques = q("questionId")
@@ -105,7 +200,7 @@ Public Class results
                     sqlCount = sqlCount + " group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId"
                     sqlCount = sqlCount + " order by answerId"
 
-                    dtAnswer = GetData(sqlCount)
+                    dtAnswer = getContent(sqlCount)
 
                     If dtAnswer.Rows.Count > 0 Then
                         For Each a In dtAnswer.Rows

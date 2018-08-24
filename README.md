@@ -4,9 +4,11 @@ Main project is to create a survey template (along the lines of google forms) so
 Using vb.net, sql, html, css, asp.net and javascript.
 
 TO DO:
-- Add a section delete button on adminCreate -> add some sort of flag to each question so we know which section it is part of, then we can delete all the questions within the section.
+- IN PROGRESS: Add a section delete button on adminCreate -> add some sort of flag to each question so we know which section it is part of, then we can delete all the questions within the section.
 - Fix the issue on adminCreate where if you add many questions in a row without choosing answer types, when you click on the last question to add an answer, the answer type will be assigned to the top available question.
-- IN PROGRESS: Graphs and summaries of data
-- IN PROGRESS: close dates
-		-> trying to figure out if the toggle switch will work or whether I can change the button text to be open or close depending on the current status.
-
+- IN PROGRESS: Graphs and summaries of data 
+	-> make it look pretty
+	-> table with percentages
+- Make a user manual and program process flow
+- IN PROGRESS: Upload to server
+- Containers for phone screen view

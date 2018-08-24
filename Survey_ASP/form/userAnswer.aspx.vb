@@ -19,6 +19,7 @@ Public Class userAnswer
         If Session("En") Is Nothing Then
             Response.Redirect("index.aspx")
         End If
+
         If IsPostBack() = False Then
             Dim subId = Request.QueryString("subjectId")
             Call getSurveyContent(subId)

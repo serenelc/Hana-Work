@@ -50,6 +50,15 @@ Partial Public Class results
     Protected WithEvents excelImg As Global.System.Web.UI.WebControls.ImageButton
     
     '''<summary>
+    '''DataList1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DataList1 As Global.System.Web.UI.WebControls.DataList
+    
+    '''<summary>
     '''btnBack control.
     '''</summary>
     '''<remarks>
@@ -66,4 +75,13 @@ Partial Public Class results
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnLogout As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''SqlDataSource1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SqlDataSource1 As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

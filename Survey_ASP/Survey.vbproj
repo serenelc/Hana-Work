@@ -38,6 +38,8 @@
     <OutputPath>bin\</OutputPath>
     <DocumentationFile>WebForms_Basic.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -178,14 +180,13 @@
     <Content Include="form\adminCreateComplete.aspx" />
     <Content Include="form\adminHome.aspx" />
     <Content Include="form\adminAllSurveys.aspx" />
-    <Content Include="form\ChartBar.aspx" />
+    <Content Include="form\images\bg.jpeg" />
     <Content Include="form\index.aspx" />
     <Content Include="form\results.aspx" />
     <Content Include="form\sendmail.aspx" />
     <Content Include="form\userAnswer.aspx" />
     <Content Include="form\userSurveyComplete.aspx" />
     <Content Include="form\userSurveyList.aspx" />
-    <Content Include="form\xx.aspx" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -199,15 +200,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\bg.jpeg" />
-    <Content Include="images\emailback.png" />
     <Content Include="images\excel.png" />
     <Content Include="images\HANA-Logo-BW.png" />
     <Content Include="images\HANA-Logo.png" />
     <Content Include="images\hana-simple-logo.jpg" />
-    <Content Include="images\header.jpg" />
     <Content Include="images\mail.png" />
-    <Content Include="images\make-survey.jpeg" />
-    <Content Include="images\statistics.jpeg" />
     <Content Include="images\thankyou.jpg" />
     <Content Include="images\user.png" />
     <Content Include="node_modules\bootstrap-toggle\css\bootstrap-toggle.css" />
@@ -446,6 +443,7 @@
     <Content Include="node_modules\bootstrap-toggle\LICENSE" />
     <Content Include="node_modules\bootstrap-toggle\package.json" />
     <Content Include="node_modules\bootstrap-toggle\README.md" />
+    <None Include="My Project\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.min.css" />
@@ -819,13 +817,6 @@
       <DependentUpon>adminAllSurveys.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="form\ChartBar.aspx.designer.vb">
-      <DependentUpon>ChartBar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="form\ChartBar.aspx.vb">
-      <DependentUpon>ChartBar.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="form\index.aspx.designer.vb">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
@@ -867,13 +858,6 @@
     <Compile Include="form\userSurveyList.aspx.vb">
       <DependentUpon>userSurveyList.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="form\xx.aspx.designer.vb">
-      <DependentUpon>xx.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="form\xx.aspx.vb">
-      <DependentUpon>xx.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
