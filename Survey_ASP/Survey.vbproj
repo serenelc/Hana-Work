@@ -185,6 +185,7 @@
     <Content Include="form\userAnswer.aspx" />
     <Content Include="form\userSurveyComplete.aspx" />
     <Content Include="form\userSurveyList.aspx" />
+    <Content Include="form\xx.aspx" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -198,6 +199,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\bg.jpeg" />
+    <Content Include="images\emailback.png" />
+    <Content Include="images\excel.png" />
     <Content Include="images\HANA-Logo-BW.png" />
     <Content Include="images\HANA-Logo.png" />
     <Content Include="images\hana-simple-logo.jpg" />
@@ -864,6 +867,13 @@
     <Compile Include="form\userSurveyList.aspx.vb">
       <DependentUpon>userSurveyList.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="form\xx.aspx.designer.vb">
+      <DependentUpon>xx.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="form\xx.aspx.vb">
+      <DependentUpon>xx.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>

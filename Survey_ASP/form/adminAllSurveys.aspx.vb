@@ -42,7 +42,7 @@ Public Class adminAllSurveys
     End Sub
 
     Private Sub SurveyList_RowCommand(sender As Object, e As GridViewCommandEventArgs) Handles surveyList.RowCommand
-        If (e.CommandName = "Go") Then
+        If (e.CommandName = "Results") Then
             Response.Redirect("results.aspx?subjectId=" + e.CommandArgument.ToString())
         End If
         If (e.CommandName = "SendMail") Then

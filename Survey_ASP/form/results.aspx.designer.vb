@@ -41,6 +41,15 @@ Partial Public Class results
     Protected WithEvents description As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''excelImg control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents excelImg As Global.System.Web.UI.WebControls.ImageButton
+    
+    '''<summary>
     '''btnBack control.
     '''</summary>
     '''<remarks>

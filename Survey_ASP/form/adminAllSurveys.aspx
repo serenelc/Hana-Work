@@ -55,8 +55,8 @@
                             <asp:BoundField DataField="status" HeaderText="Status" SortExpression="status" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
-                                    <asp:Button ID="go" runat="server" class="btn btn-success" CommandName="Results"
-                                    Text="Go" CommandArgument='<%# Eval("subjectId") %>' />
+                                    <asp:Button ID="results" runat="server" class="btn btn-success" CommandName="Results"
+                                    Text="Results" CommandArgument='<%# Eval("subjectId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Mail">

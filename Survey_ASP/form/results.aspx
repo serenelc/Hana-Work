@@ -34,7 +34,8 @@
 
             <%--Data got from the database will go into the graphs section--%>
             <div> 
-                    <p> Graphs will go here</p>
+                <p>Click on the image to download an excel spreadsheet version of the results
+                <asp:ImageButton ID="excelImg" runat="server" ImageUrl="../images/excel.png" Width="40" CommandName="excelImg"/></p>
             </div>
 
             <div id = "footer" style="background-color: white; height: 70px;">
