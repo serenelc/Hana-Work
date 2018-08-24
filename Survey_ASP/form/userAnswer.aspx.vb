@@ -106,9 +106,6 @@ Public Class userAnswer
                         listContent.Add("txtDesc=" + xsubjectDetail.ToString())
                         listContent.Add("status=" + xstatus)
                         listContent.Add("statusComp=" + xstatusComp.ToString())
-                        'listContent.Add("openDate=" + xopenDate.ToString())
-                        'listContent.Add("closeDate=" + xcloseDate.ToString())
-                        'listContent.Add("createDate=" + xcreateDate.ToString())
                         listContent.Add("createBy=" + xcreateBy)
                         xTitle = 1
                     End If

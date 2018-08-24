@@ -55,23 +55,22 @@
                             <asp:BoundField DataField="status" HeaderText="Status" SortExpression="status" />
                             <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
-                                    <asp:Button ID="go" runat="server" class="btn btn-success" CommandName="Go"
+                                    <asp:Button ID="go" runat="server" class="btn btn-success" CommandName="Results"
                                     Text="Go" CommandArgument='<%# Eval("subjectId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Mail">
                                 <ItemTemplate>
-                                    <%--<asp:Button ID="sendMail" runat="server" class="btn btn-primary" CommandName="SendMail"
-                                    Text="Send Email" CommandArgument='<%# Eval("subjectId") %>' />--%>
                                     <asp:ImageButton ID="sendMail" runat="server" ImageUrl="../images/mail.png" Width="40" CommandName="SendMail"
                                     Text="Send Email" CommandArgument='<%# Eval("subjectId") %>'/>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField ShowHeader="False">
+                            <%--TODO: When this button is toggled, a survey is closed or opened--%>
+                            <%--<asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
                                     <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed" data-size="mini" data-onstyle="primary" data-offstyle="info">
                                 </ItemTemplate>
-                            </asp:TemplateField>
+                            </asp:TemplateField>--%>
                             <asp:BoundField DataField="closeDate" HeaderText="closeDate" SortExpression="closeDate" Visible="False" />
                         </Columns>
                         <FooterStyle BackColor="#CCCC99" ForeColor="Black" />

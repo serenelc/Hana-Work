@@ -6,10 +6,10 @@ TO DO:
 - Add a section delete button on adminCreate -> add some sort of flag to each question so we know which section it is part of, then we can delete all the questions within the section.
 - Fix the issue on adminCreate where if you add many questions in a row without choosing answer types, when you click on the last question to add an answer, the answer type will be assigned to the top available question.
 - IN PROGRESS: Make a page to show graphs and summaries of an individual survey
+		-> Working on the excel spreadsheet of results.
 - IN PROGRESS: close dates
 		-> Have a manual button so the admin can close the survey before the chosen close date if desired.
 		-> manual button doesn't fill box atm.
-- Have an option so the admin can choose who they want to send the email to -> mail button will go to another page where there is a list of all employees and their emails. admin can select users from that list to email about that specific survey.
 - IN PROGRESS: testing
 - Get users logged in by their passwords so can differentiate between admins and users.
 

@@ -3,13 +3,33 @@ Imports MISClassLibrary
 
 Public Class sendmail
     Inherits System.Web.UI.Page
+    Dim xsubjectId = 0
+    Dim surveySql
+    Dim dt As DataTable
+    Dim surveyName As String = ""
+    Dim surveyDesc As String = ""
+    Dim surveyOpen As Date
+    Dim surveyClose As Date
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("En") Is Nothing Then
             Response.Redirect("index.aspx")
         End If
-        'SendEmail(16)
+        xsubjectId = Request.QueryString("subjectId")
+        surveySql = "Select * from surveyMaster where subjectId = " + xsubjectId.ToString
+        dt = GetData(surveySql)
+        For Each r In dt.Rows
+            surveyName = r("subjectName")
+            surveyDesc = r("subjectDetail")
+            surveyOpen = r("openDate")
+            surveyClose = r("closeDate")
+        Next
+
+        Dim info As String = "Survey Name: " + surveyName + ", Survey Description: " + surveyDesc + ", Survey Open Date: " + surveyOpen + ", Survey Close Date: " + surveyClose + "."
+        aboutSurvey.InnerText = info
     End Sub
+
     Private Shared Function GetData(query As String) As DataTable
         Dim dt As New DataTable()
         Dim cmd As New SqlCommand(query)
@@ -22,15 +42,15 @@ Public Class sendmail
         sda.Fill(dt)
         Return dt
     End Function
+
     Function SendEmail(xsubjectId) As Boolean
-        Dim xSql = " Select * from  surveyMaster where subjectId = " + xsubjectId.ToString
-        Dim dt As DataTable = GetData(xSql)
+        'Dim xSql = " Select * from  surveyMaster where subjectId = " + xsubjectId.ToString
+        'Dim dt As DataTable = GetData(surveySql)
         Dim mail As New EmailController(SystemInfo.SystemList.QLR)
 
-        Dim mailTo As String = "suriyongt@ayt.hanabk.th.com"
-        Dim mailTo2 As String = "SereneC@ayt.hanabk.th.com"
-        Dim mailSubject As String = "Survey hana online"
-        Dim mailMessage As String = ""
+        Dim mailTo As String = txtTo.Value.Trim
+        Dim mailSubject As String = txtSubject.Value.Trim
+        Dim mailMessage As String = txtMessage.Value.Trim
 
         Try
             mail.Subject = mailSubject
@@ -42,15 +62,16 @@ Public Class sendmail
             strbody &= "<br/><a href='http://localhost:55240/form/index.aspx'><img src='\\hsadols\Applications\MIS_App\CAR_3D_ONLINE\PICS\mailLogin.jpg'></a>"
             strbody &= "<br/> REMARK:THIS EMAIL HAS BEEN SENT AUTOMATICALLY. DO NOT REPLY TO SENDER."
 
-
             mail.Body = strbody
 
             mail.BccAddress.Clear()
             mail.ToAddress.Clear()
             mail.CcAddress.Clear()
 
-            mail.ToAddress.Add(mailTo)
-            mail.ToAddress.Add(mailTo2)
+            Dim strArrEmail() = mailTo.Split(";")
+            For i As Integer = 0 To strArrEmail.Count - 1
+                mail.ToAddress.Add(strArrEmail(i).ToString())
+            Next
             mail.Send()
             Response.Write("<script LANGUAGE='JavaScript' >alert('Send mail successfully!')</script>")
             Return True
@@ -66,5 +87,11 @@ Public Class sendmail
 
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
         Response.Redirect("index.aspx")
+    End Sub
+
+    Protected Sub btnSend_Click(sender As Object, e As EventArgs) Handles btnSend.Click
+        If SendEmail(xsubjectId) = True Then
+            Response.Redirect("adminAllSurveys.aspx")
+        End If
     End Sub
 End Class

@@ -50,7 +50,7 @@ Public Class adminAllSurveys
                 Response.Write("<script LANGUAGE='JavaScript' >alert('This survey is closed. You cannot send mail!')</script>")
                 Exit Sub
             End If
-            Response.Redirect("sendmail.aspx")
+            Response.Redirect("sendmail.aspx?subjectId=" + e.CommandArgument.ToString())
             'SendEmail(e.CommandArgument.ToString())
         End If
     End Sub
