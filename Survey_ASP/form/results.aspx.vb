@@ -93,19 +93,19 @@ Public Class results
             query = query + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName "
             query = query + " order by a.sectionId, c.questionId "
 
-            Dim dt As DataTable = GetData(query)
+            Dim dtBarChart As DataTable = GetData(query)
 
-            If dt.Rows.Count > 0 Then
+            If dtBarChart.Rows.Count > 0 Then
 
                 'Get the DISTINCT answerName.
-                Dim answerNames As List(Of String) = (From p In dt.AsEnumerable()
+                Dim answerNames As List(Of String) = (From p In dtBarChart.AsEnumerable()
                                                       Select p.Field(Of String)("answerName")).Distinct().ToList()
 
                 'Loop through the answerName.
                 For Each answerName As String In answerNames
 
                     'Get the questionName for each answerName.
-                    Dim qName As String() = (From p In dt.AsEnumerable()
+                    Dim qName As String() = (From p In dtBarChart.AsEnumerable()
                                              Where p.Field(Of String)("answerName") = answerName
                                              Order By p.Field(Of String)("questionName")
                                              Select p.Field(Of String)("questionName")).ToArray()
@@ -113,7 +113,7 @@ Public Class results
 
 
                     'Get the number of people who answered for each answerName.
-                    Dim num As Integer() = (From p In dt.AsEnumerable()
+                    Dim num As Integer() = (From p In dtBarChart.AsEnumerable()
                                             Where p.Field(Of String)("answerName") = answerName
                                             Order By p.Field(Of String)("questionName")
                                             Select p.Field(Of Integer)("cnt")).ToArray()
@@ -121,11 +121,10 @@ Public Class results
                     'Add Series to the Chart.
                     Chartx1.Series.Add(New Series(answerName))
                     Chartx1.Titles("Items").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
-                    Chartx1.Titles("Items").Text = dt.Rows(0)("sectionName").ToString()
+                    Chartx1.Titles("Items").Text = dtBarChart.Rows(0)("sectionName").ToString() + "\n" + dtBarChart.Rows(0)("subjectName").ToString()
                     Chartx1.Series(answerName).IsValueShownAsLabel = True
                     Chartx1.Series(answerName).ChartType = SeriesChartType.Bar
                     Chartx1.Series(answerName).Points.DataBindXY(qName, num)
-                    'Chartx1.PaletteCustomColors = 
                 Next
 
                 Chartx1.Legends(0).Enabled = True

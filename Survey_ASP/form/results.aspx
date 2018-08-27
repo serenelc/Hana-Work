@@ -61,7 +61,7 @@
                                 </asp:Legend>
                             </Legends>
                             <Titles>
-                                <asp:Title Name="Title1" Text="1234">
+                                <asp:Title Name="Title1" Text="">
                                 </asp:Title>
                             </Titles>
                         </asp:Chart>
