@@ -60,7 +60,8 @@ Public Class sendmail
             strbody &= "<br/><B>Subject Id:</B> " & dt.Rows(0)("subjectId").ToString()
             strbody &= "<br/><B>Subject Name:</B> " & dt.Rows(0)("subjectName")
             strbody &= "<br/><B>Open Date:</B> " & dt.Rows(0)("openDate").ToString()
-            strbody &= "<br/><a href='http://localhost:55240/form/index.aspx'><img src='\\hsadols\Applications\MIS_App\CAR_3D_ONLINE\PICS\mailLogin.jpg'></a>"
+            strbody &= "<br/>" & mailMessage & "<br/>"
+            strbody &= "<br/><a href='http://10.12.12.101/surveyOnline/form/index.aspx'><img src='\\hsadols\Applications\MIS_App\CAR_3D_ONLINE\PICS\mailLogin.jpg'></a>"
             strbody &= "<br/> REMARK:THIS EMAIL HAS BEEN SENT AUTOMATICALLY. DO NOT REPLY TO SENDER."
 
             mail.Body = strbody

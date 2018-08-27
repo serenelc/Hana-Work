@@ -9,6 +9,11 @@ TO DO:
 - IN PROGRESS: Graphs and summaries of data 
 	-> make it look pretty
 	-> table with percentages
+	-> Question titles per section
+	-> Section titles more obvious
+	-> custom colour palettes
 - IN PROGRESS: Make a user manual and program process flow
 - Make all the alerts uniform across all pages
-- Containers for phone screen view
+- Make sure each survey has at least 1 question before it allows itself to be saved
+- Today's date is fucking up. Calendar is allowing users to pick dates in the past.
+- Email confirmation pop up

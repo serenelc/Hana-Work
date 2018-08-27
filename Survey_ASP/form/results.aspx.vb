@@ -144,7 +144,7 @@ Public Class results
             query2 = query2 + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  "
             Dim dtpie As DataTable = GetData(query2)
             If dtpie.Rows.Count > 0 Then
-                ChartPie.Titles("Series1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
+                ChartPie.Titles("Title1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
                 ChartPie.Titles("Title1").Text = dtpie.Rows(0)("sectionName").ToString()
                 ChartPie.Visible = True
             End If

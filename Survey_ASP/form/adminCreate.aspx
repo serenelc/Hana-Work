@@ -36,7 +36,7 @@
                 <label>
                     <h3>Title</h3>
                 </label>
-                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title" />
+                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title"/>
             </div>
 
             <div class="form-group">

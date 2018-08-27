@@ -39,15 +39,15 @@
                 </p>
             </div>
 
-            <div class="col-8" style="width: 70%;">
-                <asp:DataList ID="DataList1" runat="server" DataKeyField="sectionId" DataSourceID="SqlDataSource1">
+            <div class="col-sm-8" style="width: 70%;">
+                <asp:DataList ID="DataList1" runat="server" DataKeyField="sectionId" DataSourceID="SqlDataSource1" HorizontalAlign="Center">
                     <ItemTemplate>
                         <asp:Label ID="sectionIdLabel" runat="server" Text='<%# Eval("sectionId") %>' Visible="<%# false %>" />
                         <asp:Label ID="subjectIdLabel" runat="server" Text='<%# Eval("subjectId") %>' Visible="<%# false %>" />
                         <br />
 
                         <%--Pie Charts for radio answers--%>
-                        <asp:Chart ID="ChartPie" runat="server" DataSourceID="SqlDataSourcePie">
+                        <asp:Chart ID="ChartPie" runat="server" DataSourceID="SqlDataSourcePie" Width="892px">
                             <Series>
                                 <asp:Series ChartType="Pie" IsValueShownAsLabel="True" Legend="Legend1" Name="Series1" XValueMember="answerName" YValueMembers="cnt">
                                 </asp:Series>
@@ -57,11 +57,11 @@
                                 </asp:ChartArea>
                             </ChartAreas>
                             <Legends>
-                                <asp:Legend Name="Legend1">
+                                <asp:Legend Name="Legend1" Alignment="Center" >
                                 </asp:Legend>
                             </Legends>
                             <Titles>
-                                <asp:Title Name="Title1" Text="1234" Font="24.75pt, style=Bold">
+                                <asp:Title Name="Title1" Text="1234">
                                 </asp:Title>
                             </Titles>
                         </asp:Chart>
