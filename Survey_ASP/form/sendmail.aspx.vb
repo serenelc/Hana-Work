@@ -53,6 +53,13 @@ Public Class sendmail
         Dim mailMessage As String = txtMessage.Value.Trim
 
         Try
+            If (Not mailTo.Length > 0) Then
+                Throw New Exception("Please choose at least 1 recipient for the email")
+            End If
+            If (Not mailSubject.Length > 0) Then
+                Throw New Exception("Please choose a subject for the email")
+            End If
+
             mail.Subject = mailSubject
             Dim strbody = ""
             strbody &= "<br/><B>SURVEY HANA ONLINE</B>"
@@ -74,10 +81,10 @@ Public Class sendmail
                 mail.ToAddress.Add(strArrEmail(i).ToString())
             Next
             mail.Send()
-            Response.Write("<script LANGUAGE='JavaScript' >alert('Send mail successfully!')</script>")
+
             Return True
         Catch ex As Exception
-            Response.Write("<script LANGUAGE='JavaScript' >alert('Send mail error!')</script>")
+            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & ex.Message & "')", True)
             Return False
         End Try
     End Function
@@ -95,6 +102,7 @@ Public Class sendmail
     Protected Sub btnSend_Click(sender As Object, e As EventArgs) Handles btnSend.Click
         If MsgBox("Are you sure you want to send this email?", vbQuestion + vbYesNo) = vbYes Then
             If SendEmail(xsubjectId) = True Then
+                ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Email sent successfully!')", True)
                 Response.Redirect("adminAllSurveys.aspx")
             End If
         End If

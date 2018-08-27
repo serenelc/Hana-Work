@@ -443,6 +443,7 @@
     <Content Include="node_modules\bootstrap-toggle\LICENSE" />
     <Content Include="node_modules\bootstrap-toggle\package.json" />
     <Content Include="node_modules\bootstrap-toggle\README.md" />
+    <Content Include="docs\Survey Online Manual.docx" />
     <None Include="My Project\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.css" />

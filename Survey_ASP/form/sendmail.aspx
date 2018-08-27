@@ -35,11 +35,11 @@
 
                 <div class="container">
                     <label>To</label>
-                    <input runat="server" id="txtTo" class="form-control" type="text" name="To"/>
+                    <input runat="server" id="txtTo" class="form-control" type="text" name="To" autocomplete="off"/>
                 </div>
                 <div class="container">
                     <label>Subject</label>
-                    <input runat="server" id="txtSubject" class="form-control" type="text" name="Subject"/>
+                    <input runat="server" id="txtSubject" class="form-control" type="text" name="Subject" autocomplete="off"/>
                 </div>
                 <div class="container">
                     <label>Message</label>

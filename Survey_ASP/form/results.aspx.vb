@@ -132,7 +132,7 @@ Public Class results
             End If
 
             'Pie Chart
-            Dim query2 As String = "Select a.sectionName, c.questionType "
+            Dim query2 As String = "Select a.sectionName, c.questionType, c.questionName "
             query2 = query2 + " , f.answerName,  count(d.answerId) As cnt   "
             query2 = query2 + " From surveyMaster b    "
             query2 = query2 + " inner Join surveySection a On a.subjectId = b.subjectId    "
@@ -144,7 +144,7 @@ Public Class results
             Dim dtpie As DataTable = GetData(query2)
             If dtpie.Rows.Count > 0 Then
                 ChartPie.Titles("Title1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
-                ChartPie.Titles("Title1").Text = dtpie.Rows(0)("sectionName").ToString() + "\n" + dtpie.Rows(0)("subjectName").ToString()
+                ChartPie.Titles("Title1").Text = dtpie.Rows(0)("sectionName").ToString() + "\n" + dtpie.Rows(0)("questionName").ToString()
                 ChartPie.Visible = True
             End If
 
@@ -170,6 +170,7 @@ Public Class results
         dtExcel.Columns.Add("questionName", GetType(String))
         dtExcel.Columns.Add("questionType", GetType(String))
         dtExcel.Columns.Add("answerId", GetType(Integer))
+        dtExcel.Columns.Add("answerName", GetType(String))
         dtExcel.Columns.Add("cnt", GetType(Integer))
         dtExcel.Columns.Add("surveyType", GetType(String))
 
@@ -187,7 +188,7 @@ Public Class results
                 For Each q In dtQuestion.Rows
                     Dim ques = q("questionId")
 
-                    Dim sqlCount = "Select b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, count(d.answerId) as cnt"
+                    Dim sqlCount = "Select b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName, count(d.answerId) as cnt"
                     sqlCount = sqlCount + " , '' as surveyType "
                     sqlCount = sqlCount + " from surveyMaster b"
                     sqlCount = sqlCount + " inner join surveySection a On a.subjectId = b.subjectId"
@@ -196,7 +197,7 @@ Public Class results
                     sqlCount = sqlCount + " left join surveyUserAnswer d On d.answerId = f.answerId"
                     sqlCount = sqlCount + " where b.subjectId = " + Session("QsubjectId").ToString()
                     sqlCount = sqlCount + " And c.questionId = " + ques.ToString()
-                    sqlCount = sqlCount + " group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId"
+                    sqlCount = sqlCount + " group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName"
                     sqlCount = sqlCount + " order by answerId"
 
                     dtAnswer = getContent(sqlCount)
@@ -211,6 +212,7 @@ Public Class results
                             nr("questionName") = a("questionName")
                             nr("questionType") = a("questionType")
                             nr("answerId") = a("answerId")
+                            nr("answerName") = a("answerName")
                             nr("cnt") = a("cnt")
                             nr("surveyType") = a("surveyType")
                             dtExcel.Rows.Add(nr)
@@ -227,6 +229,7 @@ Public Class results
                         nr2("questionName") = q("questionName")
                         nr2("questionType") = "grid"
                         nr2("answerId") = 0
+                        nr2("answerName") = ""
                         nr2("cnt") = 0
                         nr2("surveyType") = "Section"
                         dtExcel.Rows.Add(nr2)
