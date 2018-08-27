@@ -144,12 +144,13 @@ Public Class results
             Dim dtpie As DataTable = GetData(query2)
             If dtpie.Rows.Count > 0 Then
                 ChartPie.Titles("Title1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
+                'TODO: I want the section title to be distinguishable from the question title
                 ChartPie.Titles("Title1").Text = dtpie.Rows(0)("sectionName").ToString() + "\n" + dtpie.Rows(0)("questionName").ToString()
                 ChartPie.Visible = True
             End If
 
         Catch ex As Exception
-
+            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('There was an issue getting results from the database')", True)
         End Try
 
     End Sub

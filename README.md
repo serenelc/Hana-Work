@@ -9,7 +9,7 @@ TO DO:
 - IN PROGRESS: Graphs and summaries of data 
 	-> table with percentages
 	-> Question titles per section
-	-> Section titles more obvious. Maybe an underline after the end of each section? Maybe have label placeholders then find all the sections, then loop through to create the graphs depending on the section?
+	-> Section titles more obvious. Maybe an underline after the end of each section? 
+	-> For the short answer grid, if manage to make a section title obvious then just put answerComment in table with table title = questionName. Can ignore sectionName.
 	-> If there are 2 radio questions in a row, it condenses it into 1 pie chart
-- IN PROGRESS: Make a user manual and program process flow
-- Email confirmation pop up
+- Email confirmation pop up line 105 doesn't seem to appear
