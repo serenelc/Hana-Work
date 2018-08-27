@@ -57,7 +57,7 @@ Public Class results
 
         Dim t As String = "<p><h1 style='text-align: center' id='txtTitle' name='txtTitle'>"
         t += listTitleDesc.Item(0) + "</h1></p>"
-        Dim d As String = "<p  id='txtDesc' name='txtDesc'>" + listTitleDesc.Item(1) + "</p>"
+        Dim d As String = "<p  id='txtDesc' name='txtDesc'>Survey Description: " + listTitleDesc.Item(1) + "</p>"
 
         title.Text = t
         description.Text = d
@@ -90,7 +90,6 @@ Public Class results
             query = query + " inner Join surveyAnswer f On c.questionId = f.questionId  "
             query = query + " Left Join surveyUserAnswer d On d.answerId = f.answerId "
             query = query + " where questionType = 'grid' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
-            'And c.questionId = 24 
             query = query + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName "
             query = query + " order by a.sectionId, c.questionId "
 
@@ -99,33 +98,34 @@ Public Class results
             If dt.Rows.Count > 0 Then
 
                 'Get the DISTINCT answerName.
-                Dim countries As List(Of String) = (From p In dt.AsEnumerable()
-                                                    Select p.Field(Of String)("answerName")).Distinct().ToList()
+                Dim answerNames As List(Of String) = (From p In dt.AsEnumerable()
+                                                      Select p.Field(Of String)("answerName")).Distinct().ToList()
 
                 'Loop through the answerName.
-                For Each country As String In countries
+                For Each answerName As String In answerNames
 
                     'Get the questionName for each answerName.
-                    Dim x As String() = (From p In dt.AsEnumerable()
-                                         Where p.Field(Of String)("answerName") = country
-                                         Order By p.Field(Of String)("questionName")
-                                         Select p.Field(Of String)("questionName")).ToArray()
+                    Dim qName As String() = (From p In dt.AsEnumerable()
+                                             Where p.Field(Of String)("answerName") = answerName
+                                             Order By p.Field(Of String)("questionName")
+                                             Select p.Field(Of String)("questionName")).ToArray()
 
 
 
-                    'Get the Total of Orders for each answerName.
-                    Dim y As Integer() = (From p In dt.AsEnumerable()
-                                          Where p.Field(Of String)("answerName") = country
-                                          Order By p.Field(Of String)("questionName")
-                                          Select p.Field(Of Integer)("cnt")).ToArray()
+                    'Get the number of people who answered for each answerName.
+                    Dim num As Integer() = (From p In dt.AsEnumerable()
+                                            Where p.Field(Of String)("answerName") = answerName
+                                            Order By p.Field(Of String)("questionName")
+                                            Select p.Field(Of Integer)("cnt")).ToArray()
 
                     'Add Series to the Chart.
-                    Chartx1.Series.Add(New Series(country))
-                    Chartx1.Titles("Items").Font = New System.Drawing.Font("Times New Roman", 25, System.Drawing.FontStyle.Bold)
+                    Chartx1.Series.Add(New Series(answerName))
+                    Chartx1.Titles("Items").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
                     Chartx1.Titles("Items").Text = dt.Rows(0)("sectionName").ToString()
-                    Chartx1.Series(country).IsValueShownAsLabel = True
-                    Chartx1.Series(country).ChartType = SeriesChartType.Bar
-                    Chartx1.Series(country).Points.DataBindXY(x, y)
+                    Chartx1.Series(answerName).IsValueShownAsLabel = True
+                    Chartx1.Series(answerName).ChartType = SeriesChartType.Bar
+                    Chartx1.Series(answerName).Points.DataBindXY(qName, num)
+                    Chartx1.Palette = ChartColorPalette.Berry
                 Next
 
                 Chartx1.Legends(0).Enabled = True
@@ -144,7 +144,7 @@ Public Class results
             query2 = query2 + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  "
             Dim dtpie As DataTable = GetData(query2)
             If dtpie.Rows.Count > 0 Then
-                'ChartPie.Titles("Series1").Font = New System.Drawing.Font("Times New Roman", 25, System.Drawing.FontStyle.Bold)
+                ChartPie.Titles("Series1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
                 ChartPie.Titles("Title1").Text = dtpie.Rows(0)("sectionName").ToString()
                 ChartPie.Visible = True
             End If
@@ -300,4 +300,5 @@ Public Class results
         End If
 
     End Sub
+
 End Class

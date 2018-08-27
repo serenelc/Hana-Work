@@ -34,19 +34,20 @@
 
             <div>
                 <p>
+                    <asp:ImageButton ID="excelImg" runat="server" ImageUrl="../images/excel.png" Width="40" CommandName="excelImg" />
                     Click on the image to download an excel spreadsheet version of the results
-                <asp:ImageButton ID="excelImg" runat="server" ImageUrl="../images/excel.png" Width="40" CommandName="excelImg" />
                 </p>
             </div>
 
-            <div>
+            <div class="col-8" style="width: 70%;">
                 <asp:DataList ID="DataList1" runat="server" DataKeyField="sectionId" DataSourceID="SqlDataSource1">
                     <ItemTemplate>
                         <asp:Label ID="sectionIdLabel" runat="server" Text='<%# Eval("sectionId") %>' Visible="<%# false %>" />
                         <asp:Label ID="subjectIdLabel" runat="server" Text='<%# Eval("subjectId") %>' Visible="<%# false %>" />
                         <br />
-                        <br />
-                        <asp:Chart ID="ChartPie" runat="server" DataSourceID="SqlDataSourcePie" Width="1089px" BackColor="CornflowerBlue">
+
+                        <%--Pie Charts for radio answers--%>
+                        <asp:Chart ID="ChartPie" runat="server" DataSourceID="SqlDataSourcePie">
                             <Series>
                                 <asp:Series ChartType="Pie" IsValueShownAsLabel="True" Legend="Legend1" Name="Series1" XValueMember="answerName" YValueMembers="cnt">
                                 </asp:Series>
@@ -60,7 +61,7 @@
                                 </asp:Legend>
                             </Legends>
                             <Titles>
-                                <asp:Title Name="Title1" Text="1234" Font="Times New Roman, 24.75pt, style=Bold">
+                                <asp:Title Name="Title1" Text="1234" Font="24.75pt, style=Bold">
                                 </asp:Title>
                             </Titles>
                         </asp:Chart>
@@ -80,9 +81,12 @@
                             </SelectParameters>
                         </asp:SqlDataSource>
                         <br />
-                        &nbsp;&nbsp;<asp:Chart ID="Chart21" runat="server" BackColor="CornflowerBlue" BorderlineDashStyle="Solid" Height="634px" Width="1093px">
+                        &nbsp;
+                        
+                        <%--Bar charts for multi grid answers--%>
+                        <asp:Chart ID="Chart21" runat="server" BackColor="white" BorderlineDashStyle="Solid" Height="620px" Width="900px">
                             <Titles>
-                                <asp:Title Name="Items" ShadowOffset="3" Text="" />
+                                <asp:Title Name="Items" Text="" />
                             </Titles>
                             <Legends>
                                 <asp:Legend Alignment="Center" Docking="Bottom" IsTextAutoFit="False" LegendStyle="Row" Name="Default" />
@@ -92,8 +96,8 @@
                             </ChartAreas>
                         </asp:Chart>
                         <br />
-                        <br />
-                        <br />
+
+                        <%--Table for short answers--%>
                         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource31" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10"
                             ForeColor="Black" GridLines="Horizontal" AllowSorting="True" AllowPaging="True">
                             <Columns>
@@ -112,7 +116,6 @@
                         </asp:GridView>
                         <asp:SqlDataSource ID="SqlDataSource31" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="Select distinct  a.sectionName,
                          c.questionName,d.answerComment
-
                         FROM surveyMaster AS b 
                         INNER JOIN surveySection AS a ON a.subjectId = b.subjectId 
                         INNER JOIN surveyQuestion AS c ON a.sectionId = c.sectionId And c.questionType = 'shortanswer'
@@ -140,15 +143,11 @@
 
         </div>
 
-
-
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand=" select * from surveySection where subjectId = @subId">
             <SelectParameters>
                 <asp:SessionParameter Name="subId" SessionField="QsubjectId" />
             </SelectParameters>
         </asp:SqlDataSource>
-
-
 
         </div>
 

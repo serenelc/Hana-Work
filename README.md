@@ -9,6 +9,6 @@ TO DO:
 - IN PROGRESS: Graphs and summaries of data 
 	-> make it look pretty
 	-> table with percentages
-- Make a user manual and program process flow
-- IN PROGRESS: Upload to server
+- IN PROGRESS: Make a user manual and program process flow
+- Make all the alerts uniform across all pages
 - Containers for phone screen view
