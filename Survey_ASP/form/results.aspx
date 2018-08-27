@@ -47,7 +47,7 @@
                         <br />
 
                         <%--Pie Charts for radio answers--%>
-                        <asp:Chart ID="ChartPie" runat="server" DataSourceID="SqlDataSourcePie" Width="892px">
+                        <asp:Chart ID="ChartPie" runat="server" DataSourceID="SqlDataSourcePie" Width="892px" Palette="None" PaletteCustomColors="244, 229, 65; 127, 244, 65; 65, 238, 244; 65, 115, 244; 106, 65, 244; 166, 65, 244; 244, 65, 217; 244, 65, 97">
                             <Series>
                                 <asp:Series ChartType="Pie" IsValueShownAsLabel="True" Legend="Legend1" Name="Series1" XValueMember="answerName" YValueMembers="cnt">
                                 </asp:Series>
@@ -84,7 +84,7 @@
                         &nbsp;
                         
                         <%--Bar charts for multi grid answers--%>
-                        <asp:Chart ID="Chart21" runat="server" BackColor="white" BorderlineDashStyle="Solid" Height="620px" Width="900px">
+                        <asp:Chart ID="Chart21" runat="server" BackColor="white" BorderlineDashStyle="Solid" Height="620px" Width="900px" Palette="None" PaletteCustomColors="244, 229, 65; 127, 244, 65; 65, 238, 244; 65, 115, 244; 106, 65, 244; 166, 65, 244; 244, 65, 217; 244, 65, 97">
                             <Titles>
                                 <asp:Title Name="Items" Text="" />
                             </Titles>

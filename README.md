@@ -11,7 +11,7 @@ TO DO:
 	-> table with percentages
 	-> Question titles per section
 	-> Section titles more obvious
-	-> custom colour palettes
+	-> If there are 2 radio questions in a row, it condenses it into 1 pie chart
 - IN PROGRESS: Make a user manual and program process flow
 - Make all the alerts uniform across all pages
 - Make sure each survey has at least 1 question before it allows itself to be saved

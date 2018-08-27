@@ -125,7 +125,7 @@ Public Class results
                     Chartx1.Series(answerName).IsValueShownAsLabel = True
                     Chartx1.Series(answerName).ChartType = SeriesChartType.Bar
                     Chartx1.Series(answerName).Points.DataBindXY(qName, num)
-                    Chartx1.Palette = ChartColorPalette.Berry
+                    'Chartx1.PaletteCustomColors = 
                 Next
 
                 Chartx1.Legends(0).Enabled = True
