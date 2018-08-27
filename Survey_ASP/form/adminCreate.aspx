@@ -36,13 +36,13 @@
                 <label>
                     <h3>Title</h3>
                 </label>
-                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title" />
+                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title" autocomplete="off"/>
             </div>
 
             <div class="form-group">
                 <label>Description</label>
                 <textarea runat="server" class="form-control" id="txtDesc" rows="2"
-                    placeholder="Short description about your survey"></textarea>
+                    placeholder="Short description about your survey" autocomplete="off"></textarea>
             </div>
 
             <div class="form-group">
@@ -62,40 +62,13 @@
             <div id="save" style="background-color: white; height: 70px;">
                 <br>
                 <asp:Button runat="server" ID="btnSave" type="button" class="btn btn-success"
-                    Style="float: right" Text="Save" OnClick="btnSave_Click" OnClientClick="return confirmSave()" />
+                    Style="float: right" Text="Save" OnClick="btnSave_Click" />
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning" Text="Back" />
 
             </div>
         </div>
 
     </form>
-
-    <%--Script to confirm save--%>
-    <script>
-        function confirmSave() {
-            return confirm("Are you sure you have finished creating the survey?");
-        }
-    </script>
-
-    <%--Script to set the minimum date to today.--%>
-    <script>
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0
-        var yyyy = today.getFullYear();
-
-        if (dd < 10) {
-            dd = '0' + dd
-        }
-
-        if (mm < 10) {
-            mm = '0' + mm
-        }
-
-        today = mm + '-' + dd + '-' + yyyy;
-        console.log(today);
-    </script>
-
 
     <%--Script to add a section/sub topic--%>
     <script>
@@ -114,7 +87,9 @@
             let divSecTitle = document.createElement("input");
             divSecTitle.className = "form-control-lg";
             divSecTitle.type = "text";
+            divSecTitle.required = true;
             divSecTitle.placeholder = "Section Title";
+            divSecTitle.autocomplete = "off"
             divSecTitle.id = "sectionTitle_id" + newCountSec;
             divSecTitle.name = "sectionTitle_name" + newCountSec;
             divSecTitle.value = "<%=divSecTitle_val%>";
@@ -158,7 +133,8 @@
             questionInput.class = "form-control";
             questionInput.style = "font-weight:bold; width: 80%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"
             questionInput.placeholder = "  Question";
-            //questionInput.required = true;
+            questionInput.required = true;
+            questionInput.autocomplete = "off";
             questionInput.name = "questionInput_name" + newCountQ;
 
             divGroup.appendChild(questionInput);
@@ -345,10 +321,12 @@
 
                 let radLabel = document.createElement("input");
                 radLabel.type = "text";
+                radLabel.required = true;
                 radLabel.className = "input-group-sm";
                 radLabel.placeholder = "Option " + parseInt(n);
                 radLabel.id = "radLabelId" + parseInt(radCnt);
                 radLabel.name = "radLabelName" + parseInt(radCnt);
+                radLabel.autocomplete = "off";
                 radLabel.style = "margin-right: 10px; margin-bottom: 10px; border-radius: 5px; border-style: solid; border-color: #d8d8d8;";
 
                 divRadio.appendChild(document.createElement("br"));
@@ -379,7 +357,7 @@
             var gridBody = "<div class='col-7'><div></div>";
 
             for (var r = 0; r < numRows; r++) {
-                gridBody += "<div><textarea type='text' class='form-control' placeholder='question' style='border-radius: 5px; border-style: solid; border-color: #d8d8d8;' name = 'gridQ_name"
+                gridBody += "<div><textarea type='text' class='form-control' placeholder='question' required=true autocomplete= 'off' style='border-radius: 5px; border-style: solid; border-color: #d8d8d8;' name = 'gridQ_name"
                     + gridCnt + "_" + r + "_" + numCols + "' id='gridQ_Id" + gridCnt + "_" + r + "'></textarea></div>";
             }
 

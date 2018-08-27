@@ -40,18 +40,11 @@
                 <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
                     style="float: left;" Text="Back"/>
                  <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
-                    style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
+                    style="float: right" Text="Logout" onclick="btnLogout_Click"/>
              </div>
         
         </div>
     </form>
-
-     <%--Script to confirm logout--%>
-     <script>
-         function confirmLogout() {
-           return confirm("Are you sure you would like to logout?");
-         }
-     </script>
 
 </body>
 

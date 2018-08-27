@@ -138,7 +138,7 @@
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
                     Style="float: left;" Text="Back" />
                 <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
-                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="return confirmLogout()" />
+                    Style="float: right" Text="Logout" OnClick="btnLogout_Click"/>
             </div>
 
         </div>
@@ -150,13 +150,6 @@
         </asp:SqlDataSource>
 
         </div>
-
-          <%--Script to confirm logout--%>
-        <script>
-            function confirmLogout() {
-                return confirm("Are you sure you would like to logout?");
-            }
-        </script>
 
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>

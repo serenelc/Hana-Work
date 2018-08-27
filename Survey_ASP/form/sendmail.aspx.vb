@@ -45,8 +45,7 @@ Public Class sendmail
     End Function
 
     Function SendEmail(xsubjectId) As Boolean
-        'Dim xSql = " Select * from  surveyMaster where subjectId = " + xsubjectId.ToString
-        'Dim dt As DataTable = GetData(surveySql)
+
         Dim mail As New EmailController(SystemInfo.SystemList.QLR)
 
         Dim mailTo As String = txtTo.Value.Trim
@@ -88,12 +87,16 @@ Public Class sendmail
     End Sub
 
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        Response.Redirect("index.aspx")
+        If MsgBox("Are you sure you want to logout?", vbQuestion + vbYesNo) = vbYes Then
+            Response.Redirect("index.aspx")
+        End If
     End Sub
 
     Protected Sub btnSend_Click(sender As Object, e As EventArgs) Handles btnSend.Click
-        If SendEmail(xsubjectId) = True Then
-            Response.Redirect("adminAllSurveys.aspx")
+        If MsgBox("Are you sure you want to send this email?", vbQuestion + vbYesNo) = vbYes Then
+            If SendEmail(xsubjectId) = True Then
+                Response.Redirect("adminAllSurveys.aspx")
+            End If
         End If
     End Sub
 End Class

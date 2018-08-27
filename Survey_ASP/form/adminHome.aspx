@@ -59,7 +59,7 @@
             <div id = "footer" style="background-color: white; height: 70px;">
                     <br>
                     <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
-                    style="float: right" Text="Logout" onclick="btnLogout_Click" OnClientClick="return confirmLogout()"/>
+                    style="float: right" Text="Logout" onclick="btnLogout_Click"/>
              </div>
         
         </div>
@@ -67,13 +67,6 @@
         <div style="background-color:inherit; height: 100px" >
                  
         </div>
-
-        <%--Script to confirm logout--%>
-        <script>
-            function confirmLogout() {
-                return confirm("Are you sure you would like to logout?");
-            }
-        </script>
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>

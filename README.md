@@ -12,6 +12,4 @@ TO DO:
 	-> Section titles more obvious. Maybe an underline after the end of each section? Maybe have label placeholders then find all the sections, then loop through to create the graphs depending on the section?
 	-> If there are 2 radio questions in a row, it condenses it into 1 pie chart
 - IN PROGRESS: Make a user manual and program process flow
-- Make all the alerts uniform across all pages
-- Make sure each survey has at least 1 question before it allows itself to be saved
 - Email confirmation pop up
