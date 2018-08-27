@@ -98,7 +98,7 @@
                         <br />
 
                         <%--Table for short answers--%>
-                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource31" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10"
+                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource31" Width="90%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10"
                             ForeColor="Black" GridLines="Horizontal" AllowSorting="True" AllowPaging="True">
                             <Columns>
                                 <asp:BoundField DataField="sectionName" HeaderText="sectionName" SortExpression="sectionName" />

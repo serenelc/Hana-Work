@@ -36,7 +36,7 @@
                 <label>
                     <h3>Title</h3>
                 </label>
-                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title"/>
+                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title" />
             </div>
 
             <div class="form-group">
@@ -47,7 +47,7 @@
 
             <div class="form-group">
                 <label>Survey close date (The survey will close automatically at 00:00 of the day chosen)</label>
-                <input class="w-input input" id="closeDate" type="date" name="close" min="2018-08-22" style="width: 60%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;"/>
+                <input class="w-input input" id="closeDate" type="date" name="close" style="width: 60%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;" />
             </div>
 
             <hr>
@@ -79,30 +79,27 @@
 
     <%--Script to set the minimum date to today.--%>
     <script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0
+        var yyyy = today.getFullYear();
 
-        $(document).ready(function () {
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1;
-            var yy = today.getFullYear();
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-            var rightnow = yy + '-' + mm + '-' + dd;
-            $('#closeDate').attr('min', rightnow);
-        });
+        if (dd < 10) {
+            dd = '0' + dd
+        }
 
-        var currentDate = $( ".selector" ).datepicker( "getDate" );
-        console.log(currentDate);
+        if (mm < 10) {
+            mm = '0' + mm
+        }
 
+        today = mm + '-' + dd + '-' + yyyy;
+        console.log(today);
     </script>
 
 
     <%--Script to add a section/sub topic--%>
     <script>
-        var countSec = 100; 
+        var countSec = 100;
         var newCountSec;
 
         function addSection() {
@@ -227,7 +224,7 @@
 
             var idNum = this.id.slice(-2);
 
-            
+
             document.getElementById("divGroupQ_id" + idNum).remove();
             document.getElementById("break_id" + idNum).remove();
             if (document.getElementById("divRadio_id" + idNum) != null) {
@@ -279,7 +276,7 @@
         }
     </script>
 
-    
+
     <%--Script to get ID attribute--%>
     <script>
         function getID() {

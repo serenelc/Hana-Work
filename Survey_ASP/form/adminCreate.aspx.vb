@@ -155,7 +155,7 @@ Public Class adminCreate
         Try
             If txtTitle.Value = "" Then Throw New Exception("Please fill in the Title")
             If txtDesc.Value = "" Then Throw New Exception("Please fill in the Description")
-            'If prmCloseDate Then
+            If (prmCloseDate < xcreateDate) Then Throw New Exception("Please choose a close date in the future")
         Catch ex As Exception
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & ex.Message & "')", True)
             Return False

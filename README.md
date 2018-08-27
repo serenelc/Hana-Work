@@ -14,5 +14,4 @@ TO DO:
 - IN PROGRESS: Make a user manual and program process flow
 - Make all the alerts uniform across all pages
 - Make sure each survey has at least 1 question before it allows itself to be saved
-- Today's date is fucking up. Calendar is allowing users to pick dates in the past.
 - Email confirmation pop up
