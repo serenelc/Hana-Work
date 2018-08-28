@@ -99,13 +99,18 @@
                         </asp:Chart>
                         <br />
 
+                       
                         <%--Table for short answers--%>
+                        <center><asp:Label ID="shortAnsLabel" runat="server" Font-Bold="True" Font-Size="19"></asp:Label>
                         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource31" Width="90%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10"
                             ForeColor="Black" GridLines="Horizontal" AllowSorting="True" AllowPaging="True">
                             <Columns>
-                                <asp:BoundField DataField="sectionName" HeaderText="sectionName" SortExpression="sectionName" />
-                                <asp:BoundField DataField="questionName" HeaderText="questionName" SortExpression="questionName" />
-                                <asp:BoundField DataField="answerComment" HeaderText="answerComment" SortExpression="answerComment" />
+                                <asp:BoundField DataField="sectionName" HeaderText="sectionName" SortExpression="sectionName" Visible="False" />
+                                <asp:BoundField DataField="questionName" HeaderText="questionName" SortExpression="questionName" Visible="False" />
+                                <asp:BoundField DataField="answerComment" HeaderText="Answer" SortExpression="answerComment" >
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <ItemStyle HorizontalAlign="Left" />
+                                </asp:BoundField>
                             </Columns>
                             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
                             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
@@ -115,9 +120,8 @@
                             <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
                             <SortedDescendingCellStyle BackColor="#E5E5E5" />
                             <SortedDescendingHeaderStyle BackColor="#242121" />
-                        </asp:GridView>
-                        <asp:SqlDataSource ID="SqlDataSource31" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="Select distinct  a.sectionName,
-                         c.questionName,d.answerComment
+                        </asp:GridView></center>
+                        <asp:SqlDataSource ID="SqlDataSource31" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="Select distinct  a.sectionName, c.questionName, d.answerComment
                         FROM surveyMaster AS b 
                         INNER JOIN surveySection AS a ON a.subjectId = b.subjectId 
                         INNER JOIN surveyQuestion AS c ON a.sectionId = c.sectionId And c.questionType = 'shortanswer'

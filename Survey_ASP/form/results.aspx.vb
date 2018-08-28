@@ -83,18 +83,40 @@ Public Class results
             ChartPie.Visible = False
             Chartx1.Visible = False
 
-            Dim query As String = "Select b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName, "
-            query = query + " count(d.answerId) As cnt "
-            query = query + " From surveyMaster b  "
-            query = query + " inner Join surveySection a On a.subjectId = b.subjectId  "
-            query = query + " inner Join surveyQuestion c On a.sectionId = c.sectionId  "
-            query = query + " inner Join surveyAnswer f On c.questionId = f.questionId  "
-            query = query + " Left Join surveyUserAnswer d On d.answerId = f.answerId "
-            query = query + " where questionType = 'grid' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
-            query = query + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName "
-            query = query + " order by a.sectionId, c.questionId "
+            'Tables for short answers
+            Dim queryShort As String = "Select distinct a.sectionName, c.questionName "
+            queryShort += "From surveyMaster b "
+            queryShort += "INNER Join surveySection a ON a.subjectId = b.subjectId "
+            queryShort += "INNER Join surveyQuestion c ON a.sectionId = c.sectionId And c.questionType = 'shortanswer' "
+            queryShort += "INNER Join surveyAnswer f ON c.questionId = f.questionId "
+            queryShort += "INNER Join surveyUserAnswer d ON d.answerId = f.answerId "
+            queryShort += "WHERE b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            queryShort += " AND c.questionId = " + xquestionIdLabel.Text
 
-            Dim dtBarChart As DataTable = GetData(query)
+            Dim dtShort As DataTable = GetData(queryShort)
+
+            If dtShort.Rows.Count > 0 Then
+                Dim qTitle As String
+                qTitle = "<p> Section: " + dtShort.Rows(0)("sectionName").ToString() + "</p> Question: " + dtShort.Rows(0)("questionName").ToString()
+                Dim shortLabel As Label = e.Item.FindControl("shortAnsLabel")
+                shortLabel.Text = qTitle
+            End If
+
+
+            'Bar charts for multiple choice grid
+            Dim queryBarChart As String = "Select b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName, "
+            queryBarChart = queryBarChart + " count(d.answerId) As cnt "
+            queryBarChart = queryBarChart + " From surveyMaster b  "
+            queryBarChart = queryBarChart + " inner Join surveySection a On a.subjectId = b.subjectId  "
+            queryBarChart = queryBarChart + " inner Join surveyQuestion c On a.sectionId = c.sectionId  "
+            queryBarChart = queryBarChart + " inner Join surveyAnswer f On c.questionId = f.questionId  "
+            queryBarChart = queryBarChart + " Left Join surveyUserAnswer d On d.answerId = f.answerId "
+            queryBarChart = queryBarChart + " where questionType = 'grid' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            'queryBarChart = queryBarChart + " and c.questionId = " + xquestionIdLabel.Text
+            queryBarChart = queryBarChart + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName "
+            queryBarChart = queryBarChart + " order by a.sectionId, c.questionId "
+
+            Dim dtBarChart As DataTable = GetData(queryBarChart)
 
             If dtBarChart.Rows.Count > 0 Then
 
@@ -122,7 +144,7 @@ Public Class results
                     'Add Series to the Chart.
                     Chartx1.Series.Add(New Series(answerName))
                     Chartx1.Titles("Items").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
-                    Chartx1.Titles("Items").Text = dtBarChart.Rows(0)("sectionName").ToString() + "\n" + dtBarChart.Rows(0)("subjectName").ToString()
+                    Chartx1.Titles("Items").Text = "Section: " + dtBarChart.Rows(0)("sectionName").ToString() + "\n" + "Question: " + dtBarChart.Rows(0)("subjectName").ToString()
                     Chartx1.Series(answerName).IsValueShownAsLabel = True
                     Chartx1.Series(answerName).ChartType = SeriesChartType.Bar
                     Chartx1.Series(answerName).Points.DataBindXY(qName, num)
@@ -132,23 +154,23 @@ Public Class results
                 Chartx1.Visible = True
             End If
 
-            'Pie Chart
-            Dim query2 As String = "Select a.sectionName, c.questionType, c.questionName "
-            query2 = query2 + " , f.answerName,  count(d.answerId) As cnt   "
-            query2 = query2 + " From surveyMaster b    "
-            query2 = query2 + " inner Join surveySection a On a.subjectId = b.subjectId    "
-            query2 = query2 + " inner Join surveyQuestion c On a.sectionId = c.sectionId    "
-            query2 = query2 + " inner Join surveyAnswer f On c.questionId = f.questionId    "
-            query2 = query2 + " Left Join surveyUserAnswer d On d.answerId = f.answerId   "
-            query2 = query2 + " where questionType = 'radio' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
-            query2 = query2 + " and c.questionId = " + xquestionIdLabel.Text
-            query2 = query2 + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  "
-            Dim dtpie As DataTable = GetData(query2)
+            'Pie Chart for radio buttons
+            Dim queryPie As String = "Select a.sectionName, c.questionType, c.questionName "
+            queryPie = queryPie + " , f.answerName,  count(d.answerId) As cnt   "
+            queryPie = queryPie + " From surveyMaster b    "
+            queryPie = queryPie + " inner Join surveySection a On a.subjectId = b.subjectId    "
+            queryPie = queryPie + " inner Join surveyQuestion c On a.sectionId = c.sectionId    "
+            queryPie = queryPie + " inner Join surveyAnswer f On c.questionId = f.questionId    "
+            queryPie = queryPie + " Left Join surveyUserAnswer d On d.answerId = f.answerId   "
+            queryPie = queryPie + " where questionType = 'radio' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            queryPie = queryPie + " and c.questionId = " + xquestionIdLabel.Text
+            queryPie = queryPie + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  "
+            Dim dtpie As DataTable = GetData(queryPie)
             If dtpie.Rows.Count > 0 Then
                 '  Session("qName") = dtpie.Rows(0)("questionName").ToString()
                 ChartPie.Titles("Title1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
                 'TODO: I want the section title to be distinguishable from the question title
-                ChartPie.Titles("Title1").Text = dtpie.Rows(0)("sectionName").ToString() + "\n" + dtpie.Rows(0)("questionName").ToString()
+                ChartPie.Titles("Title1").Text = "Section: " + dtpie.Rows(0)("sectionName").ToString() + "\n" + "Question: " + dtpie.Rows(0)("questionName").ToString()
                 ChartPie.Visible = True
             End If
 
