@@ -8,8 +8,6 @@ TO DO:
 - Fix the issue on adminCreate where if you add many questions in a row without choosing answer types, when you click on the last question to add an answer, the answer type will be assigned to the top available question.
 - IN PROGRESS: Graphs and summaries of data 
 	-> table with percentages
-	-> Question titles per section
-	-> Section titles more obvious. Maybe an underline after the end of each section? 
+	-> Section titles more obvious. Maybe an underline after the end of each section? Only 1 section title per section not 1 title per graph.
 	-> For the short answer grid, if manage to make a section title obvious then just put answerComment in table with table title = questionName. Can ignore sectionName.
-	-> If there are 2 radio questions in a row, it condenses it into 1 pie chart
 - Email confirmation pop up line 105 doesn't seem to appear

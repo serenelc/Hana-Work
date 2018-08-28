@@ -79,6 +79,7 @@ Public Class results
             Dim ChartPie As Chart = e.Item.FindControl("ChartPie")
             Dim Chartx1 As Chart = e.Item.FindControl("Chart21")
             Dim xsectionIdLabel As Label = e.Item.FindControl("sectionIdLabel")
+            Dim xquestionIdLabel As Label = e.Item.FindControl("questionIdLabel")
             ChartPie.Visible = False
             Chartx1.Visible = False
 
@@ -140,9 +141,11 @@ Public Class results
             query2 = query2 + " inner Join surveyAnswer f On c.questionId = f.questionId    "
             query2 = query2 + " Left Join surveyUserAnswer d On d.answerId = f.answerId   "
             query2 = query2 + " where questionType = 'radio' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            query2 = query2 + " and c.questionId = " + xquestionIdLabel.Text
             query2 = query2 + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  "
             Dim dtpie As DataTable = GetData(query2)
             If dtpie.Rows.Count > 0 Then
+                '  Session("qName") = dtpie.Rows(0)("questionName").ToString()
                 ChartPie.Titles("Title1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
                 'TODO: I want the section title to be distinguishable from the question title
                 ChartPie.Titles("Title1").Text = dtpie.Rows(0)("sectionName").ToString() + "\n" + dtpie.Rows(0)("questionName").ToString()
