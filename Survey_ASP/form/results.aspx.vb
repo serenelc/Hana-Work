@@ -112,15 +112,26 @@ Public Class results
             queryBarChart = queryBarChart + " inner Join surveyAnswer f On c.questionId = f.questionId  "
             queryBarChart = queryBarChart + " Left Join surveyUserAnswer d On d.answerId = f.answerId "
             queryBarChart = queryBarChart + " where questionType = 'grid' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
-            'queryBarChart = queryBarChart + " and c.questionId = " + xquestionIdLabel.Text
             queryBarChart = queryBarChart + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName "
             queryBarChart = queryBarChart + " order by a.sectionId, c.questionId "
 
+            Dim queryBarQName As String = "Select b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName, "
+            queryBarQName = queryBarQName + " count(d.answerId) As cnt "
+            queryBarQName = queryBarQName + " From surveyMaster b  "
+            queryBarQName = queryBarQName + " inner Join surveySection a On a.subjectId = b.subjectId  "
+            queryBarQName = queryBarQName + " inner Join surveyQuestion c On a.sectionId = c.sectionId  "
+            queryBarQName = queryBarQName + " left Join surveyAnswer f On c.questionId = f.questionId  "
+            queryBarQName = queryBarQName + " Left Join surveyUserAnswer d On d.answerId = f.answerId "
+            queryBarQName = queryBarQName + " where questionType = 'grid' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            queryBarQName = queryBarQName + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName "
+            queryBarQName = queryBarQName + " order by a.sectionId, c.questionId "
+
             Dim dtBarChart As DataTable = GetData(queryBarChart)
+            Dim dtBarQName As DataTable = GetData(queryBarQName)
 
             If dtBarChart.Rows.Count > 0 Then
                 Dim qTitle As String
-                qTitle = "<p style='text-decoration: underline; font-size: 25px; font-weight: bold;'>" + dtBarChart.Rows(0)("sectionName").ToString() + "</p><div style='font-size: 20px;'>" + dtBarChart.Rows(0)("questionName").ToString() + "</div>"
+                qTitle = "<p style='text-decoration: underline; font-size: 25px; font-weight: bold;'>" + dtBarQName.Rows(0)("sectionName").ToString() + "</p><div style='font-size: 20px;'>" + dtBarQName.Rows(0)("questionName").ToString() + "</div>"
                 Dim multiLabel As Label = e.Item.FindControl("multiLabel")
                 multiLabel.Text = qTitle
 
@@ -147,11 +158,10 @@ Public Class results
 
                     'Add Series to the Chart.
                     Chartx1.Series.Add(New Series(answerName))
-                    Chartx1.Titles("Items").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
-                    Chartx1.Titles("Items").Text = "Section: " + dtBarChart.Rows(0)("sectionName").ToString() + "\n" + "Question: " + dtBarChart.Rows(0)("subjectName").ToString()
                     Chartx1.Series(answerName).IsValueShownAsLabel = True
                     Chartx1.Series(answerName).ChartType = SeriesChartType.Bar
                     Chartx1.Series(answerName).Points.DataBindXY(qName, num)
+
                 Next
 
                 Chartx1.Legends(0).Enabled = True
@@ -176,9 +186,6 @@ Public Class results
                 qTitle = "<p style='text-decoration: underline; font-size: 25px; font-weight: bold;'>" + dtpie.Rows(0)("sectionName").ToString() + "</p><div style='font-size: 20px;'>" + dtpie.Rows(0)("questionName").ToString()
                 Dim radioLabel As Label = e.Item.FindControl("radioLabel")
                 radioLabel.Text = qTitle
-
-                'ChartPie.Titles("Title1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
-                'ChartPie.Titles("Title1").Text = "Section: " + dtpie.Rows(0)("sectionName").ToString() + "\n" + "Question: " + dtpie.Rows(0)("questionName").ToString()
                 ChartPie.Visible = True
             End If
 

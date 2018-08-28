@@ -83,12 +83,11 @@
                                 <asp:ControlParameter ControlID="questionIdLabel" Name="qId" PropertyName="Text" />
                             </SelectParameters>
                         </asp:SqlDataSource>
-                        <br />
                         &nbsp;
                         
                         <%--Bar charts for multi grid answers--%>
                         <center><asp:Label ID="multiLabel" runat="server"></asp:Label>
-                        <asp:Chart ID="Chart21" runat="server" BackColor="white" BorderlineDashStyle="Solid" Height="620px" Width="900px" Palette="None" PaletteCustomColors="244, 229, 65; 127, 244, 65; 65, 238, 244; 65, 115, 244; 106, 65, 244; 166, 65, 244; 244, 65, 217; 244, 65, 97">
+                        <asp:Chart ID="Chart21" runat="server" BorderlineDashStyle="Solid" Height="620px" Width="900px" Palette="None" PaletteCustomColors="244, 229, 65; 127, 244, 65; 65, 238, 244; 65, 115, 244; 106, 65, 244; 166, 65, 244; 244, 65, 217; 244, 65, 97" DataSourceID="SqlDataSourceChart">
                             <Titles>
                                 <asp:Title Name="Items" Text="" />
                             </Titles>
@@ -99,9 +98,24 @@
                                 <asp:ChartArea BorderWidth="0" Name="ChartArea1" />
                             </ChartAreas>
                         </asp:Chart></center>
+                            <asp:SqlDataSource ID="SqlDataSourceChart" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="Select a.sectionName, c.questionType, c.questionName, c.questionId, f.answerName,  count(d.answerId) As cnt  
+                                        From surveyMaster b   
+                                        inner Join surveySection a On a.subjectId = b.subjectId   
+                                        inner Join surveyQuestion c On a.sectionId = c.sectionId   
+                                        inner Join surveyAnswer f On c.questionId = f.questionId   
+                                        Left Join surveyUserAnswer d On d.answerId = f.answerId  
+                                        where questionType = 'grid'  and b.subjectId =  @subId and a.sectionId = @secId and c.questionId = @qId
+                                        Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  
+                                        order by a.sectionId, c.questionId">
+                                <SelectParameters>
+                                    <asp:SessionParameter Name="subId" SessionField="QsubjectId" />
+                                    <asp:ControlParameter ControlID="sectionIdLabel" Name="secId" PropertyName="Text" />
+                                    <asp:ControlParameter ControlID="questionIdLabel" Name="qId" PropertyName="Text" />
+                                </SelectParameters>
+                            </asp:SqlDataSource>
                         <br />
 
-                       
+
                         <%--Table for short answers--%>
                         <center><asp:Label ID="shortAnsLabel" runat="server"></asp:Label>
                         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource31" Width="90%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10"
@@ -122,7 +136,7 @@
                             <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
                             <SortedDescendingCellStyle BackColor="#E5E5E5" />
                             <SortedDescendingHeaderStyle BackColor="#242121" />
-                        </asp:GridView></center>
+                        </asp:GridView> </center>
                         <asp:SqlDataSource ID="SqlDataSource31" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="Select distinct  a.sectionName, c.questionName, d.answerComment
                         FROM surveyMaster AS b 
                         INNER JOIN surveySection AS a ON a.subjectId = b.subjectId 
@@ -147,7 +161,7 @@
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
                     Style="float: left;" Text="Back" />
                 <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
-                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };"/>
+                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />
             </div>
 
         </div>

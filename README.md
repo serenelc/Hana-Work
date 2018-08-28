@@ -11,4 +11,3 @@ TO DO:
 	-> Only 1 section title per section not 1 title per graph.
 	-> The grid charts are now showing up multiple times instead of once.
 - Email confirmation pop up line 105 doesn't seem to appear
-- dialog boxes don't work once the website is uploaded to the server.
