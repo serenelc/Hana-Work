@@ -8,7 +8,7 @@ TO DO:
 - Fix the issue on adminCreate where if you add many questions in a row without choosing answer types, when you click on the last question to add an answer, the answer type will be assigned to the top available question.
 - IN PROGRESS: Graphs and summaries of data 
 	-> table with percentages
-	-> Section titles more obvious. Maybe an underline after the end of each section? Only 1 section title per section not 1 title per graph.
+	-> Only 1 section title per section not 1 title per graph.
 	-> The grid charts are now showing up multiple times instead of once.
 - Email confirmation pop up line 105 doesn't seem to appear
 - dialog boxes don't work once the website is uploaded to the server.

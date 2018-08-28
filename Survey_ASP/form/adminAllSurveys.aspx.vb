@@ -28,19 +28,34 @@ Public Class adminAllSurveys
             End If
             Response.Redirect("sendmail.aspx?subjectId=" + e.CommandArgument.ToString())
         End If
-        'If (e.CommandName = "Toggle") Then
-        '    If (checkIfClosed(e.CommandArgument.ToString())) Then
-        '        'If MsgBox("Are you sure you want to open this survey?", vbQuestion + vbYesNo) = vbYes Then
-        '        '    openSurvey(e.CommandArgument.ToString())
-        '        'End If
+        If (e.CommandName = "Toggle") Then
+            If (checkIfClosed(e.CommandArgument.ToString())) Then
+                'If MsgBox("Are you sure you want to open this survey?", vbQuestion + vbYesNo) = vbYes Then
+                '    openSurvey(e.CommandArgument.ToString())
+                'End If
+                Dim message As String = "Are you sure you want to open this survey?"
+                Dim sb As New System.Text.StringBuilder()
+                sb.Append("return confirm('")
+                sb.Append(message)
+                sb.Append("');")
+                ClientScript.RegisterOnSubmitStatement(Me.GetType(), "alert", sb.ToString())
+                openSurvey(e.CommandArgument.ToString())
+            Else
+                'If MsgBox("Are you sure you want to close this survey?", vbQuestion + vbYesNo) = vbYes Then
+                '    closeSurvey(e.CommandArgument.ToString())
+                'End If
+                Dim message As String = "Are you sure you want to close this survey?"
+                Dim sb As New System.Text.StringBuilder()
+                sb.Append("return confirm('")
+                sb.Append(message)
+                sb.Append("');")
+                ClientScript.RegisterOnSubmitStatement(Me.GetType(), "alert", sb.ToString())
+                closeSurvey(e.CommandArgument.ToString())
+            End If
 
-        '    Else
-        '            If MsgBox("Are you sure you want to close this survey?", vbQuestion + vbYesNo) = vbYes Then
-        '            closeSurvey(e.CommandArgument.ToString())
-        '        End If
-        '    End If
-        '    Response.Redirect("adminAllSurveys.aspx")
-        'End If
+
+            Response.Redirect("adminAllSurveys.aspx")
+        End If
     End Sub
 
     Private Sub openSurvey(subjId)

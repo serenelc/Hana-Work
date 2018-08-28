@@ -73,7 +73,7 @@
                                 <asp:TemplateField HeaderText="Open/Close Survey">
                                     <ItemTemplate>
                                         <asp:Button ID="openClose" runat="server" class="btn btn-primary" CommandName="Toggle"
-                                            Text="Open or Close" CommandArgument='<%# Eval("subjectId") %>' OnClientClick="javascript: if (!OpenTaskDialog(this)) { return false; };" />
+                                            Text="Open or Close" CommandArgument='<%# Eval("subjectId") %>'/>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="closeDate" HeaderText="closeDate" SortExpression="closeDate" Visible="False" />
@@ -105,42 +105,6 @@
                     function OpenTaskDialogLogout() {
                         return confirm("Are you sure you want to logout?");
                     }
-                </script>
-
-
-                <%--Script to allow use of dialog box in server--%>
-                <script>
-                    function OpenTaskDialog(xxx) {
-
-
-                        alert(xxx);
-
-                        //var retVal = confirm("Do you want to continue ?");
-                        // if (retVal == true) {             
-                        //     alert(xxx.CommandName);
-                        //   return true;
-                        //}
-                        //else{                 
-                        //   return false;
-                        //}
-
-
-
-
-                        //If (checkIfClosed(e.CommandArgument.ToString())) Then
-                        //    'If MsgBox("Are you sure you want to open this survey?", vbQuestion + vbYesNo) = vbYes Then
-                        //    '    openSurvey(e.CommandArgument.ToString())
-                        //    'End If
-
-                        //Else
-                        //        If MsgBox("Are you sure you want to close this survey?", vbQuestion + vbYesNo) = vbYes Then
-                        //        closeSurvey(e.CommandArgument.ToString())
-                        //    End If
-                        //End If
-                        //Response.Redirect("adminAllSurveys.aspx")
-
-                    }
-
                 </script>
 
                 <script src="../node_modules/jquery/dist/jquery.min.js"></script>

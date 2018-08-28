@@ -97,7 +97,7 @@ Public Class results
 
             If dtShort.Rows.Count > 0 Then
                 Dim qTitle As String
-                qTitle = "<p> Section: " + dtShort.Rows(0)("sectionName").ToString() + "</p> Question: " + dtShort.Rows(0)("questionName").ToString()
+                qTitle = "<p style='text-decoration: underline; font-size: 25px; font-weight: bold;'>" + dtShort.Rows(0)("sectionName").ToString() + "</p><div style='font-size: 20px;'>" + dtShort.Rows(0)("questionName").ToString()
                 Dim shortLabel As Label = e.Item.FindControl("shortAnsLabel")
                 shortLabel.Text = qTitle
             End If
@@ -119,6 +119,10 @@ Public Class results
             Dim dtBarChart As DataTable = GetData(queryBarChart)
 
             If dtBarChart.Rows.Count > 0 Then
+                Dim qTitle As String
+                qTitle = "<p style='text-decoration: underline; font-size: 25px; font-weight: bold;'>" + dtBarChart.Rows(0)("sectionName").ToString() + "</p><div style='font-size: 20px;'>" + dtBarChart.Rows(0)("questionName").ToString() + "</div>"
+                Dim multiLabel As Label = e.Item.FindControl("multiLabel")
+                multiLabel.Text = qTitle
 
                 'Get the DISTINCT answerName.
                 Dim answerNames As List(Of String) = (From p In dtBarChart.AsEnumerable()
@@ -155,6 +159,7 @@ Public Class results
             End If
 
             'Pie Chart for radio buttons
+
             Dim queryPie As String = "Select a.sectionName, c.questionType, c.questionName "
             queryPie = queryPie + " , f.answerName,  count(d.answerId) As cnt   "
             queryPie = queryPie + " From surveyMaster b    "
@@ -167,10 +172,13 @@ Public Class results
             queryPie = queryPie + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  "
             Dim dtpie As DataTable = GetData(queryPie)
             If dtpie.Rows.Count > 0 Then
-                '  Session("qName") = dtpie.Rows(0)("questionName").ToString()
-                ChartPie.Titles("Title1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
-                'TODO: I want the section title to be distinguishable from the question title
-                ChartPie.Titles("Title1").Text = "Section: " + dtpie.Rows(0)("sectionName").ToString() + "\n" + "Question: " + dtpie.Rows(0)("questionName").ToString()
+                Dim qTitle As String
+                qTitle = "<p style='text-decoration: underline; font-size: 25px; font-weight: bold;'>" + dtpie.Rows(0)("sectionName").ToString() + "</p><div style='font-size: 20px;'>" + dtpie.Rows(0)("questionName").ToString()
+                Dim radioLabel As Label = e.Item.FindControl("radioLabel")
+                radioLabel.Text = qTitle
+
+                'ChartPie.Titles("Title1").Font = New System.Drawing.Font("Helvetica Neue", 20, System.Drawing.FontStyle.Bold)
+                'ChartPie.Titles("Title1").Text = "Section: " + dtpie.Rows(0)("sectionName").ToString() + "\n" + "Question: " + dtpie.Rows(0)("questionName").ToString()
                 ChartPie.Visible = True
             End If
 
