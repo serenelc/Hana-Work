@@ -7,57 +7,56 @@
 <head runat="server">
     <title>List of Surveys</title>
     <!-- Custom styles for this template -->
-    <link href="../css/userInfo.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link href="../css/userInfo.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 
 <body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
 
     <form id="form1" runat="server" method="get">
 
-        <div style="background: inherit; height: 100px" >
+        <div style="background: inherit; height: 100px">
             <div id="userInfo" class="sidenav">
-                <label id= "info">
-                    <img src="../images/user.png" style="height: 40px; padding-right: 10px"/>
+                <label id="info">
+                    <img src="../images/user.png" style="height: 40px; padding-right: 10px" />
                     <%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%>
-                </label> 
+                </label>
             </div>
-            <img src="../images/HANA-Logo-BW.png" style="float:left;" />
+            <img src="../images/HANA-Logo-BW.png" style="float: left;" />
         </div>
-        
-        <div id ="main" class="container col-8" style="padding: 20px; background-color:white; min-height: 100%; width: 70%;">
-            
+
+        <div id="main" class="container col-8" style="padding: 20px; background-color: white; min-height: 100%; width: 70%;">
+
             <div>
-                <h1 style="text-align: center;"> Surveys </h1>
+                <h1 style="text-align: center;">Surveys </h1>
                 <br>
             </div>
 
             <div>
-                <p> 
+                <p>
                     The following surveys are currently open. Click on the column title to sort the table.
                 </p>
                 <div>
-                    
-                    <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" 
+
+                    <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>"
                         SelectCommand="Select subjectName, subjectDetail, openDate, closeDate, subjectId  From surveyMaster where statusComp = 0 and subjectId not in 
-(select subjectId from surveyUserSubmit where submitBy = @xUserEn)"
-                        >
+(select subjectId from surveyUserSubmit where submitBy = @xUserEn)">
                         <SelectParameters>
                             <asp:SessionParameter Name="xUserEn" SessionField="EN" Type="String" />
                         </SelectParameters>
                     </asp:SqlDataSource>
-                    
-                    <asp:GridView ID="surveyList" runat="server" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10" 
+
+                    <asp:GridView ID="surveyList" runat="server" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10"
                         ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlSurveyListSource" AllowSorting="True">
                         <Columns>
                             <asp:BoundField DataField="subjectName" HeaderText="Survey Title" SortExpression="subjectName" />
                             <asp:BoundField DataField="subjectDetail" HeaderText="Details" SortExpression="subjectDetail" />
                             <asp:BoundField DataField="openDate" HeaderText="Open Date" SortExpression="openDate" />
                             <asp:BoundField DataField="closeDate" HeaderText="Close Date" SortExpression="closeDate" />
-                             <asp:TemplateField ShowHeader="False">
+                            <asp:TemplateField ShowHeader="False">
                                 <ItemTemplate>
                                     <asp:Button ID="go" runat="server" class="btn btn-success" CommandName="Go"
-                                    Text="Go" CommandArgument='<%# Eval("subjectId") %>' />
+                                        Text="Go" CommandArgument='<%# Eval("subjectId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="subjectId" HeaderText="subjectId" InsertVisible="False" ReadOnly="True" SortExpression="subjectId" Visible="False" />
@@ -71,19 +70,26 @@
                         <SortedDescendingCellStyle BackColor="#E5E5E5" />
                         <SortedDescendingHeaderStyle BackColor="#242121" />
                     </asp:GridView>
-                    
+
                 </div>
             </div>
 
-            <div id = "footer" style="background-color: white; height: 70px;">
+            <div id="footer" style="background-color: white; height: 70px;">
                 <br>
-                <asp:button runat="server" id="btnBack" type="button" class="btn btn-warning"
-                    style="float: left; visibility: hidden;" Text="Back"/>
-                <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
-                    style="float: right" Text="Logout" onclick="btnLogout_Click"/>
-             </div>
-        
+                <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
+                    Style="float: left; visibility: hidden;" Text="Back" />
+                <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
+                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />
+            </div>
+
         </div>
+
+        <%--Script to allow use of dialog box in server--%>
+        <script>
+            function OpenTaskDialogLogout() {
+                return confirm("Are you sure you want to logout?");
+            }
+        </script>
 
         <%--Script to check if user is admin--%>
         <script>
@@ -100,10 +106,10 @@
             isAdmin();
         </script>
 
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
     </form>
- </body>
+</body>
 </html>

@@ -35,17 +35,17 @@
 
                 <div class="container">
                     <label>To</label>
-                    <input runat="server" id="txtTo" class="form-control" type="text" name="To" autocomplete="off"/>
+                    <input runat="server" id="txtTo" class="form-control" type="text" name="To" autocomplete="off" />
                 </div>
                 <div class="container">
                     <label>Subject</label>
-                    <input runat="server" id="txtSubject" class="form-control" type="text" name="Subject" autocomplete="off"/>
+                    <input runat="server" id="txtSubject" class="form-control" type="text" name="Subject" autocomplete="off" />
                 </div>
                 <div class="container">
                     <label>Message</label>
                     <textarea runat="server" class="form-control" name="message" id="txtMessage" cols="30" rows="15"></textarea>
-                    <br/>
-                    <asp:Button runat="server" ID="btnSend" type="submit" class="btn btn-success" Text="Send"></asp:Button>
+                    <br />
+                    <asp:Button runat="server" ID="btnSend" type="submit" class="btn btn-success" Text="Send" OnClientClick="javascript: if (!OpenTaskDialogSend()) { return false; };"></asp:Button>
                 </div>
 
             </div>
@@ -55,10 +55,25 @@
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
                     Style="float: left;" Text="Back" />
                 <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
-                    Style="float: right" Text="Logout" OnClick="btnLogout_Click"/>
+                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />
             </div>
 
         </div>
+
+        <%--Script to allow use of dialog box in server--%>
+        <script>
+            function OpenTaskDialogLogout() {
+                return confirm("Are you sure you want to logout?");
+            }
+
+            function OpenTaskDialogSend() {
+                return confirm("Are you sure you want to send this email?");
+            }
+        </script>
+
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     </form>
 
 </body>

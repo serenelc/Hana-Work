@@ -58,7 +58,7 @@
                                 </asp:ChartArea>
                             </ChartAreas>
                             <Legends>
-                                <asp:Legend Name="Legend1" Alignment="Center" >
+                                <asp:Legend Name="Legend1" Alignment="Center">
                                 </asp:Legend>
                             </Legends>
                             <Titles>
@@ -141,21 +141,27 @@
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
                     Style="float: left;" Text="Back" />
                 <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
-                    Style="float: right" Text="Logout" OnClick="btnLogout_Click"/>
+                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };"/>
             </div>
 
         </div>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand=" select * from surveySection A inner join surveyQuestion B on A.sectionId = B.sectionId
- where A.subjectId = @subId
-
-">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>"
+            SelectCommand=" select * from surveySection A inner join surveyQuestion B on A.sectionId = B.sectionId
+                            where A.subjectId = @subId">
             <SelectParameters>
                 <asp:SessionParameter Name="subId" SessionField="QsubjectId" />
             </SelectParameters>
         </asp:SqlDataSource>
 
         </div>
+
+          <%--Script to allow use of dialog box in server--%>
+        <script>
+            function OpenTaskDialogLogout() {
+                return confirm("Are you sure you want to logout?");
+            }
+        </script>
 
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>

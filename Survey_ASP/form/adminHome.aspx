@@ -15,35 +15,35 @@
 
     <form id="form1" runat="server" method="get">
 
-        <div style="background-color:inherit; height: 100px" >
+        <div style="background-color: inherit; height: 100px">
             <div id="userInfo" class="sidenav">
-                <label id= "info">
-                    <img src="../images/user.png" style="height: 40px; padding-right: 10px"/>
+                <label id="info">
+                    <img src="../images/user.png" style="height: 40px; padding-right: 10px" />
                     <%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%>
                 </label>
             </div>
-            <img src="../images/HANA-Logo-BW.png" style="float:left;" />
+            <img src="../images/HANA-Logo-BW.png" style="float: left;" />
         </div>
-        
-        <div id ="main" class="container col-8" style="padding: 20px; background-color:white; width: 70%;">
-            
+
+        <div id="main" class="container col-8" style="padding: 20px; background-color: white; width: 70%;">
+
             <div>
-                <h1 style="text-align: center;"> Admin Home </h1>
+                <h1 style="text-align: center;">Admin Home </h1>
                 <br>
             </div>
 
             <div>
                 <div>
                     <a href="adminCreate.aspx" style="text-decoration: none; color: white; display: block;">
-                        <button type="button" class="btn btn-secondary btn-lg btn-block"> Create a survey</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block">Create a survey</button>
                     </a>
                     <br>
                 </div>
-                
+
                 <div>
-                     <a href="adminAllSurveys.aspx" style="text-decoration: none; color: white; display: block;">
+                    <a href="adminAllSurveys.aspx" style="text-decoration: none; color: white; display: block;">
                         <button type="button" class="btn btn-secondary btn-lg btn-block">All Surveys</button>
-                     </a>
+                    </a>
                     <br>
                 </div>
 
@@ -53,24 +53,30 @@
                     </a>
                     <br>
                 </div>
-                  
+
             </div>
 
-            <div id = "footer" style="background-color: white; height: 70px;">
-                    <br>
-                    <asp:button runat="server" id="btnLogout" type="button" class="btn btn-danger"
-                    style="float: right" Text="Logout" onclick="btnLogout_Click"/>
-             </div>
-        
+            <div id="footer" style="background-color: white; height: 70px;">
+                <br>
+                <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
+                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />
+            </div>
+
         </div>
 
-        <div style="background-color:inherit; height: 100px" >
-                 
+        <div style="background-color: inherit; height: 100px">
         </div>
 
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <%--Script to allow use of dialog box in server--%>
+        <script>
+                    function OpenTaskDialogLogout() {
+                        return confirm("Are you sure you want to logout?");
+                    }
+        </script>
+
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
     </form>
 </body>

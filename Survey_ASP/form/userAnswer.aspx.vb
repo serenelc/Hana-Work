@@ -146,7 +146,6 @@ Public Class userAnswer
 
     End Sub
 
-
     Protected Sub printListContent()
 
         Dim t As String = "<p><h1 style='text-align: center' id='txtTitle' name='txtTitle'>"

@@ -94,17 +94,13 @@ Public Class sendmail
     End Sub
 
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        If MsgBox("Are you sure you want to logout?", vbQuestion + vbYesNo) = vbYes Then
-            Response.Redirect("index.aspx")
-        End If
+        Response.Redirect("index.aspx")
     End Sub
 
     Protected Sub btnSend_Click(sender As Object, e As EventArgs) Handles btnSend.Click
-        If MsgBox("Are you sure you want to send this email?", vbQuestion + vbYesNo) = vbYes Then
-            If SendEmail(xsubjectId) = True Then
-                ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Email sent successfully!')", True)
-                Response.Redirect("adminAllSurveys.aspx")
-            End If
+        If SendEmail(xsubjectId) = True Then
+            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Email sent successfully!')", True)
+            Response.Redirect("adminAllSurveys.aspx")
         End If
     End Sub
 End Class

@@ -7,8 +7,6 @@
     End Sub
 
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs)
-        If MsgBox("Are you sure you want to logout?", vbQuestion + vbYesNo) = vbYes Then
-            Response.Redirect("index.aspx")
-        End If
+        Response.Redirect("index.aspx")
     End Sub
 End Class
