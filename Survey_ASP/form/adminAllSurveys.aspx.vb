@@ -28,19 +28,19 @@ Public Class adminAllSurveys
             End If
             Response.Redirect("sendmail.aspx?subjectId=" + e.CommandArgument.ToString())
         End If
-        If (e.CommandName = "Toggle") Then
-            If (checkIfClosed(e.CommandArgument.ToString())) Then
-                If MsgBox("Are you sure you want to open this survey?", vbQuestion + vbYesNo) = vbYes Then
-                    openSurvey(e.CommandArgument.ToString())
-                End If
+        'If (e.CommandName = "Toggle") Then
+        '    If (checkIfClosed(e.CommandArgument.ToString())) Then
+        '        'If MsgBox("Are you sure you want to open this survey?", vbQuestion + vbYesNo) = vbYes Then
+        '        '    openSurvey(e.CommandArgument.ToString())
+        '        'End If
 
-            Else
-                If MsgBox("Are you sure you want to close this survey?", vbQuestion + vbYesNo) = vbYes Then
-                    closeSurvey(e.CommandArgument.ToString())
-                End If
-            End If
-            Response.Redirect("adminAllSurveys.aspx")
-        End If
+        '    Else
+        '            If MsgBox("Are you sure you want to close this survey?", vbQuestion + vbYesNo) = vbYes Then
+        '            closeSurvey(e.CommandArgument.ToString())
+        '        End If
+        '    End If
+        '    Response.Redirect("adminAllSurveys.aspx")
+        'End If
     End Sub
 
     Private Sub openSurvey(subjId)
@@ -53,8 +53,8 @@ Public Class adminAllSurveys
             command.Connection = connect
             command.CommandText = "UPDATE SurveyMaster SET status='OPEN', statusComp=0, closeDate = '" + inAMonth + "' WHERE subjectId= " + subjId
 
-            'create a DataReader and execute the SqlCommand
-            Dim MyDataReader As SqlDataReader = command.ExecuteReader()
+                    'create a DataReader and execute the SqlCommand
+                    Dim MyDataReader As SqlDataReader = command.ExecuteReader()
 
             'load the reader into the datatable
             dataT.Load(MyDataReader)

@@ -11,3 +11,4 @@ TO DO:
 	-> Section titles more obvious. Maybe an underline after the end of each section? Only 1 section title per section not 1 title per graph.
 	-> For the short answer grid, if manage to make a section title obvious then just put answerComment in table with table title = questionName. Can ignore sectionName.
 - Email confirmation pop up line 105 doesn't seem to appear
+- dialog boxes don't work once the website is uploaded to the server.

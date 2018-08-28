@@ -36,7 +36,7 @@
                 <label>
                     <h3>Title</h3>
                 </label>
-                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title" autocomplete="off"/>
+                <input runat="server" type="text" class="form-control" id="txtTitle" style="font-weight: bold;" placeholder="Survey Title" autocomplete="off" />
             </div>
 
             <div class="form-group">
@@ -62,13 +62,21 @@
             <div id="save" style="background-color: white; height: 70px;">
                 <br>
                 <asp:Button runat="server" ID="btnSave" type="button" class="btn btn-success"
-                    Style="float: right" Text="Save" OnClick="btnSave_Click" />
+                    Style="float: right" Text="Save" OnClick="btnSave_Click" OnClientClick="javascript: if (!OpenTaskDialog()) { return false; };" />
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning" Text="Back" />
 
             </div>
         </div>
 
     </form>
+
+    <%--Script to allow use of dialog box in server--%>
+    <script>
+        function OpenTaskDialog() {
+            return confirm("Are you sure you have finished creating this survey?");
+        }
+
+    </script>
 
     <%--Script to add a section/sub topic--%>
     <script>

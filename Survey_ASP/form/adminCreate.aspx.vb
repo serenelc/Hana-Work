@@ -23,9 +23,9 @@ Public Class adminCreate
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
 
-        If MsgBox("Are you sure you have finished creating this survey?", vbQuestion + vbYesNo) = vbYes Then
+        'If MsgBox("Are you sure you have finished creating this survey?", vbQuestion + vbYesNo) = vbYes Then
 
-            txtTitle.Value = Request.QueryString("txtTitle")
+        txtTitle.Value = Request.QueryString("txtTitle")
             txtDesc.Value = Request.QueryString("txtDesc")
 
             xcreateDate = Date.Now
@@ -158,7 +158,7 @@ Public Class adminCreate
                     Response.Redirect("adminCreateComplete.aspx")
                 End If
             End Try
-        End If
+        'End If
 
     End Sub
 
