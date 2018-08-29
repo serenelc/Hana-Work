@@ -39,11 +39,7 @@
                 <div>
 
                     <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>"
-                        SelectCommand="Select subjectName, subjectDetail, openDate, closeDate, subjectId  From surveyMaster where statusComp = 0 and subjectId not in 
-(select subjectId from surveyUserSubmit where submitBy = @xUserEn)">
-                        <SelectParameters>
-                            <asp:SessionParameter Name="xUserEn" SessionField="EN" Type="String" />
-                        </SelectParameters>
+                        SelectCommand="Select subjectName, subjectDetail, openDate, closeDate, subjectId, enRequired  From surveyMaster where statusComp = 0">
                     </asp:SqlDataSource>
 
                     <asp:GridView ID="surveyList" runat="server" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10"
@@ -78,8 +74,8 @@
                 <br>
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
                     Style="float: left; visibility: hidden;" Text="Back" />
-                <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
-                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />
+               <%-- <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
+                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />--%>
             </div>
 
         </div>
