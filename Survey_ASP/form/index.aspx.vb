@@ -4,7 +4,9 @@ Public Class index
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
+        Session("UserType") = Nothing
+        Session("En") = Nothing
+        Session("Name") = Nothing
     End Sub
     Function ConnectDB(ConnectionString As String, Sql As String)
         Dim MyDataTable As New DataTable
@@ -43,8 +45,6 @@ Public Class index
         Dim en As String = inputEn.Value
         Dim pwd As String = inputPassword.Value
         Session("en") = en
-        'Session("UserType") = "USER"
-        'Response.Redirect("adminHome.aspx")
 
         'Everyone who logs in will be an admin. We will only distinguish between users and admins on userSurveyList from now on.
         en = en.PadLeft(6, "0")
@@ -73,12 +73,8 @@ Public Class index
                         Session("UserType") = "ADMIN"
                         Response.Redirect("adminHome.aspx")
                     Else
-                        Session("UserType") = "USER"
-                        Response.Redirect("userSurveyList.aspx")
+                        ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('You are not an admin!')", True)
                     End If
-
-                    'ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Connection sucessful')", True)
-
 
                 Else
                     ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Password incorrect!')", True)

@@ -4,9 +4,9 @@ Public Class userSurveyList
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        'If Session("En") Is Nothing Then
-        '    Response.Redirect("index.aspx")
-        'End If
+        If Session("En") Is Nothing Then
+            Session("UserType") = "USER"
+        End If
         updateDatabase()
     End Sub
 
@@ -36,9 +36,9 @@ Public Class userSurveyList
         End Try
     End Sub
 
-    'Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-    '    Response.Redirect("index.aspx")
-    'End Sub
+    Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+        Response.Redirect("index.aspx")
+    End Sub
 
     Private Sub surveyList_RowCommand(sender As Object, e As GridViewCommandEventArgs) Handles surveyList.RowCommand
         If (e.CommandName = "Go") Then
@@ -76,7 +76,8 @@ Public Class userSurveyList
             End Try
 
             If (xenReq = 1) Then
-                'open a login form as EN required
+                'open a login form as EN required. When logging in, if EN is already found in database for this survey, then pop up error message
+                'saying "You have already completed this survey"
             Else
                 Response.Redirect("userAnswer.aspx?subjectId=" + e.CommandArgument.ToString())
             End If

@@ -69,9 +69,9 @@
 
         <%--Script to allow use of dialog box in server--%>
         <script>
-                    function OpenTaskDialogLogout() {
-                        return confirm("Are you sure you want to logout?");
-                    }
+            function OpenTaskDialogLogout() {
+                return confirm("Are you sure you want to logout?");
+            }
         </script>
 
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>

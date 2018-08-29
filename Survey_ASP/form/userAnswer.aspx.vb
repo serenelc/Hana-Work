@@ -57,7 +57,6 @@ Public Class userAnswer
             Dim xstatus As String = ""
             Dim xstatusComp As String = ""
             Dim xopenDate As Date = Now
-            Dim xcloseDate As Date = Now
             Dim xcreateDate As Date = Now
             Dim xcreateBy As String = ""
             Dim xsectionId As Integer = 0
@@ -80,7 +79,6 @@ Public Class userAnswer
                     xstatus = r("status")
                     xstatusComp = r("statusComp")
                     xopenDate = r("openDate")
-                    ' xcloseDate = r("closeDate")
                     xcreateDate = r("createDate")
                     xcreateBy = r("createBy")
 
@@ -293,7 +291,7 @@ Public Class userAnswer
 
         Try
             prmSurveyId = Session("surveyId")
-            If (SaveSurveyUserSubmit(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserSubmit fail!")
+            If (Not SaveSurveyUserSubmit(SQLConn, SQLTran)) Then Throw New Exception("Save SurveyUserSubmit fail!")
 
             For i As Integer = 0 To arrKey.Count - 1
                 Dim xval As String = arrItem(i).ToString()
@@ -318,7 +316,7 @@ Public Class userAnswer
                         prmAnswerComment = ""
                     End If
 
-                    If (SaveSurveyUserAnswer(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserAnswer fail!")
+                    If (Not SaveSurveyUserAnswer(SQLConn, SQLTran)) Then Throw New Exception("Save SurveyUserAnswer fail!")
                 End If
 
             Next

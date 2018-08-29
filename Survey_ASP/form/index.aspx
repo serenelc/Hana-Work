@@ -16,7 +16,6 @@
             <a href="/form/userSurveyList.aspx" class="btn btn-success" role="button" aria-pressed="true">Go</a>
             <br />
             <br />
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Admin Login</button>
             <br />
             <br />
             <br />
@@ -34,17 +33,12 @@
 
         </div>
 
-        <%--            <div style="color: white; float: left;">
-                <a href="../docs/SurveyOnlineManual.docx" class="btn btn-secondary active" role="button" aria-pressed="true">Manual</a>
-                <a href="../docs/ProcessFlow.jpg" class="btn btn-secondary active" role="button" aria-pressed="true" target="_blank">Process Flow</a>
-                <div style="color: white; float:right;">&copy; 2018 Hana Semiconductor (Ayutthaya)  Co., Ltd. Company, Inc.</div>
-            </div>--%>
-
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-4 mt-5 md-3">
                     <a href="../docs/SurveyOnlineManual.docx" class="btn btn-warning" role="button" aria-pressed="true">Manual</a>
                     <a href="../docs/ProcessFlow.jpg" class="btn btn-warning" role="button" aria-pressed="true" target="_blank">Process Flow</a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Admin Login</button>
                 </div>
                 <div class="col-6 mt-5 md-3" style="color: white; float: right; text-align: right;">
                     &copy; 2018 Hana Semiconductor (Ayutthaya)  Co., Ltd. Company, Inc.
