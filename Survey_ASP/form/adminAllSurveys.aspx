@@ -9,7 +9,6 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="../css/userInfo.css" />
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../node_modules/bootstrap-toggle/css/bootstrap2-toggle.min.css" />
 </head>
 
 <body style="background: linear-gradient(#a9c5f2, #619af4) fixed;">
@@ -64,12 +63,6 @@
                                             Text="Send Email" CommandArgument='<%# Eval("subjectId") %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <%--Toggle button if bothered--%>
-                                <%--<asp:TemplateField ShowHeader="False">
-                                <ItemTemplate>
-                                    <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed" data-size="mini" data-onstyle="primary" data-offstyle="info">
-                                </ItemTemplate>
-                            </asp:TemplateField>--%>
                                 <asp:TemplateField HeaderText="Open/Close Survey">
                                     <ItemTemplate>
                                         <asp:Button ID="openClose" runat="server" class="btn btn-primary" CommandName="Toggle"
@@ -110,7 +103,6 @@
                 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
                 <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
                 <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-                <%--<script src="../node_modules/bootstrap-toggle/js/bootstrap2-toggle.min.js"></script>--%>
     </form>
 
 </body>

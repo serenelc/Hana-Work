@@ -101,13 +101,18 @@ Public Class adminCreate
                             Dim val2 As String = strArr(i + 1).ToString()
                             Dim updateValueType As String = ""
                             If val2.Contains("rad") = True Then
-                                updateValueType = "radio"
+                                updateValueType = "radio" + i.ToString()
                             Else
                                 If val2.Contains("short") = True Then
-                                    updateValueType = "shortanswer"
+                                    updateValueType = "shortanswer" + i.ToString()
                                 Else
-                                    If val2.Contains("grid") = True Then
-                                        updateValueType = "grid"
+                                    If val2.Contains("gridQQ") = True Then
+                                        updateValueType = "gridHead" + i.ToString()
+                                    Else
+                                        'If val2.Contains("grid") = True Then
+                                        '    updateValueType = "grid"
+                                        'End If
+
                                     End If
                                 End If
                             End If
@@ -116,7 +121,7 @@ Public Class adminCreate
 
                             If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType) = False) Then Throw New Exception("Error while saving to database! Save surveyQuestion fail!")
                         Else
-                            If xupdateValueType = "grid" Then
+                            If xupdateValueType.Contains("gridHead") = True Then
                                 Dim updateValue = strArr2.Item(i)
                                 If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, xupdateValueType) = False) Then Throw New Exception("Error while saving to database! Save surveyQuestion fail!")
                                 Dim updateValue2 As String = val.Substring(val.IndexOf("=") - 2, 2)

@@ -79,9 +79,10 @@ Public Class results
             Dim ChartPie As Chart = e.Item.FindControl("ChartPie")
             Dim Chartx1 As Chart = e.Item.FindControl("Chart21")
             Dim xsectionIdLabel As Label = e.Item.FindControl("sectionIdLabel")
-            Dim xquestionIdLabel As Label = e.Item.FindControl("questionIdLabel")
+            'Dim xquestionIdLabel As Label = e.Item.FindControl("questionIdLabel")
+            Dim xquestionTypeLabel As Label = e.Item.FindControl("questionTypeLabel")
             ChartPie.Visible = False
-            Chartx1.Visible = False
+            Chartx1.Visible = False  'Gridview
 
             'Tables for short answers
             Dim queryShort As String = "Select distinct a.sectionName, c.questionName "
@@ -91,7 +92,7 @@ Public Class results
             queryShort += "INNER Join surveyAnswer f ON c.questionId = f.questionId "
             queryShort += "INNER Join surveyUserAnswer d ON d.answerId = f.answerId "
             queryShort += "WHERE b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
-            queryShort += " AND c.questionId = " + xquestionIdLabel.Text
+            queryShort += " AND c.questionType = '" + xquestionTypeLabel.Text + "' And c.questionType like '%short%' "
 
             Dim dtShort As DataTable = GetData(queryShort)
 
@@ -111,7 +112,7 @@ Public Class results
             queryBarChart = queryBarChart + " inner Join surveyQuestion c On a.sectionId = c.sectionId  "
             queryBarChart = queryBarChart + " inner Join surveyAnswer f On c.questionId = f.questionId  "
             queryBarChart = queryBarChart + " Left Join surveyUserAnswer d On d.answerId = f.answerId "
-            queryBarChart = queryBarChart + " where questionType = 'grid' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            queryBarChart = queryBarChart + " where questionType = '" + xquestionTypeLabel.Text + "' and questionType like 'grid%' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
             queryBarChart = queryBarChart + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName "
             queryBarChart = queryBarChart + " order by a.sectionId, c.questionId "
 
@@ -122,7 +123,7 @@ Public Class results
             queryBarQName = queryBarQName + " inner Join surveyQuestion c On a.sectionId = c.sectionId  "
             queryBarQName = queryBarQName + " left Join surveyAnswer f On c.questionId = f.questionId  "
             queryBarQName = queryBarQName + " Left Join surveyUserAnswer d On d.answerId = f.answerId "
-            queryBarQName = queryBarQName + " where questionType = 'grid' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            queryBarQName = queryBarQName + " where questionType = '" + xquestionTypeLabel.Text + "' and questionType like 'grid%' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
             queryBarQName = queryBarQName + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName "
             queryBarQName = queryBarQName + " order by a.sectionId, c.questionId "
 
@@ -149,7 +150,6 @@ Public Class results
                                              Select p.Field(Of String)("questionName")).ToArray()
 
 
-
                     'Get the number of people who answered for each answerName.
                     Dim num As Integer() = (From p In dtBarChart.AsEnumerable()
                                             Where p.Field(Of String)("answerName") = answerName
@@ -169,7 +169,6 @@ Public Class results
             End If
 
             'Pie Chart for radio buttons
-
             Dim queryPie As String = "Select a.sectionName, c.questionType, c.questionName "
             queryPie = queryPie + " , f.answerName,  count(d.answerId) As cnt   "
             queryPie = queryPie + " From surveyMaster b    "
@@ -177,8 +176,8 @@ Public Class results
             queryPie = queryPie + " inner Join surveyQuestion c On a.sectionId = c.sectionId    "
             queryPie = queryPie + " inner Join surveyAnswer f On c.questionId = f.questionId    "
             queryPie = queryPie + " Left Join surveyUserAnswer d On d.answerId = f.answerId   "
-            queryPie = queryPie + " where questionType = 'radio' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
-            queryPie = queryPie + " and c.questionId = " + xquestionIdLabel.Text
+            queryPie = queryPie + " where questionType = '" + xquestionTypeLabel.Text + "' and questionType like 'radio%' and b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
+            'queryPie = queryPie + " and c.questionId = " + xquestionIdLabel.Text
             queryPie = queryPie + " Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  "
             Dim dtpie As DataTable = GetData(queryPie)
             If dtpie.Rows.Count > 0 Then

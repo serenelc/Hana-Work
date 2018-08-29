@@ -363,10 +363,16 @@
             divRow.className = "row";
 
             var gridBody = "<div class='col-7'><div></div>";
-
+           
             for (var r = 0; r < numRows; r++) {
-                gridBody += "<div><textarea type='text' class='form-control' placeholder='question' required=true autocomplete= 'off' style='border-radius: 5px; border-style: solid; border-color: #d8d8d8;' name = 'gridQ_name"
+                if (r == 0) {
+                    gridBody += "<div><textarea type='text' class='form-control' placeholder='question' required=true autocomplete= 'off' style='border-radius: 5px; border-style: solid; border-color: #d8d8d8;' name = 'gridQQ_name"
+                        + gridCnt + "_" + r + "_" + numCols + "' id='gridQ_Id" + gridCnt + "_" + r + "'></textarea></div>";
+                }
+                else {
+                    gridBody += "<div><textarea type='text' class='form-control' placeholder='question' required=true autocomplete= 'off' style='border-radius: 5px; border-style: solid; border-color: #d8d8d8;' name = 'gridQ_name"
                     + gridCnt + "_" + r + "_" + numCols + "' id='gridQ_Id" + gridCnt + "_" + r + "'></textarea></div>";
+                }
             }
 
             gridBody += "</div><div class='col-5' style='overflow:scroll;height:auto;width:100%;overflow-y:hidden;overflow-x:scroll;'>";

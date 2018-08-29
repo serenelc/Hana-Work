@@ -44,7 +44,8 @@
                     <ItemTemplate>
                         <asp:Label ID="sectionIdLabel" runat="server" Text='<%# Eval("sectionId") %>' Visible="<%# false %>" />
                         <asp:Label ID="subjectIdLabel" runat="server" Text='<%# Eval("subjectId") %>' Visible="<%# false %>" />
-                        <asp:Label ID="questionIdLabel" runat="server" Text='<%# Eval("questionId") %>' Visible="<%# false %>" />
+                        <%--<asp:Label ID="questionIdLabel" runat="server" Text='<%# Eval("questionId") %>' Visible="<%# false %>" />--%>
+                        <asp:Label ID="questionTypeLabel" runat="server" Text='<%# Eval("questionType") %>' Visible="<%# false %>" />
                         <br />
 
                         <%--Pie Charts for radio answers--%>
@@ -74,20 +75,20 @@
                                         inner Join surveyQuestion c On a.sectionId = c.sectionId   
                                         inner Join surveyAnswer f On c.questionId = f.questionId   
                                         Left Join surveyUserAnswer d On d.answerId = f.answerId  
-                                        where questionType = 'radio'  and b.subjectId =  @subId and a.sectionId = @secId and c.questionId = @qId
+                                        where questionType like 'radio%'  and b.subjectId =  @subId and a.sectionId = @secId and c.questionType = @qType
                                         Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  
                                         order by a.sectionId, c.questionId ">
                             <SelectParameters>
                                 <asp:SessionParameter Name="subId" SessionField="QsubjectId" />
                                 <asp:ControlParameter ControlID="sectionIdLabel" Name="secId" PropertyName="Text" />
-                                <asp:ControlParameter ControlID="questionIdLabel" Name="qId" PropertyName="Text" />
+                                <asp:ControlParameter ControlID="questionTypeLabel" Name="qType" PropertyName="Text" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                         &nbsp;
                         
                         <%--Bar charts for multi grid answers--%>
                         <center><asp:Label ID="multiLabel" runat="server"></asp:Label>
-                        <asp:Chart ID="Chart21" runat="server" BorderlineDashStyle="Solid" Height="620px" Width="900px" Palette="None" PaletteCustomColors="244, 229, 65; 127, 244, 65; 65, 238, 244; 65, 115, 244; 106, 65, 244; 166, 65, 244; 244, 65, 217; 244, 65, 97" DataSourceID="SqlDataSourceChart">
+                        <asp:Chart ID="Chart21" runat="server" BorderlineDashStyle="Solid" Height="620px" Width="900px" Palette="None" PaletteCustomColors="244, 229, 65; 127, 244, 65; 65, 238, 244; 65, 115, 244; 106, 65, 244; 166, 65, 244; 244, 65, 217; 244, 65, 97">
                             <Titles>
                                 <asp:Title Name="Items" Text="" />
                             </Titles>
@@ -98,21 +99,20 @@
                                 <asp:ChartArea BorderWidth="0" Name="ChartArea1" />
                             </ChartAreas>
                         </asp:Chart></center>
-                            <asp:SqlDataSource ID="SqlDataSourceChart" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="Select a.sectionName, c.questionType, c.questionName, c.questionId, f.answerName,  count(d.answerId) As cnt  
+                        <asp:SqlDataSource ID="SqlDataSourceChart" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="Select a.sectionName , c.questionType , c.questionName , c.questionId /* ,[answerName]= isnull(f.answerName,space(10)) */ ,  count(d.answerId) As cnt  
                                         From surveyMaster b   
                                         inner Join surveySection a On a.subjectId = b.subjectId   
                                         inner Join surveyQuestion c On a.sectionId = c.sectionId   
                                         inner Join surveyAnswer f On c.questionId = f.questionId   
                                         Left Join surveyUserAnswer d On d.answerId = f.answerId  
-                                        where questionType = 'grid'  and b.subjectId =  @subId and a.sectionId = @secId and c.questionId = @qId
-                                        Group by b.subjectName, a.sectionId, a.sectionName, c.questionId, c.questionName, c.questionType, f.answerId, f.answerName  
-                                        order by a.sectionId, c.questionId">
-                                <SelectParameters>
-                                    <asp:SessionParameter Name="subId" SessionField="QsubjectId" />
-                                    <asp:ControlParameter ControlID="sectionIdLabel" Name="secId" PropertyName="Text" />
-                                    <asp:ControlParameter ControlID="questionIdLabel" Name="qId" PropertyName="Text" />
-                                </SelectParameters>
-                            </asp:SqlDataSource>
+                                        where questionType ='grid'  and b.subjectId =  @subId and a.sectionId = @secId 
+                                        Group by a.sectionName , c.questionType , c.questionName, c.questionId /* , isnull(f.answerName,space(10))*/
+                                     ">
+                            <SelectParameters>
+                                <asp:SessionParameter Name="subId" SessionField="QsubjectId" DefaultValue="5" />
+                                <asp:ControlParameter ControlID="sectionIdLabel" Name="secId" PropertyName="Text" DefaultValue="11" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                         <br />
 
 
@@ -140,14 +140,14 @@
                         <asp:SqlDataSource ID="SqlDataSource31" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>" SelectCommand="Select distinct  a.sectionName, c.questionName, d.answerComment
                         FROM surveyMaster AS b 
                         INNER JOIN surveySection AS a ON a.subjectId = b.subjectId 
-                        INNER JOIN surveyQuestion AS c ON a.sectionId = c.sectionId And c.questionType = 'shortanswer'
+                        INNER JOIN surveyQuestion AS c ON a.sectionId = c.sectionId And c.questionType like 'shortanswer%'
                         INNER JOIN surveyAnswer AS f ON c.questionId = f.questionId 
                         INNER JOIN surveyUserAnswer AS d ON d.answerId = f.answerId 
-                        WHERE (b.subjectId = @subId) AND (a.sectionId = @secId) AND (c.questionId = @qId)">
+                        WHERE (b.subjectId = @subId) AND (a.sectionId = @secId) AND (c.questionType = @qType)">
                             <SelectParameters>
                                 <asp:SessionParameter Name="subId" SessionField="QsubjectId" />
                                 <asp:ControlParameter ControlID="sectionIdLabel" DefaultValue="9" Name="secId" PropertyName="Text" />
-                                <asp:ControlParameter ControlID="questionIdLabel" Name="qId" PropertyName="Text" />
+                                <asp:ControlParameter ControlID="questionTypeLabel" Name="qType" PropertyName="Text" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                         <br />
@@ -167,10 +167,13 @@
         </div>
 
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>"
-            SelectCommand=" select * from surveySection A inner join surveyQuestion B on A.sectionId = B.sectionId
-                            where A.subjectId = @subId">
+            SelectCommand=" select A.subjectId,A.sectionId,A.sectionName,B.questionType
+                            from surveySection A
+                            inner join surveyQuestion B on A.sectionId = B.sectionId
+                            where A.subjectId = @subId
+                            group by A.subjectId,A.sectionId,A.sectionName,B.questionType">
             <SelectParameters>
-                <asp:SessionParameter Name="subId" SessionField="QsubjectId" />
+                <asp:SessionParameter Name="subId" SessionField="QsubjectId" DefaultValue="12" />
             </SelectParameters>
         </asp:SqlDataSource>
 

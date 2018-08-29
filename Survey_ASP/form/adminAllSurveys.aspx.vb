@@ -30,51 +30,14 @@ Public Class adminAllSurveys
         End If
         If (e.CommandName = "Toggle") Then
             If (checkIfClosed(e.CommandArgument.ToString())) Then
-
-                Dim message As String = "Are you sure you want to open this survey?"
-                Dim sb As New System.Text.StringBuilder()
-                sb.Append("return confirm('")
-                sb.Append(message)
-                sb.Append("');")
-                ClientScript.RegisterStartupScript(Me.GetType(), "alert", sb.ToString(), True)
                 openSurvey(e.CommandArgument.ToString())
             Else
-
-                Dim message As String = "Are you sure you want to close this survey?"
-                Dim sb As New System.Text.StringBuilder()
-                sb.Append("return confirm('")
-                sb.Append(message)
-                sb.Append("');")
-                ClientScript.RegisterStartupScript(Me.GetType(), "alert", sb.ToString(), True)
                 closeSurvey(e.CommandArgument.ToString())
             End If
-
-
             Response.Redirect("adminAllSurveys.aspx")
         End If
     End Sub
 
-    'Protected Sub submit(sender As Object, e As EventArgs)
-    '    If (sender.CommandName = "Toggle") Then
-    '        Dim sqlClosed = " Select * from  surveyMaster where subjectId = " + sender.CommandArgument.ToString() + " and statusComp = 1"
-    '        Dim dt As DataTable = GetData(sqlClosed)
-
-    '        If (dt.Rows.Count > 0) Then
-    '            Dim messageOpen As String = "Are you sure you want to open this survey?"
-    '            ClientScript.RegisterStartupScript(Me.GetType(), "alert", "confirm('" + messageOpen + "')", True)
-    '            openSurvey(sender.CommandArgument.ToString())
-    '            Response.Redirect("adminAllSurveys.aspx")
-    '        Else
-    '            Dim messageClose As String = "Are you sure you want to close this survey?"
-    '            ClientScript.RegisterStartupScript(Me.GetType(), "alert", "confirm('" + messageClose + "')", True)
-    '            closeSurvey(sender.CommandArgument.ToString())
-    '            Response.Redirect("adminAllSurveys.aspx")
-    '        End If
-
-    '    End If
-
-
-    'End Sub
 
     Private Sub openSurvey(subjId)
         Dim dataT As New DataTable
