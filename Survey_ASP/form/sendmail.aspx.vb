@@ -99,6 +99,7 @@ Public Class sendmail
 
     Protected Sub btnSend_Click(sender As Object, e As EventArgs) Handles btnSend.Click
         If SendEmail(xsubjectId) = True Then
+            'This alert message does not appear.
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Email sent successfully!')", True)
             Response.Redirect("adminAllSurveys.aspx")
         End If

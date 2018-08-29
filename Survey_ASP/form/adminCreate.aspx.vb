@@ -107,12 +107,7 @@ Public Class adminCreate
                                     updateValueType = "shortanswer" + i.ToString()
                                 Else
                                     If val2.Contains("gridQQ") = True Then
-                                        updateValueType = "gridHead" + i.ToString()
-                                    Else
-                                        'If val2.Contains("grid") = True Then
-                                        '    updateValueType = "grid"
-                                        'End If
-
+                                        updateValueType = "grid" + i.ToString()
                                     End If
                                 End If
                             End If
@@ -121,7 +116,7 @@ Public Class adminCreate
 
                             If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType) = False) Then Throw New Exception("Error while saving to database! Save surveyQuestion fail!")
                         Else
-                            If xupdateValueType.Contains("gridHead") = True Then
+                            If xupdateValueType.Contains("grid") = True Then
                                 Dim updateValue = strArr2.Item(i)
                                 If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, xupdateValueType) = False) Then Throw New Exception("Error while saving to database! Save surveyQuestion fail!")
                                 Dim updateValue2 As String = val.Substring(val.IndexOf("=") - 2, 2)
