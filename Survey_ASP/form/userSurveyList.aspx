@@ -77,35 +77,7 @@
                     Style="float: right; visibility: hidden;" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />
             </div>
 
-            <!--login menu-->
-            <%--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="form2" class="form-signin " runat="server">
-                                <label for="text" class="sr-only">En</label>
-                                <input type="text" id="inputEn" runat="server" class="form-control" placeholder="En" required autofocus>
-                                <label for="inputPassword" class="sr-only">Password</label>
-                                <input type="password" id="inputPassword" runat="server" class="form-control" placeholder="Password" required>
-                                <br>
-                                <asp:Button ID="btnLogin"
-                                    class="btn btn-lg btn-primary btn-block"
-                                    type="button"
-                                    Text="Login"
-                                    runat="server" />
-                                <button class="btn btn-lg btn-secondary btn-block" type="reset">Cancel</button>
-                                <p class="mt-5 mb-3 text-muted">&copy; 2018 Hana Semiconductor (Ayutthaya)  Co., Ltd. Company, Inc.</p>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>--%>
+           
         </div>
 
 

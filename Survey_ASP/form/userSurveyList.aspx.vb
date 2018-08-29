@@ -4,7 +4,7 @@ Public Class userSurveyList
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        If Session("En") Is Nothing Then
+        If Session("UserType") Is Nothing Then
             Session("UserType") = "USER"
         End If
         updateDatabase()
@@ -78,6 +78,7 @@ Public Class userSurveyList
             If (xenReq = 1) Then
                 'open a login form as EN required. When logging in, if EN is already found in database for this survey, then pop up error message
                 'saying "You have already completed this survey"
+                Response.Redirect("login.aspx?subjectId=" + e.CommandArgument.ToString())
             Else
                 Response.Redirect("userAnswer.aspx?subjectId=" + e.CommandArgument.ToString())
             End If

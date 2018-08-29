@@ -14,16 +14,17 @@ Public Class userAnswer
     Public prmAnswerID As Integer = 0
     Public prmAnswerComment As String = ""
     Public c As Integer = 0
+    Dim subId
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        If Session("En") Is Nothing Then
-            Response.Redirect("index.aspx")
-        End If
-
         If IsPostBack() = False Then
-            Dim subId = Request.QueryString("subjectId")
+            subId = Request.QueryString("subjectId")
             Call getSurveyContent(subId)
             Session("surveyId") = xsurveyId.ToString()
+        End If
+
+        If (subId Is Nothing) Then
+            Response.Redirect("index.aspx")
         End If
     End Sub
 

@@ -7,7 +7,7 @@ Public Class adminAllSurveys
     Dim inAMonth As Date = Date.Now.AddMonths(1)
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        If Session("En") Is Nothing Then
+        If Session("UserType") Is Nothing Then
             Response.Redirect("index.aspx")
         End If
         updateDatabase()
