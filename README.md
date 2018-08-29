@@ -10,3 +10,7 @@ TO DO:
 	-> table with percentages
 	-> Only 1 section title per section not 1 title per graph. (not v important)
 - Email confirmation pop up line 105 doesn't seem to appear
+
+After meeting with user, they want: 
+- Two types of surveys. Ones where the user EN is not required and ones where they are. -> restructuring the database, adminCreate, index, userSurveyList. Change the hover icon top right.
+- Table with percentages
