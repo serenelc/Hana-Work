@@ -37,11 +37,7 @@
             <div class="row justify-content-between">
                 <div class="col-4 mt-5 md-3">
                     <a href="../docs/SurveyOnlineManual.docx" class="btn btn-warning" role="button" aria-pressed="true">Manual</a>
-<<<<<<< HEAD
                     <a href="../docs/ProcessFlow.png" class="btn btn-warning" role="button" aria-pressed="true" target="_blank">Process Flow</a>
-=======
-                    <a href="../docs/ProcessFlow.jpg" class="btn btn-warning" role="button" aria-pressed="true" target="_blank">Process Flow</a>
->>>>>>> 001d42659cf8624165d447cf1bb952b49a8aa145
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Admin Login</button>
                 </div>
                 <div class="col-6 mt-5 md-3" style="color: white; float: right; text-align: right;">
