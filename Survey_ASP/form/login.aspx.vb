@@ -1,13 +1,20 @@
 ﻿Imports System.Data.SqlClient
 
-Public Class index
+Public Class login
     Inherits System.Web.UI.Page
+    Dim subjId
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("UserType") = Nothing
         Session("En") = Nothing
         Session("Name") = Nothing
+
+        subjId = Request.QueryString("subjectId")
+        If (subjId Is Nothing) Then
+            Response.Redirect("index.aspx")
+        End If
     End Sub
+
     Function ConnectDB(ConnectionString As String, Sql As String)
         Dim MyDataTable As New DataTable
         Try
@@ -64,17 +71,8 @@ Public Class index
                 If dtpw.Rows(0)("PW").ToString = pwd Then
                     Session("En") = en
                     Session("Name") = dtCheckHanaOne.Rows(0)("EngName") & " " & dtCheckHanaOne.Rows(0)("EngSurname")
-
-                    strSQLHanaone = "Select * from surveyUsers where userEn='" & inputEn.Value & "'"
-                    dtRight = ConnectDB(My.Settings.ConnStringDatabaseSurvey, strSQLHanaone)
-
-
-                    If (dtRight IsNot Nothing) And (dtRight.Rows.Count > 0) Then
-                        Session("UserType") = "ADMIN"
-                        Response.Redirect("adminHome.aspx")
-                    Else
-                        ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('You are not an admin!')", True)
-                    End If
+                    Session("UserType") = "USER"
+                    Response.Redirect("userAnswer.aspx?subjectId=" + subjId)
 
                 Else
                     ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Password incorrect!')", True)
@@ -90,4 +88,5 @@ Public Class index
 
         '***********************************************
     End Sub
+
 End Class

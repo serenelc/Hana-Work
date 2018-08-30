@@ -10,3 +10,11 @@ TO DO:
 	-> table with percentages
 	-> Only 1 section title per section not 1 title per graph. (not v important)
 - Email confirmation pop up line 105 doesn't seem to appear
+
+After meeting with user, TO DO:
+- Redo process flow and manual
+- Logout button won't float right on userSurveyList page
+- UserSurveyComplete need to check for Session("EN") to show logout button if exists and not if it's just a Go one. Also make sure the session clears if it's a login one when it goes back to userSurveyList
+	-> If a user is an admin the userType = ADMIN
+	-> If a user logged in to answer a survey the userType = USER
+	-> If a user didn't log in to answer a survey, the userType = ""

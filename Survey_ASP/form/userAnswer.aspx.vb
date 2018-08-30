@@ -14,17 +14,19 @@ Public Class userAnswer
     Public prmAnswerID As Integer = 0
     Public prmAnswerComment As String = ""
     Public c As Integer = 0
+    Dim subId
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        If Session("En") Is Nothing Then
-            Response.Redirect("index.aspx")
-        End If
-
         If IsPostBack() = False Then
-            Dim subId = Request.QueryString("subjectId")
+            subId = Request.QueryString("subjectId")
             Call getSurveyContent(subId)
             Session("surveyId") = xsurveyId.ToString()
+
+            If (subId Is Nothing) Then
+                Response.Redirect("index.aspx")
+            End If
         End If
+
     End Sub
 
     Protected Sub getSurveyContent(xSubId)
@@ -57,7 +59,6 @@ Public Class userAnswer
             Dim xstatus As String = ""
             Dim xstatusComp As String = ""
             Dim xopenDate As Date = Now
-            Dim xcloseDate As Date = Now
             Dim xcreateDate As Date = Now
             Dim xcreateBy As String = ""
             Dim xsectionId As Integer = 0
@@ -80,7 +81,6 @@ Public Class userAnswer
                     xstatus = r("status")
                     xstatusComp = r("statusComp")
                     xopenDate = r("openDate")
-                    ' xcloseDate = r("closeDate")
                     xcreateDate = r("createDate")
                     xcreateBy = r("createBy")
 
@@ -293,7 +293,7 @@ Public Class userAnswer
 
         Try
             prmSurveyId = Session("surveyId")
-            If (SaveSurveyUserSubmit(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserSubmit fail!")
+            If (Not SaveSurveyUserSubmit(SQLConn, SQLTran)) Then Throw New Exception("Save SurveyUserSubmit fail!")
 
             For i As Integer = 0 To arrKey.Count - 1
                 Dim xval As String = arrItem(i).ToString()
@@ -318,25 +318,24 @@ Public Class userAnswer
                         prmAnswerComment = ""
                     End If
 
-                    If (SaveSurveyUserAnswer(SQLConn, SQLTran) = False) Then Throw New Exception("Save SurveyUserAnswer fail!")
+                    If (Not SaveSurveyUserAnswer(SQLConn, SQLTran)) Then Throw New Exception("Save SurveyUserAnswer fail!")
                 End If
 
             Next
 
             SaveComp = True
             SQLTran.Commit()
-            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
 
         Catch ex As Exception
 
-            Dim errorMsg = "Error While inserting record On table..." & ex.Message & ", Insert Records"
-            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & errorMsg & "Save')", True)
-            SQLTran.Commit()
+            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & ex.Message & "')", True)
+            SQLTran.Rollback()
             SQLConn.Close()
 
         Finally
             If SaveComp Then
                 SQLConn.Close()
+                'ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
                 Response.Redirect("userSurveyComplete.aspx")
             End If
         End Try
@@ -359,7 +358,12 @@ Public Class userAnswer
 
                 .Parameters.AddWithValue("@subjectId", prmSurveyId)
                 .Parameters.AddWithValue("@submitDate", xcreateDate)
-                .Parameters.AddWithValue("@submitBy", Session("En"))
+
+                If (Session("EN") = Nothing Or Session("EN") = "") Then
+                    .Parameters.AddWithValue("@submitBy", "")
+                Else
+                    .Parameters.AddWithValue("@submitBy", Session("En"))
+                End If
 
                 Dim prm_submitid As System.Data.SqlClient.SqlParameter = New SqlParameter("@submitID", SqlDbType.Int)
                 prm_submitid.Direction = ParameterDirection.Output

@@ -17,7 +17,7 @@
 
         <div style="background-color: inherit; height: 100px">
             <div id="userInfo" class="sidenav">
-                <label id="info">
+                <label id="info" style="visibility: hidden;">
                     <img src="../images/user.png" style="height: 40px; padding-right: 10px" />
                     <%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%>
                 </label>
@@ -42,7 +42,7 @@
                 <asp:Button runat="server" ID="btnSave" type="button" class="btn btn-success"
                     Style="float: right" Text="Save" CommandArgument='<%# Eval("subjectId") %>' OnClientClick="javascript: if (!OpenTaskDialogSave()) { return false; };" />
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
-                    Style="float: left;" Text="Back" />
+                    Style="float: left;" Text="Back" onclick="btnBack_Click"/>
             </div>
 
         </div>
@@ -52,6 +52,20 @@
             function OpenTaskDialogSave() {
                 return confirm("Are you sure you have finished answering the survey?");
             }
+        </script>
+
+        <%--Script to check if user has logged in to take this survey--%>
+        <script>
+            function isAdmin() {
+                    let uType = "<%=Session("UserType").ToString()%>";
+                    if ("" == uType) {
+                        //Do nothing
+                    }
+                    else {
+                        document.getElementById("info").style = "visibility: visible;";
+                    }
+            }
+            isAdmin();
         </script>
 
 
