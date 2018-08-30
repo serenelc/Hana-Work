@@ -45,9 +45,16 @@
                     placeholder="Short description about your survey" autocomplete="off"></textarea>
             </div>
 
-            <div class="form-group">
-                <label>Survey close date (The survey will close automatically at 00:00 of the day chosen)</label>
-                <input class="w-input input" id="closeDate" type="date" name="close" style="width: 60%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;" />
+            <div class="form-check form-check-inline">
+                <div class="form-group">
+                    <label>Survey close date (The survey will close automatically at 00:00 of the day chosen)</label>
+                    <input class="w-input input" id="closeDate" type="date" name="close" style="width: 50%; border-radius: 5px; border-style: solid; border-color: #d8d8d8;" />
+                </div>
+                <%--1 means EN is required--%>
+                <input class="form-check-input" type="checkbox" name="enReq" value="1" id="enReq">
+                <label class="form-check-label" for="enReq">
+                    Require User En
+                </label>
             </div>
 
             <hr>
@@ -363,7 +370,7 @@
             divRow.className = "row";
 
             var gridBody = "<div class='col-7'><div></div>";
-           
+
             for (var r = 0; r < numRows; r++) {
                 if (r == 0) {
                     gridBody += "<div><textarea type='text' class='form-control' placeholder='question' required=true autocomplete= 'off' style='border-radius: 5px; border-style: solid; border-color: #d8d8d8;' name = 'gridQQ_name"
@@ -371,7 +378,7 @@
                 }
                 else {
                     gridBody += "<div><textarea type='text' class='form-control' placeholder='question' required=true autocomplete= 'off' style='border-radius: 5px; border-style: solid; border-color: #d8d8d8;' name = 'gridQ_name"
-                    + gridCnt + "_" + r + "_" + numCols + "' id='gridQ_Id" + gridCnt + "_" + r + "'></textarea></div>";
+                        + gridCnt + "_" + r + "_" + numCols + "' id='gridQ_Id" + gridCnt + "_" + r + "'></textarea></div>";
                 }
             }
 

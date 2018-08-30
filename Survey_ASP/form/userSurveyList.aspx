@@ -17,7 +17,7 @@
 
         <div style="background: inherit; height: 100px">
             <div id="userInfo" class="sidenav">
-                <label id="info">
+                <label id="info" style="visibility: hidden;">
                     <img src="../images/user.png" style="height: 40px; padding-right: 10px" />
                     <%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%>
                 </label>
@@ -39,12 +39,7 @@
                 <div>
 
                     <asp:SqlDataSource ID="SqlSurveyListSource" runat="server" ConnectionString="<%$ ConnectionStrings:SURVEYConnectionString %>"
-                        SelectCommand="Select subjectName, subjectDetail, openDate, closeDate, subjectId  From surveyMaster where statusComp = 0 and subjectId not in 
-(select subjectId from surveyUserSubmit where submitBy = @xUserEn)">
-                        <SelectParameters>
-                            <asp:SessionParameter Name="xUserEn" SessionField="EN" Type="String" />
-                        </SelectParameters>
-                    </asp:SqlDataSource>
+                        SelectCommand="Select subjectName, subjectDetail, openDate, closeDate, subjectId, enRequired  From surveyMaster where statusComp = 0"></asp:SqlDataSource>
 
                     <asp:GridView ID="surveyList" runat="server" Width="100%" BackColor="White" BorderColor="Black" BorderStyle="None" BorderWidth="0px" CellPadding="10"
                         ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="subjectId" DataSourceID="SqlSurveyListSource" AllowSorting="True">
@@ -76,13 +71,16 @@
 
             <div id="footer" style="background-color: white; height: 70px;">
                 <br>
-                <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
-                    Style="float: left; visibility: hidden;" Text="Back" />
+
+                <a href="" class="btn btn-warning" role="button" id="btnBack" aria-pressed="true" style="float:left;" target="">Back</a> 
                 <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
-                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />
+                    Style="float: right; visibility: hidden;" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />
+                 
             </div>
 
+          
         </div>
+
 
         <%--Script to allow use of dialog box in server--%>
         <script>
@@ -94,14 +92,18 @@
         <%--Script to check if user is admin--%>
         <script>
             function isAdmin() {
-                let uType = "<%=Session("UserType").ToString()%>";
-                let btn = document.getElementById("btnBack");
-                if ("ADMIN" == uType) {
-                    btn.style = "visibility: visible;";
-                }
-                else {
-                    btn.style = "visibility: hidden;";
-                }
+                    let uType = "<%=Session("UserType").ToString()%>";
+                    let btnBack = document.getElementById("btnBack");
+                    let btnLogout = document.getElementById("btnLogout")
+                    if ("ADMIN" == uType) {
+                        btnBack.setAttribute("href", "adminHome.aspx")
+                        btnLogout.style = "visibility: visible;";
+                        document.getElementById("info").style = "visibility: visible;";
+                    }
+                    else {
+                        btnBack.setAttribute("href", "index.aspx");
+                        btnLogout.style = "visibility: hidden;";
+                    }
             }
             isAdmin();
         </script>
@@ -109,7 +111,6 @@
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
         <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
     </form>
 </body>
 </html>

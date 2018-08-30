@@ -5,6 +5,7 @@ Public Class adminCreate
 
     Public divSecTitle_val = ""
     Public prmCloseDate As DateTime
+    Public prmEnReq As Integer = 0
     Public prmSubjid As Integer = 0
     Public prmSectionID As Integer = 0
     Public prmSectionOrder As Integer = 0
@@ -84,58 +85,70 @@ Public Class adminCreate
                         Throw New Exception("Please create at least 1 question!")
                     End If
 
-                    If (SaveSurveyMaster(SQLConn, SQLTran) = False) Then Throw New Exception("Save surveyMaster fail!")
+                    Dim nextItem = strArr(i + 1)
+                    If (nextItem.Contains("enReq")) Then
+                        prmEnReq = 1
+                    End If
+
+
+                    If (Not SaveSurveyMaster(SQLConn, SQLTran)) Then Throw New Exception("Save surveyMaster fail!")
                 Else
-                    If val.Contains("sectionTitle_name") = True Then
-                        prmSectionID = 0
-                        prmSectionOrder = 0
-                        prmQuestionID = 0
-                        prmQuestionOrder = 0
-                        prmAnswerID = 0
-                        prmAnswerOrder = 0
-                        Dim updateValue = strArr2.Item(i)
-                        If (SaveSurveySection(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Save surveySection fail!")
+                    If val.Contains("enReq") Then
+                        prmEnReq = val.Substring(val.IndexOf("=") + 1)
+
+
                     Else
-                        If val.Contains("questionInput_name") = True Then
+                        If val.Contains("sectionTitle_name") Then
+                            prmSectionID = 0
+                            prmSectionOrder = 0
+                            prmQuestionID = 0
+                            prmQuestionOrder = 0
+                            prmAnswerID = 0
+                            prmAnswerOrder = 0
                             Dim updateValue = strArr2.Item(i)
-                            Dim val2 As String = strArr(i + 1).ToString()
-                            Dim updateValueType As String = ""
-                            If val2.Contains("rad") = True Then
-                                updateValueType = "radio" + i.ToString()
-                            Else
-                                If val2.Contains("short") = True Then
-                                    updateValueType = "shortanswer" + i.ToString()
+                            If (Not SaveSurveySection(SQLConn, SQLTran, updateValue)) Then Throw New Exception("Save surveySection fail!")
+                        Else
+                            If val.Contains("questionInput_name") Then
+                                Dim updateValue = strArr2.Item(i)
+                                Dim val2 As String = strArr(i + 1).ToString()
+                                Dim updateValueType As String = ""
+                                If val2.Contains("rad") = True Then
+                                    updateValueType = "radio" + i.ToString()
                                 Else
-                                    If val2.Contains("gridQQ") = True Then
-                                        updateValueType = "grid" + i.ToString()
+                                    If val2.Contains("short") = True Then
+                                        updateValueType = "shortanswer" + i.ToString()
+                                    Else
+                                        If val2.Contains("gridQQ") = True Then
+                                            updateValueType = "grid" + i.ToString()
+                                        End If
                                     End If
                                 End If
-                            End If
 
-                            xupdateValueType = updateValueType
+                                xupdateValueType = updateValueType
 
-                            If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType) = False) Then Throw New Exception("Error while saving to database! Save surveyQuestion fail!")
-                        Else
-                            If xupdateValueType.Contains("grid") = True Then
-                                Dim updateValue = strArr2.Item(i)
-                                If (SaveSurveyQuestion(SQLConn, SQLTran, updateValue, xupdateValueType) = False) Then Throw New Exception("Error while saving to database! Save surveyQuestion fail!")
-                                Dim updateValue2 As String = val.Substring(val.IndexOf("=") - 2, 2)
-                                Dim updateValue3 As String = ""
-                                If updateValue2.Contains("_") = True Then
-                                    updateValue3 = Right(updateValue2, 1)
-                                Else
-                                    updateValue3 = updateValue2
-                                End If
-                                For ii As Integer = 1 To updateValue3
-                                    If (SaveSurveyAnswer(SQLConn, SQLTran, ii) = False) Then Throw New Exception("Error while saving to database! Save surveyAnswer fail!")
-                                Next
+                                If (Not SaveSurveyQuestion(SQLConn, SQLTran, updateValue, updateValueType)) Then Throw New Exception("Error while saving to database! Save surveyQuestion fail!")
                             Else
-                                If val.Contains("rad") = True Or val.Contains("short") = True Or val.Contains("grid") = True Then
+                                If xupdateValueType.Contains("grid") Then
                                     Dim updateValue = strArr2.Item(i)
-                                    If (SaveSurveyAnswer(SQLConn, SQLTran, updateValue) = False) Then Throw New Exception("Error while saving to database! Save surveyAnswer fail!")
+                                    If (Not SaveSurveyQuestion(SQLConn, SQLTran, updateValue, xupdateValueType)) Then Throw New Exception("Error while saving to database! Save surveyQuestion fail!")
+                                    Dim updateValue2 As String = val.Substring(val.IndexOf("=") - 2, 2)
+                                    Dim updateValue3 As String = ""
+                                    If updateValue2.Contains("_") Then
+                                        updateValue3 = Right(updateValue2, 1)
+                                    Else
+                                        updateValue3 = updateValue2
+                                    End If
+                                    For ii As Integer = 1 To updateValue3
+                                        If (Not SaveSurveyAnswer(SQLConn, SQLTran, ii)) Then Throw New Exception("Error while saving to database! Save surveyAnswer fail!")
+                                    Next
+                                Else
+                                    If val.Contains("rad") Or val.Contains("short") Or val.Contains("grid") = True Then
+                                        Dim updateValue = strArr2.Item(i)
+                                        If (Not SaveSurveyAnswer(SQLConn, SQLTran, updateValue)) Then Throw New Exception("Error while saving to database! Save surveyAnswer fail!")
+                                    End If
                                 End If
-                            End If
 
+                            End If
                         End If
                     End If
                 End If
@@ -177,8 +190,8 @@ Public Class adminCreate
         Dim str As String = String.Empty
         'New
         If prmSubjid = 0 Then
-            str = "INSERT INTO surveyMaster(subjectName,subjectDetail,status,openDate,closeDate,createBy,createDate) "
-            str = str + " VALUES(@subjectName, @subjectDetail, @status,@openDate,@closeDate,@createBy,@createDate); Set @subj_ID = SCOPE_IDENTITY() "
+            str = "INSERT INTO surveyMaster(subjectName,subjectDetail,status,openDate,closeDate,createBy,createDate,enRequired) "
+            str = str + " VALUES(@subjectName, @subjectDetail, @status,@openDate,@closeDate,@createBy,@createDate,@enRequired); Set @subj_ID = SCOPE_IDENTITY() "
             Using SQLCmd As New SqlCommand With {.Connection = SQLConn,
                                                              .Transaction = SQLTran,
                                                              .CommandType = CommandType.Text,
@@ -192,6 +205,7 @@ Public Class adminCreate
                     .Parameters.AddWithValue("@closeDate", prmCloseDate)
                     .Parameters.AddWithValue("@createBy", Session("En"))
                     .Parameters.AddWithValue("@createDate", xcreateDate)
+                    .Parameters.AddWithValue("@enRequired", prmEnReq)
 
                     Dim prm_subjid As System.Data.SqlClient.SqlParameter = New SqlParameter("@subj_ID", SqlDbType.Int)
                     prm_subjid.Direction = ParameterDirection.Output

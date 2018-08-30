@@ -12,7 +12,11 @@ TO DO:
 - Email confirmation pop up line 105 doesn't seem to appear
 
 After meeting with user, TO DO:
+<<<<<<< HEAD
 - Redo manual
+=======
+- Redo process flow and manual
+>>>>>>> 001d42659cf8624165d447cf1bb952b49a8aa145
 - Logout button won't float right on userSurveyList page
 - UserSurveyComplete need to check for Session("EN") to show logout button if exists and not if it's just a Go one. Also make sure the session clears if it's a login one when it goes back to userSurveyList
 	-> If a user is an admin the userType = ADMIN
