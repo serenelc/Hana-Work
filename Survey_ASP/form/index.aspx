@@ -73,7 +73,7 @@
                             type="button"
                             Text="Login"
                             runat="server" />
-                        <button class="btn btn-lg btn-secondary btn-block" type="reset">Cancel</button>
+                        <button class="btn btn-lg btn-secondary btn-block" type="reset">Clear</button>
                         <p class="mt-5 mb-3 text-muted">&copy; 2018 Hana Semiconductor (Ayutthaya)  Co., Ltd. Company, Inc.</p>
                     </form>
                 </div>
