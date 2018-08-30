@@ -5,7 +5,11 @@ Public Class userSurveyList
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Session("UserType") Is Nothing Then
-            Session("UserType") = "USER"
+            Session("UserType") = ""
+        ElseIf Session("UserType") = "USER" Then
+            Session("UserType") = ""
+            Session("Name") = Nothing
+            Session("En") = Nothing
         End If
         updateDatabase()
     End Sub
@@ -86,9 +90,5 @@ Public Class userSurveyList
 
         End If
     End Sub
-
-    'Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
-    '    Response.Redirect("adminHome.aspx")
-    'End Sub
 
 End Class

@@ -42,15 +42,14 @@
                 </div>
                 <div class="col-6 mt-5 md-3" style="color: white; float: right; text-align: right;">
                     &copy; 2018 Hana Semiconductor (Ayutthaya)  Co., Ltd. Company, Inc.
-                    <br /> Created by: Serene Chongtrakul & Suriyong Thaphiang (Tel: 726)
+                    <br />
+                    Created by: MIS Team
                 </div>
             </div>
         </div>
 
         <br />
     </div>
-
-
 
     <!--login menu-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -82,7 +81,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>

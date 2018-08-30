@@ -325,18 +325,17 @@ Public Class userAnswer
 
             SaveComp = True
             SQLTran.Commit()
-            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
 
         Catch ex As Exception
 
-            Dim errorMsg = "Error While inserting record On table..." & ex.Message & ", Insert Records"
-            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & errorMsg & "Save')", True)
-            SQLTran.Commit()
+            ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('" & ex.Message & "')", True)
+            SQLTran.Rollback()
             SQLConn.Close()
 
         Finally
             If SaveComp Then
                 SQLConn.Close()
+                'ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Save successful!')", True)
                 Response.Redirect("userSurveyComplete.aspx")
             End If
         End Try
@@ -359,7 +358,12 @@ Public Class userAnswer
 
                 .Parameters.AddWithValue("@subjectId", prmSurveyId)
                 .Parameters.AddWithValue("@submitDate", xcreateDate)
-                .Parameters.AddWithValue("@submitBy", Session("En"))
+
+                If (Session("EN") = Nothing Or Session("EN") = "") Then
+                    .Parameters.AddWithValue("@submitBy", "")
+                Else
+                    .Parameters.AddWithValue("@submitBy", Session("En"))
+                End If
 
                 Dim prm_submitid As System.Data.SqlClient.SqlParameter = New SqlParameter("@submitID", SqlDbType.Int)
                 prm_submitid.Direction = ParameterDirection.Output

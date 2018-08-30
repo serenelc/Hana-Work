@@ -17,7 +17,7 @@
 
         <div style="background: inherit; height: 100px">
             <div id="userInfo" class="sidenav">
-                <label id="info">
+                <label id="info" style="visibility: hidden;">
                     <img src="../images/user.png" style="height: 40px; padding-right: 10px" />
                     <%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%>
                 </label>
@@ -98,6 +98,7 @@
                     if ("ADMIN" == uType) {
                         btnBack.setAttribute("href", "adminHome.aspx")
                         btnLogout.style = "visibility: visible;";
+                        document.getElementById("info").style = "visibility: visible;";
                     }
                     else {
                         btnBack.setAttribute("href", "index.aspx");
