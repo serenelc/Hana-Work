@@ -17,7 +17,7 @@
 
         <div style="background-color: inherit; height: 100px">
             <div id="userInfo" class="sidenav">
-                <label id="info">
+                <label id="info" style="visibility: hidden;">
                     <img src="../images/user.png" style="height: 40px; padding-right: 10px" />
                     <%=Session("En")%>, <%=Session("Name")%>, <%=Session("UserType")%>
                 </label>
@@ -37,16 +37,34 @@
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
                     Style="float: left;" Text="Complete Another Survey" />
                 <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
-                    Style="float: right" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };"/>
+                    Style="float: right; visibility: hidden;" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };"/>
             </div>
 
         </div>
+
 
         <%--Script to allow use of dialog box in server--%>
         <script>
             function OpenTaskDialogLogout() {
                 return confirm("Are you sure you want to logout?");
             }
+        </script>
+
+          <%--Script to check if user had to log in to get to this survey--%>
+        <script>
+            function isAdmin() {
+                let uType = "<%=Session("UserType").ToString()%>";
+                    let btnLogout = document.getElementById("btnLogout")
+                    if (uType == "") {
+                        btnLogout.style = "visibility: hidden;";
+                        document.getElementById("info").style = "visibility: hidden;";
+                    }
+                    else {
+                        btnLogout.style = "visibility: visible;";
+                        document.getElementById("info").style = "visibility: visible;";
+                    }
+            }
+            isAdmin();
         </script>
 
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
