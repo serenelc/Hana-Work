@@ -71,13 +71,14 @@
 
             <div id="footer" style="background-color: white; height: 70px;">
                 <br>
-                <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
-                    Style="float: left; visibility: hidden;" Text="Back" />
-                 <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
+
+                <a href="" class="btn btn-warning" role="button" id="btnBack" aria-pressed="true" style="float:left;" target="">Back</a> 
+                <asp:Button runat="server" ID="btnLogout" type="button" class="btn btn-danger"
                     Style="float: right; visibility: hidden;" Text="Logout" OnClick="btnLogout_Click" OnClientClick="javascript: if (!OpenTaskDialogLogout()) { return false; };" />
+                 
             </div>
 
-           
+          
         </div>
 
 
@@ -95,11 +96,11 @@
                     let btnBack = document.getElementById("btnBack");
                     let btnLogout = document.getElementById("btnLogout")
                     if ("ADMIN" == uType) {
-                        btnBack.style = "visibility: visible;";
+                        btnBack.setAttribute("href", "adminHome.aspx")
                         btnLogout.style = "visibility: visible;";
                     }
                     else {
-                        btnBack.style = "visibility: hidden;";
+                        btnBack.setAttribute("href", "index.aspx");
                         btnLogout.style = "visibility: hidden;";
                     }
             }

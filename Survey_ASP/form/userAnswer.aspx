@@ -42,7 +42,7 @@
                 <asp:Button runat="server" ID="btnSave" type="button" class="btn btn-success"
                     Style="float: right" Text="Save" CommandArgument='<%# Eval("subjectId") %>' OnClientClick="javascript: if (!OpenTaskDialogSave()) { return false; };" />
                 <asp:Button runat="server" ID="btnBack" type="button" class="btn btn-warning"
-                    Style="float: left;" Text="Back" />
+                    Style="float: left;" Text="Back" onclick="btnBack_Click"/>
             </div>
 
         </div>

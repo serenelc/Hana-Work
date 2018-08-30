@@ -52,7 +52,7 @@ Public Class userSurveyList
                 con.ConnectionString = My.Settings.ConnStringDatabaseSurvey
                 con.Open()
                 cmd.Connection = con
-                cmd.CommandText = "SELECT * from surveyMaster where subjectId = " + subjId
+                cmd.CommandText = "SELECT * from surveyMaster where enRequired = 1 and subjectId = " + subjId
 
                 'create a DataReader And execute the SqlCommand
                 Dim MyDataReader As SqlDataReader = cmd.ExecuteReader()
@@ -64,9 +64,10 @@ Public Class userSurveyList
                 MyDataReader.Close()
 
                 If dt.Rows.Count > 0 Then
-                    For Each r In dt.Rows
-                        xenReq = r("enRequired")
-                    Next
+                    xenReq = 1
+                    'For Each r In dt.Rows
+                    '    xenReq = r("enRequired")
+                    'Next
                 End If
             Catch ex As Exception
                 Dim errorMsg = "Error While getting information from database"
@@ -86,8 +87,8 @@ Public Class userSurveyList
         End If
     End Sub
 
-    Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
-        Response.Redirect("adminHome.aspx")
-    End Sub
+    'Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
+    '    Response.Redirect("adminHome.aspx")
+    'End Sub
 
 End Class

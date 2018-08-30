@@ -21,11 +21,12 @@ Public Class userAnswer
             subId = Request.QueryString("subjectId")
             Call getSurveyContent(subId)
             Session("surveyId") = xsurveyId.ToString()
+
+            If (subId Is Nothing) Then
+                Response.Redirect("index.aspx")
+            End If
         End If
 
-        If (subId Is Nothing) Then
-            Response.Redirect("index.aspx")
-        End If
     End Sub
 
     Protected Sub getSurveyContent(xSubId)
