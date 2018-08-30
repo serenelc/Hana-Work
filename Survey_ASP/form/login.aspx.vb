@@ -48,7 +48,6 @@ Public Class login
         Dim strConnString, strSQLHanaone, sqlCheckEn As String
         strConnString = My.Settings.ConnStringDatabaseSurvey
 
-        'Dim intNumRows As Integer
         Dim en As String = inputEn.Value
         Dim pwd As String = inputPassword.Value
         Session("en") = en
@@ -58,7 +57,7 @@ Public Class login
 
         strSQLHanaone = "select  * from  HanaOne..hosemployee h right outer join   [hanadata].dbo.EMP_PASS t on h.EmpNo=t.FempNo "
         strSQLHanaone = strSQLHanaone + " where h.EmpStatus <> 'D'  and EmpNo='" & inputEn.Value & "' "
-        'Function connect database
+
         dtCheckHanaOne = ConnectDB(My.Settings.ConnStringDatabaseSurvey, strSQLHanaone)
         If dtCheckHanaOne.Rows.Count > 0 Then
 
@@ -75,12 +74,12 @@ Public Class login
                     dtCheckEn = ConnectDB(My.Settings.ConnStringDatabaseSurvey, sqlCheckEn)
 
                     If (dtCheckEn IsNot Nothing) And (dtCheckEn.Rows.Count > 0) Then
-                        ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('You have already completed this survey!')", True)
-                        Response.Redirect("userSurveyList.aspx")
+                        ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('You have already completed this survey! Please go back.')", True)
                     Else
                         Session("UserType") = "USER"
                         Response.Redirect("userAnswer.aspx?subjectId=" + subjId)
                     End If
+
 
                 Else
                     ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Password incorrect!')", True)
@@ -94,7 +93,6 @@ Public Class login
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('User en Incorrect!')", True)
         End If
 
-        '***********************************************
     End Sub
 
 End Class

@@ -69,9 +69,6 @@ Public Class userSurveyList
 
                 If dt.Rows.Count > 0 Then
                     xenReq = 1
-                    'For Each r In dt.Rows
-                    '    xenReq = r("enRequired")
-                    'Next
                 End If
             Catch ex As Exception
                 Dim errorMsg = "Error While getting information from database"

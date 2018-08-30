@@ -41,7 +41,6 @@ Public Class index
         Dim strConnString, strSQLHanaone As String
         strConnString = My.Settings.ConnStringDatabaseSurvey
 
-        'Dim intNumRows As Integer
         Dim en As String = inputEn.Value
         Dim pwd As String = inputPassword.Value
         Session("en") = en
@@ -88,6 +87,5 @@ Public Class index
             ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('User en Incorrect!')", True)
         End If
 
-        '***********************************************
     End Sub
 End Class

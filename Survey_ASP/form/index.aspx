@@ -13,7 +13,7 @@
     <div class="container align-items-center" style="background-image: url(images/bg.jpeg); margin-top: 20px; background-color: white; height: 700px;">
         <div class="mx-auto text-center" style="padding-top: 100px;">
             <h1 class="mx-auto text-uppercase" style="color: white; font-weight: bold;">Employee Satisfaction Surveys</h1>
-            <a href="/form/userSurveyList.aspx" class="btn btn-success" role="button" aria-pressed="true">Go</a>
+            <a href="userSurveyList.aspx" class="btn btn-success" role="button" aria-pressed="true">Go</a>
             <br />
             <br />
             <br />

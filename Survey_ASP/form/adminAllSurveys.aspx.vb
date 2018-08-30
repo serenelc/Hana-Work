@@ -49,8 +49,8 @@ Public Class adminAllSurveys
             command.Connection = connect
             command.CommandText = "UPDATE SurveyMaster SET status='OPEN', statusComp=0, closeDate = '" + inAMonth + "' WHERE subjectId= " + subjId
 
-                    'create a DataReader and execute the SqlCommand
-                    Dim MyDataReader As SqlDataReader = command.ExecuteReader()
+            'create a DataReader and execute the SqlCommand
+            Dim MyDataReader As SqlDataReader = command.ExecuteReader()
 
             'load the reader into the datatable
             dataT.Load(MyDataReader)
