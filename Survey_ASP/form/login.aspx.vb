@@ -45,7 +45,7 @@ Public Class login
 
     End Function
     Protected Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        Dim strConnString, strSQLHanaone As String
+        Dim strConnString, strSQLHanaone, sqlCheckEn As String
         strConnString = My.Settings.ConnStringDatabaseSurvey
 
         'Dim intNumRows As Integer
@@ -53,9 +53,8 @@ Public Class login
         Dim pwd As String = inputPassword.Value
         Session("en") = en
 
-        'Everyone who logs in will be an admin. We will only distinguish between users and admins on userSurveyList from now on.
         en = en.PadLeft(6, "0")
-        Dim dtRight, dtpw, dtCheckHanaOne As DataTable
+        Dim dtpw, dtCheckHanaOne, dtCheckEn As DataTable
 
         strSQLHanaone = "select  * from  HanaOne..hosemployee h right outer join   [hanadata].dbo.EMP_PASS t on h.EmpNo=t.FempNo "
         strSQLHanaone = strSQLHanaone + " where h.EmpStatus <> 'D'  and EmpNo='" & inputEn.Value & "' "
@@ -71,8 +70,17 @@ Public Class login
                 If dtpw.Rows(0)("PW").ToString = pwd Then
                     Session("En") = en
                     Session("Name") = dtCheckHanaOne.Rows(0)("EngName") & " " & dtCheckHanaOne.Rows(0)("EngSurname")
-                    Session("UserType") = "USER"
-                    Response.Redirect("userAnswer.aspx?subjectId=" + subjId)
+
+                    sqlCheckEn = "Select * from surveyUserSubmit where subjectId='" + subjId + "' and submitBy = '" + en + "'"
+                    dtCheckEn = ConnectDB(My.Settings.ConnStringDatabaseSurvey, sqlCheckEn)
+
+                    If (dtCheckEn IsNot Nothing) And (dtCheckEn.Rows.Count > 0) Then
+                        ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('You have already completed this survey!')", True)
+                        Response.Redirect("userSurveyList.aspx")
+                    Else
+                        Session("UserType") = "USER"
+                        Response.Redirect("userAnswer.aspx?subjectId=" + subjId)
+                    End If
 
                 Else
                     ClientScript.RegisterStartupScript(Me.[GetType](), "alert", "alert('Password incorrect!')", True)

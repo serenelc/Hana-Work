@@ -10,8 +10,6 @@
     <link rel="icon" href="../../../../favicon.ico">
     <title>Login</title>
 
-    <!-- Custom styles for this template -->
-    <%--<link href="../css/login.css" rel="stylesheet">--%>
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 

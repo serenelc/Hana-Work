@@ -81,8 +81,6 @@ Public Class userSurveyList
             End Try
 
             If (xenReq = 1) Then
-                'open a login form as EN required. When logging in, if EN is already found in database for this survey, then pop up error message
-                'saying "You have already completed this survey"
                 Response.Redirect("login.aspx?subjectId=" + e.CommandArgument.ToString())
             Else
                 Response.Redirect("userAnswer.aspx?subjectId=" + e.CommandArgument.ToString())
