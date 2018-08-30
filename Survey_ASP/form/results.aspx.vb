@@ -88,11 +88,12 @@ Public Class results
             Dim queryShort As String = "Select distinct a.sectionName, c.questionName "
             queryShort += "From surveyMaster b "
             queryShort += "INNER Join surveySection a ON a.subjectId = b.subjectId "
-            queryShort += "INNER Join surveyQuestion c ON a.sectionId = c.sectionId And c.questionType = 'shortanswer' "
+            queryShort += "INNER Join surveyQuestion c ON a.sectionId = c.sectionId And c.questionType like '%short%' "
             queryShort += "INNER Join surveyAnswer f ON c.questionId = f.questionId "
             queryShort += "INNER Join surveyUserAnswer d ON d.answerId = f.answerId "
             queryShort += "WHERE b.subjectId = " + Session("QsubjectId").ToString() + " and a.sectionId = " + xsectionIdLabel.Text
-            queryShort += " AND c.questionType = '" + xquestionTypeLabel.Text + "' And c.questionType like '%short%' "
+            'queryShort += " And c.questionType like '%short%' "
+            queryShort += " AND c.questionType = '" + xquestionTypeLabel.Text + "'"
 
             Dim dtShort As DataTable = GetData(queryShort)
 
@@ -193,6 +194,7 @@ Public Class results
         End Try
 
     End Sub
+
     Private Sub getExcel()
 
         'Get all the sections in the survey

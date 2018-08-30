@@ -174,7 +174,7 @@
     <Content Include="css\login.css" />
     <Content Include="css\userInfo.css" />
     <Content Include="dll\MISClassLibrary.dll" />
-    <Content Include="docs\ProcessFlow.jpg" />
+    <Content Include="docs\ProcessFlow.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="form\adminCreate.aspx" />
@@ -183,6 +183,7 @@
     <Content Include="form\adminAllSurveys.aspx" />
     <Content Include="form\images\bg.jpeg" />
     <Content Include="form\index.aspx" />
+    <Content Include="form\login.aspx" />
     <Content Include="form\results.aspx" />
     <Content Include="form\sendmail.aspx" />
     <Content Include="form\userAnswer.aspx" />
@@ -206,6 +207,7 @@
     <Content Include="images\HANA-Logo.png" />
     <Content Include="images\hana-simple-logo.jpg" />
     <Content Include="images\mail.png" />
+    <Content Include="images\success.jpg" />
     <Content Include="images\thankyou.jpg" />
     <Content Include="images\user.png" />
     <Content Include="node_modules\bootstrap-toggle\css\bootstrap-toggle.css" />
@@ -824,6 +826,13 @@
     </Compile>
     <Compile Include="form\index.aspx.vb">
       <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="form\login.aspx.designer.vb">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="form\login.aspx.vb">
+      <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="form\results.aspx.designer.vb">
