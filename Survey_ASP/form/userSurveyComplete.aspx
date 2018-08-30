@@ -53,15 +53,9 @@
           <%--Script to check if user had to log in to get to this survey--%>
         <script>
             function isAdmin() {
-<<<<<<< HEAD
                 let uType = "<%=Session("UserType").ToString()%>";
                     let btnLogout = document.getElementById("btnLogout")
                     if (uType == "") {
-=======
-                    let uType = "<%=Session("UserType").ToString()%>";
-                    let btnLogout = document.getElementById("btnLogout")
-                    if (uType = "") {
->>>>>>> 001d42659cf8624165d447cf1bb952b49a8aa145
                         btnLogout.style = "visibility: hidden;";
                         document.getElementById("info").style = "visibility: hidden;";
                     }
